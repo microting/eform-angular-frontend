@@ -231,6 +231,8 @@ public class Startup(IConfiguration configuration)
             .AddDefaultTokenProviders();
         // Authentication
         services.AddEFormAuth(Configuration, GetPluginsPermissions());
+        // Login brute-force brake (POST /api/auth/token, per client)
+        services.AddRateLimiter(LoginRateLimit.Configure);
         // Localization
         services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
         services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
@@ -371,6 +373,7 @@ public class Startup(IConfiguration configuration)
         app.UseDefaultFiles();
         app.UseStaticFiles();
         app.UseAuthentication();
+        app.UseRateLimiter();
         app.UseSentryHost();
         // Plugins
         app.UseEFormLocalization();

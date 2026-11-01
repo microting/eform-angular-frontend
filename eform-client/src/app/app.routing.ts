@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {IsAuthGuard} from 'src/app/common/guards';
+import {IsAuthGuard, NotPluginOnlyGuard} from 'src/app/common/guards';
 import {FullLayoutComponent, SimpleLayoutComponent, ConnectionSetupComponent, NotFoundComponent} from './components';
 import {UserClaimsEnum} from 'src/app/common/const';
 
@@ -14,13 +14,13 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/eforms/eforms.module').then((m) => m.EFormsModule),
       },
       {
         path: 'advanced',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/advanced/advanced.module').then(
             (m) => m.AdvancedModule
@@ -28,7 +28,7 @@ export const routes: Routes = [
       },
       {
         path: 'device-users',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/device-users/device-users.module').then(
             (m) => m.DeviceUsersModule
@@ -36,12 +36,13 @@ export const routes: Routes = [
       },
       {
         path: 'cases',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/cases/cases.module').then((m) => m.CasesModule),
       },
       {
         path: 'application-settings',
+        canActivate: [NotPluginOnlyGuard],
         loadChildren: () =>
           import(
             './modules/application-settings/application-settings.module'
@@ -49,7 +50,7 @@ export const routes: Routes = [
       },
       {
         path: 'plugins-settings',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/plugins-management/plugins-management.module').then(
             (m) => m.PluginsManagementModule
@@ -65,7 +66,7 @@ export const routes: Routes = [
       },
       {
         path: 'email-recipients',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         data: {requiredClaim: UserClaimsEnum.emailRecipientRead},
         loadChildren: () =>
           import('./modules/email-recipients/email-recipients.module').then(
@@ -74,7 +75,7 @@ export const routes: Routes = [
       },
       {
         path: 'security',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/security/security.module').then(
             (m) => m.SecurityModule
@@ -95,7 +96,7 @@ export const routes: Routes = [
       },
       {
         path: 'cms',
-        canActivate: [IsAuthGuard],
+        canActivate: [IsAuthGuard, NotPluginOnlyGuard],
         loadChildren: () =>
           import('./modules/cms/cms.module').then((m) => m.CmsModule),
       },
@@ -125,6 +126,13 @@ export const routes: Routes = [
         component: ConnectionSetupComponent
       }
     ],
+  },
+  // Anonymous plugin pages (signup, invitation links, ...): plugins insert their routes into public-plugins.routing.ts.
+  {
+    path: 'p',
+    component: SimpleLayoutComponent,
+    loadChildren: () =>
+      import('./plugins/public-plugins.module').then((m) => m.PublicPluginsModule),
   },
   // Anything else: a not-found page that keeps the URL, instead of silently
   // redirecting to My eForms (#8103). It must stay the last app route —

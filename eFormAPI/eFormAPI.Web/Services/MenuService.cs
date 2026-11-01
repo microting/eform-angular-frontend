@@ -270,6 +270,12 @@ public class MenuService(
                 menuItemsForFilter = FilterMenuForUser(menuItemsForFilter, userClaims);
             }
 
+            // Plugin-only accounts (neither admin nor user, e.g. the kanban plugin's "kanban" role) see only plugin pages.
+            if (!userService.IsInRole(EformRole.Admin) && !userService.IsInRole(EformRole.User))
+            {
+                menuItemsForFilter = KeepPluginItemsOnly(menuItemsForFilter);
+            }
+
             var menuItems = menuItemsForFilter
                 .Where(x => x.ParentId == null)
                 .OrderBy(x => x.Position)
@@ -499,6 +505,15 @@ public class MenuService(
             }
         }
 
+    }
+
+    /// <summary>Plugin menu items, plus the top-level dropdowns that hold one; everything of the main application is dropped.</summary>
+    public static List<MenuItem> KeepPluginItemsOnly(List<MenuItem> items)
+    {
+        var pluginIds = items.Where(x => x.MenuTemplate?.EformPluginId != null).Select(x => x.Id).ToHashSet();
+        return items.Where(x => pluginIds.Contains(x.Id)
+                                || (x.ParentId == null && items.Any(c => c.ParentId == x.Id && pluginIds.Contains(c.Id))))
+            .ToList();
     }
 
     private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)
