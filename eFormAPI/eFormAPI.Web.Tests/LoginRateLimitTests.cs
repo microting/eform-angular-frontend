@@ -182,21 +182,32 @@ public class LoginRateLimitTests
     }
 
     [Test]
-    public async Task AtTheKeyCap_NewClientsAreRejected_KnownClientsAndLaterClientsAreNot()
+    public async Task AtTheKeyCap_NewClientsFailOpen_KnownClientsKeepTheirLimits()
     {
-        var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = Limit }),
-            _time, maxTrackedClients: 5);
+        var logger = new ListLogger();
+        var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = 2 }),
+            _time, logger, maxTrackedClients: 5);
         for (var i = 1; i <= 5; i++)
             Assert.That(await Send(limit, Request($"203.0.113.{i}"), loginFails: true), Is.EqualTo(200));
+        Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: true), Is.EqualTo(200));
 
-        var rejected = Request("203.0.113.99");
-        Assert.That(await Send(limit, rejected, loginFails: false), Is.EqualTo(429), "the table does not grow");
-        Assert.That(limit.TrackedClients, Is.EqualTo(5));
-        Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: false), Is.EqualTo(200), "known client");
+        // A flood of distinct keys must not lock new clients out: a new key is let through, untracked and unlimited.
+        for (var i = 0; i < 5; i++)
+            Assert.That(await Send(limit, Request("203.0.113.99"), loginFails: true), Is.EqualTo(200));
+        Assert.That(limit.TrackedClients, Is.EqualTo(5), "the table does not grow");
+        Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: false), Is.EqualTo(429), "known client still limited");
+        Assert.That(await Send(limit, Request("203.0.113.2"), loginFails: true), Is.EqualTo(200));
+        Assert.That(await Send(limit, Request("203.0.113.2"), loginFails: false), Is.EqualTo(429));
 
-        _time.Now += TimeSpan.FromMinutes(1);
-        Assert.That(await Send(limit, Request("203.0.113.99"), loginFails: false), Is.EqualTo(200),
-            "expired windows were evicted");
+        // Warned at most once a minute, without addresses.
+        Assert.That(logger.Warnings, Is.EqualTo(new[] { "Login rate-limit table full; new clients are not limited" }));
+        _time.Now += TimeSpan.FromSeconds(30);
+        await Send(limit, Request("203.0.113.98"), loginFails: false);
+        Assert.That(logger.Warnings, Has.Count.EqualTo(1));
+
+        // Once the windows expire they are evicted and new clients are tracked again.
+        _time.Now += TimeSpan.FromSeconds(31);
+        Assert.That(await Send(limit, Request("203.0.113.99"), loginFails: true), Is.EqualTo(200));
         Assert.That(limit.TrackedClients, Is.EqualTo(1));
     }
 
@@ -210,9 +221,27 @@ public class LoginRateLimitTests
         await Send(limit, Request("203.0.113.2"), loginFails: true);
 
         _time.Now += TimeSpan.FromSeconds(30);
-        Assert.That(await Send(limit, Request("203.0.113.3"), loginFails: false), Is.EqualTo(429));
+        Assert.That(await Send(limit, Request("203.0.113.3"), loginFails: false), Is.EqualTo(200), "fails open");
+        Assert.That(limit.TrackedClients, Is.EqualTo(2));
         // The throttled client keeps its count instead of being evicted to make room.
         Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: false), Is.EqualTo(429));
+    }
+
+    [Test]
+    public async Task AClientThatAborts_IsNotCountedAsAFailure()
+    {
+        for (var i = 0; i < Limit * 2; i++)
+        {
+            var ctx = Request();
+            using var aborted = new CancellationTokenSource();
+            ctx.RequestAborted = aborted.Token;
+            await Assert.ThrowsAsync<OperationCanceledException>(() => _limit.InvokeAsync(ctx, _ =>
+            {
+                aborted.Cancel();
+                throw new OperationCanceledException(aborted.Token);
+            }));
+        }
+        Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(200));
     }
 
     [Test]

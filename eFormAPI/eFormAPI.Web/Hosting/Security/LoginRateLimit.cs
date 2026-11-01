@@ -83,6 +83,7 @@ public sealed class LoginRateLimit : IMiddleware
     private readonly ConcurrentDictionary<string, ClientWindow> _windows = new();
     private long _lastSweepTicks;
     private int _warnedAboutLoopback;
+    private long _lastTableFullWarningTicks = long.MinValue / 2;
 
     public LoginRateLimit(IOptions<LoginRateLimitOptions> options, TimeProvider time,
         ILogger<LoginRateLimit> logger = null, int maxTrackedClients = DefaultMaxTrackedClients)
@@ -125,22 +126,29 @@ public sealed class LoginRateLimit : IMiddleware
             return;
         }
 
-        var threw = true;
+        var failed = true; // an endpoint that throws may have checked the password first
         try
         {
             await next(context);
-            threw = false;
+            failed = false;
+        }
+        catch (OperationCanceledException) when (context.RequestAborted.IsCancellationRequested)
+        {
+            failed = false; // the client went away: not a guess
+            throw;
         }
         finally
         {
-            attempt.End(threw || context.Items.ContainsKey(FailedItemKey));
+            attempt.End(failed || context.Items.ContainsKey(FailedItemKey));
         }
     }
 
     /// <summary>Reserves a slot for one login of <paramref name="key"/>; the caller must call
     /// <see cref="Attempt.End"/> exactly once, in a finally. A null key (not limited) always succeeds. When
-    /// <see cref="DefaultMaxTrackedClients"/> clients are tracked and none can be evicted, new clients are rejected
-    /// rather than growing the table.</summary>
+    /// <see cref="DefaultMaxTrackedClients"/> clients are tracked and none can be evicted, a NEW client fails open
+    /// (let through, not tracked, not limited) rather than growing the table or locking every new client out —
+    /// a flood of distinct keys must not deny service to everyone; known clients keep their limits. A warning is
+    /// logged at most once a minute while this happens.</summary>
     public bool TryBegin(string key, out Attempt attempt, out TimeSpan retryAfter)
     {
         attempt = Attempt.Unlimited;
@@ -156,8 +164,8 @@ public sealed class LoginRateLimit : IMiddleware
             {
                 if (_windows.Count >= _maxTrackedClients)
                 {
-                    retryAfter = MinSweepInterval;
-                    return false;
+                    WarnTableFull(now);
+                    return true; // fail open: Attempt.Unlimited, not tracked
                 }
                 window = _windows.GetOrAdd(key, _ => new ClientWindow { Start = now });
             }
@@ -256,6 +264,15 @@ public sealed class LoginRateLimit : IMiddleware
 
     /// <summary>Number of tracked client windows (for tests).</summary>
     public int TrackedClients => _windows.Count;
+
+    private void WarnTableFull(DateTimeOffset now)
+    {
+        var last = Interlocked.Read(ref _lastTableFullWarningTicks);
+        if (now.UtcTicks - last < Window.Ticks
+            || Interlocked.CompareExchange(ref _lastTableFullWarningTicks, now.UtcTicks, last) != last)
+            return;
+        _logger.LogWarning("Login rate-limit table full; new clients are not limited");
+    }
 
     private static bool IsDirectLoopback(HttpContext ctx) =>
         Normalise(ctx.Connection.RemoteIpAddress) is { } peer && IPAddress.IsLoopback(peer)
