@@ -49,7 +49,7 @@ public class AuthController(
     {
         Log.LogEvent("api/auth/token called");
         var result = await authService.AuthenticateUser(model);
-        if (!result.Success)
+        if (LoginRateLimit.CountsAsFailure(result))
         {
             LoginRateLimit.MarkFailed(HttpContext);
         }
@@ -128,10 +128,17 @@ public class AuthController(
         // check model
         if (!ModelState.IsValid)
         {
+            LoginRateLimit.MarkFailed(HttpContext);
             return new OperationDataResult<GoogleAuthenticatorModel>(false,
                 localizationService.GetString("InvalidUserNameOrPassword"));
         }
 
-        return await authService.GetGoogleAuthenticator(loginModel);
+        // Anonymous password check: braked like the login itself (LoginRateLimit covers this path).
+        var result = await authService.GetGoogleAuthenticator(loginModel);
+        if (LoginRateLimit.CountsAsFailure(result))
+        {
+            LoginRateLimit.MarkFailed(HttpContext);
+        }
+        return result;
     }
 }

@@ -111,7 +111,8 @@ public class AuthService(
             // check input params
             if (string.IsNullOrEmpty(psk) || string.IsNullOrEmpty(code))
             {
-                return new OperationDataResult<EformAuthorizeResult>(false, "PSK or code is empty");
+                // Correct password, second factor still to come: not a failed guess for the login brake.
+                return new SecondFactorRequiredResult("PSK or code is empty");
             }
 
             if (psk != user.GoogleAuthenticatorSecretKey)

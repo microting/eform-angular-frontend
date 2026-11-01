@@ -27,6 +27,8 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
+using eFormAPI.Web.Hosting.Security;
+using eFormAPI.Web.Infrastructure.Models.Auth;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Cache.AuthCache;
 using Microsoft.AspNetCore.Identity;
@@ -252,6 +254,34 @@ namespace eFormAPI.Web.Integration.Tests.Services
             Assert.That(result.Success, Is.False,
                 "a disabled account must not be able to roll its session forward");
             Assert.That(result.Message, Is.EqualTo(GenericMessageKey));
+        }
+
+        // The login brake (LoginRateLimit) counts failed guesses only: a correct password that still needs the
+        // second factor must not count, or 2FA users and non-web clients posting without a code get throttled.
+        [Test]
+        public async Task AuthenticateUser_CorrectPasswordWithoutSecondFactor_IsNotAFailedGuess()
+        {
+            var user = User(isActive: true);
+            user.TwoFactorEnabled = true;
+            user.GoogleAuthenticatorSecretKey = "JBSWY3DPEHPK3PXP";
+            GivenUser(user);
+            GivenSignInResult(SignInResult.TwoFactorRequired);
+
+            var result = await _authService.AuthenticateUser(Login());
+
+            Assert.That(result, Is.InstanceOf<SecondFactorRequiredResult>());
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Message, Is.EqualTo("PSK or code is empty"), "the answer the clients see is unchanged");
+            Assert.That(LoginRateLimit.CountsAsFailure(result), Is.False);
+        }
+
+        [Test]
+        public async Task AuthenticateUser_WrongPassword_IsAFailedGuess()
+        {
+            GivenUser(User(isActive: true));
+            GivenSignInResult(SignInResult.Failed);
+
+            Assert.That(LoginRateLimit.CountsAsFailure(await _authService.AuthenticateUser(Login())), Is.True);
         }
     }
 }

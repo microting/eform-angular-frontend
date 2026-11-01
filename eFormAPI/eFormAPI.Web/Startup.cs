@@ -231,9 +231,8 @@ public class Startup(IConfiguration configuration)
             .AddDefaultTokenProviders();
         // Authentication
         services.AddEFormAuth(Configuration, GetPluginsPermissions());
-        // Login brute-force brake (failed POST /api/auth/token per client)
-        services.Configure<LoginRateLimitOptions>(Configuration.GetSection(LoginRateLimitOptions.Section));
-        services.AddSingleton<LoginRateLimit>();
+        // Login brute-force brake (failed password checks per client: REST login, google-auth-key, gRPC login)
+        LoginRateLimit.Register(services, Configuration);
         // Localization
         services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
         services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
