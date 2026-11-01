@@ -271,7 +271,8 @@ public class MenuService(
             }
 
             // Plugin-only accounts (a role, but neither admin nor user, e.g. the kanban plugin's "kanban" role) see only plugin pages.
-            if (IsPluginOnly(userService))
+            var pluginOnly = IsPluginOnly(userService);
+            if (pluginOnly)
             {
                 menuItemsForFilter = KeepPluginItemsOnly(menuItemsForFilter);
             }
@@ -303,6 +304,8 @@ public class MenuService(
                     MenuItems = dbContext.MenuItems
                         .Include(p => p.MenuTemplate)
                         .Where(p => p.ParentId == x.Id)
+                        // Children are re-read here, so a kept dropdown must drop its main-app links for plugin-only users too.
+                        .Where(p => !pluginOnly || p.MenuTemplate.EformPluginId != null)
                         .OrderBy(p => p.Position)
                         .Select(p => new MenuItemModel
                         {

@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using eFormAPI.Web.Infrastructure.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +22,7 @@ namespace eFormAPI.Web.Hosting.Security;
 /// at startup.</summary>
 public class LoginRateLimitOptions
 {
-    public const string Section = "LoginRateLimit";
+    public static string Section => "LoginRateLimit";
 
     /// <summary>Failed logins per client per one-minute window before further logins get 429.</summary>
     public int FailedAttemptsPerMinute { get; set; } = 10;
@@ -67,7 +66,7 @@ public class LoginRateLimitOptions
 /// the password first). "Second factor required" after a correct password is not a failure.</para></summary>
 public sealed class LoginRateLimit : IMiddleware
 {
-    public const int DefaultMaxTrackedClients = 50_000;
+    public static int DefaultMaxTrackedClients => 50_000;
 
     private const string FailedItemKey = "eFormAPI.LoginRateLimit.Failed";
     private static readonly TimeSpan Window = TimeSpan.FromMinutes(1);
@@ -81,12 +80,23 @@ public sealed class LoginRateLimit : IMiddleware
     private readonly TimeProvider _time;
     private readonly ILogger _logger;
     private readonly ConcurrentDictionary<string, ClientWindow> _windows = new();
+    private readonly object _admission = new();
     private long _lastSweepTicks;
     private int _warnedAboutLoopback;
     private long _lastTableFullWarningTicks = long.MinValue / 2;
 
-    public LoginRateLimit(IOptions<LoginRateLimitOptions> options, TimeProvider time,
-        ILogger<LoginRateLimit> logger = null, int maxTrackedClients = DefaultMaxTrackedClients)
+    public LoginRateLimit(IOptions<LoginRateLimitOptions> options, TimeProvider time)
+        : this(options, time, NullLogger<LoginRateLimit>.Instance)
+    {
+    }
+
+    public LoginRateLimit(IOptions<LoginRateLimitOptions> options, TimeProvider time, ILogger<LoginRateLimit> logger)
+        : this(options, time, logger, DefaultMaxTrackedClients)
+    {
+    }
+
+    public LoginRateLimit(IOptions<LoginRateLimitOptions> options, TimeProvider time, ILogger<LoginRateLimit> logger,
+        int maxTrackedClients)
     {
         var o = options.Value;
         _limit = o.FailedAttemptsPerMinute;
@@ -154,7 +164,9 @@ public sealed class LoginRateLimit : IMiddleware
         attempt = Attempt.Unlimited;
         retryAfter = TimeSpan.Zero;
         if (key == null)
+        {
             return true;
+        }
 
         var now = _time.GetUtcNow();
         SweepIfDue(now);
@@ -162,18 +174,28 @@ public sealed class LoginRateLimit : IMiddleware
         {
             if (!_windows.TryGetValue(key, out var window))
             {
-                if (_windows.Count >= _maxTrackedClients)
+                // New keys are admitted one at a time, so concurrent new clients cannot overshoot the cap.
+                lock (_admission)
                 {
-                    WarnTableFull(now);
-                    return true; // fail open: Attempt.Unlimited, not tracked
+                    if (!_windows.TryGetValue(key, out window))
+                    {
+                        if (_windows.Count >= _maxTrackedClients)
+                        {
+                            WarnTableFull(now);
+                            return true; // fail open: Attempt.Unlimited, not tracked
+                        }
+                        window = new ClientWindow { Start = now };
+                        _windows[key] = window;
+                    }
                 }
-                window = _windows.GetOrAdd(key, _ => new ClientWindow { Start = now });
             }
 
             lock (window)
             {
                 if (window.Removed)
+                {
                     continue; // swept between lookup and lock: take the fresh entry
+                }
 
                 if (now - window.Start >= Window)
                 {
@@ -184,7 +206,10 @@ public sealed class LoginRateLimit : IMiddleware
                 if (window.Failures + window.InFlight >= _limit)
                 {
                     retryAfter = window.Start + Window - now;
-                    if (retryAfter < MinSweepInterval) retryAfter = MinSweepInterval;
+                    if (retryAfter < MinSweepInterval)
+                    {
+                        retryAfter = MinSweepInterval;
+                    }
                     return false;
                 }
 
@@ -198,13 +223,24 @@ public sealed class LoginRateLimit : IMiddleware
     /// <summary>Called by a braked endpoint when the login failed; see <see cref="CountsAsFailure"/>.</summary>
     public static void MarkFailed(HttpContext context) => context.Items[FailedItemKey] = true;
 
-    /// <summary>A failed login that is a guess: anything not successful, except "second factor required".</summary>
-    public static bool CountsAsFailure(OperationResult result) => !result.Success && result is not SecondFactorRequiredResult;
+    /// <summary>AuthService's answer when the password was right but the second factor is still missing
+    /// (AuthService.cs:114, "PSK or code is empty"). AuthService.cs is byte-frozen by the login-path fence, so the
+    /// step is recognised here by its text; AuthServiceDisabledAccountTests pins this value to AuthService's real
+    /// answer, so a wording change there fails CI.</summary>
+    public static string SecondFactorRequiredMessage => "PSK or code is empty";
+
+    /// <summary>A failed login that is a guess: anything not successful, except the "second factor required" step
+    /// of a request that carried no code (a correct password; non-web clients first post without a code).</summary>
+    public static bool CountsAsFailure(OperationResult result, string requestCode) =>
+        !result.Success
+        && !(string.IsNullOrEmpty(requestCode) && result.Message == SecondFactorRequiredMessage);
 
     public static bool IsLogin(HttpRequest request)
     {
         if (!HttpMethods.IsPost(request.Method))
+        {
             return false;
+        }
         var path = request.Path.Value?.TrimEnd('/');
         return string.Equals(path, "/api/auth/token", StringComparison.OrdinalIgnoreCase)
                || string.Equals(path, "/api/auth/google-auth-key", StringComparison.OrdinalIgnoreCase);
@@ -230,16 +266,26 @@ public sealed class LoginRateLimit : IMiddleware
     /// hop examined is the client, so a trusted proxy vouches only for the entry it wrote and entries a client put
     /// in front are never used. An unparsable entry stops the walk at the nearest hop known so far. IPv6 clients are
     /// keyed on their /64.</summary>
-    public static string ClientKey(HttpContext ctx, IReadOnlyList<IPNetwork> trustedProxies, int forwardLimit = 1,
-        bool exemptLoopback = false)
+    public static string ClientKey(HttpContext ctx, IReadOnlyList<IPNetwork> trustedProxies) =>
+        ClientKey(ctx, trustedProxies, 1, false);
+
+    public static string ClientKey(HttpContext ctx, IReadOnlyList<IPNetwork> trustedProxies, int forwardLimit) =>
+        ClientKey(ctx, trustedProxies, forwardLimit, false);
+
+    public static string ClientKey(HttpContext ctx, IReadOnlyList<IPNetwork> trustedProxies, int forwardLimit,
+        bool exemptLoopback)
     {
         var peer = Normalise(ctx.Connection.RemoteIpAddress);
         if (peer == null)
+        {
             return null;
+        }
 
         var forwarded = ctx.Request.Headers["X-Forwarded-For"].ToString();
         if (string.IsNullOrWhiteSpace(forwarded))
+        {
             return exemptLoopback && IPAddress.IsLoopback(peer) ? null : Key(peer);
+        }
 
         var client = peer;
         var entries = forwarded.Split(',');
@@ -249,7 +295,9 @@ public sealed class LoginRateLimit : IMiddleware
         {
             var hop = Normalise(ParseAddress(entries[i]));
             if (hop == null)
+            {
                 break;
+            }
             client = hop;
         }
 
@@ -270,7 +318,9 @@ public sealed class LoginRateLimit : IMiddleware
         var last = Interlocked.Read(ref _lastTableFullWarningTicks);
         if (now.UtcTicks - last < Window.Ticks
             || Interlocked.CompareExchange(ref _lastTableFullWarningTicks, now.UtcTicks, last) != last)
+        {
             return;
+        }
         _logger.LogWarning("Login rate-limit table full; new clients are not limited");
     }
 
@@ -288,16 +338,22 @@ public sealed class LoginRateLimit : IMiddleware
         var last = Interlocked.Read(ref _lastSweepTicks);
         var since = now.UtcTicks - last;
         if (since < MinSweepInterval.Ticks || (since < Window.Ticks && _windows.Count < _maxTrackedClients))
+        {
             return;
+        }
         if (Interlocked.CompareExchange(ref _lastSweepTicks, now.UtcTicks, last) != last)
+        {
             return; // another thread sweeps
+        }
 
         foreach (var (key, window) in _windows)
         {
             lock (window)
             {
                 if (window.InFlight > 0 || now - window.Start < Window)
+                {
                     continue;
+                }
                 window.Removed = true;
                 _windows.TryRemove(new KeyValuePair<string, ClientWindow>(key, window));
             }
@@ -313,7 +369,9 @@ public sealed class LoginRateLimit : IMiddleware
     private static string Key(IPAddress ip)
     {
         if (ip.AddressFamily != AddressFamily.InterNetworkV6 || IPAddress.IsLoopback(ip))
+        {
             return ip.ToString();
+        }
         var bytes = ip.GetAddressBytes();
         Array.Clear(bytes, 8, 8);
         return $"{new IPAddress(bytes)}/64";
@@ -340,11 +398,16 @@ public sealed class LoginRateLimit : IMiddleware
         public void End(bool failed)
         {
             if (_window == null || Interlocked.Exchange(ref _ended, 1) == 1)
+            {
                 return;
+            }
             lock (_window)
             {
                 _window.InFlight--;
-                if (failed) _window.Failures++;
+                if (failed)
+                {
+                    _window.Failures++;
+                }
             }
         }
     }

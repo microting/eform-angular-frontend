@@ -5,7 +5,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using eFormAPI.Web.Hosting.Security;
-using eFormAPI.Web.Infrastructure.Models.Auth;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +47,10 @@ public class LoginRateLimitTests
         ctx.Request.Method = method;
         ctx.Request.Path = path;
         ctx.Connection.RemoteIpAddress = ip == null ? null : IPAddress.Parse(ip);
-        if (forwardedFor != null) ctx.Request.Headers["X-Forwarded-For"] = forwardedFor;
+        if (forwardedFor != null)
+        {
+            ctx.Request.Headers["X-Forwarded-For"] = forwardedFor;
+        }
         return ctx;
     }
 
@@ -60,8 +62,14 @@ public class LoginRateLimitTests
         await limit.InvokeAsync(ctx, async c =>
         {
             endpointRan = true;
-            if (gate != null) await gate;
-            if (loginFails) LoginRateLimit.MarkFailed(c);
+            if (gate != null)
+            {
+                await gate;
+            }
+            if (loginFails)
+            {
+                LoginRateLimit.MarkFailed(c);
+            }
         });
         Assert.That(endpointRan, Is.EqualTo(ctx.Response.StatusCode != 429));
         return ctx.Response.StatusCode;
@@ -72,7 +80,9 @@ public class LoginRateLimitTests
     private async Task Fail(int times, string ip = "203.0.113.5", string forwardedFor = null)
     {
         for (var i = 0; i < times; i++)
+        {
             Assert.That(await Send(Request(ip, forwardedFor), loginFails: true), Is.EqualTo(200));
+        }
     }
 
     // ---- counting -------------------------------------------------------------------------------------------
@@ -81,7 +91,9 @@ public class LoginRateLimitTests
     public async Task SuccessfulLogins_NeverUseTheQuota()
     {
         for (var i = 0; i < Limit * 5; i++)
+        {
             Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(200));
+        }
     }
 
     [Test]
@@ -148,7 +160,9 @@ public class LoginRateLimitTests
         Assert.That(await Task.WhenAll(running), Is.All.EqualTo(200));
 
         for (var i = 0; i < Limit * 2; i++)
+        {
             Assert.That(await Send(Request(), loginFails: false), Is.EqualTo(200));
+        }
     }
 
     [Test]
@@ -188,12 +202,16 @@ public class LoginRateLimitTests
         var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = 2 }),
             _time, logger, maxTrackedClients: 5);
         for (var i = 1; i <= 5; i++)
+        {
             Assert.That(await Send(limit, Request($"203.0.113.{i}"), loginFails: true), Is.EqualTo(200));
+        }
         Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: true), Is.EqualTo(200));
 
         // A flood of distinct keys must not lock new clients out: a new key is let through, untracked and unlimited.
         for (var i = 0; i < 5; i++)
+        {
             Assert.That(await Send(limit, Request("203.0.113.99"), loginFails: true), Is.EqualTo(200));
+        }
         Assert.That(limit.TrackedClients, Is.EqualTo(5), "the table does not grow");
         Assert.That(await Send(limit, Request("203.0.113.1"), loginFails: false), Is.EqualTo(429), "known client still limited");
         Assert.That(await Send(limit, Request("203.0.113.2"), loginFails: true), Is.EqualTo(200));
@@ -215,7 +233,7 @@ public class LoginRateLimitTests
     public async Task AtTheKeyCap_LiveWindowsAreNotEvicted()
     {
         var limit = new LoginRateLimit(Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = 2 }),
-            _time, maxTrackedClients: 2);
+            _time, Microsoft.Extensions.Logging.Abstractions.NullLogger<LoginRateLimit>.Instance, 2);
         await Send(limit, Request("203.0.113.1"), loginFails: true);
         await Send(limit, Request("203.0.113.1"), loginFails: true);
         await Send(limit, Request("203.0.113.2"), loginFails: true);
@@ -257,11 +275,14 @@ public class LoginRateLimitTests
     }
 
     [Test]
-    public void CountsAsFailure_ExceptSecondFactorRequired()
+    public void CountsAsFailure_ExceptSecondFactorRequiredWithoutACode()
     {
-        Assert.That(LoginRateLimit.CountsAsFailure(new OperationResult(false, "UserNameOrPasswordIncorrect")), Is.True);
-        Assert.That(LoginRateLimit.CountsAsFailure(new OperationResult(true)), Is.False);
-        Assert.That(LoginRateLimit.CountsAsFailure(new SecondFactorRequiredResult("PSK or code is empty")), Is.False);
+        Assert.That(LoginRateLimit.CountsAsFailure(new OperationResult(false, "UserNameOrPasswordIncorrect"), null), Is.True);
+        Assert.That(LoginRateLimit.CountsAsFailure(new OperationResult(true), null), Is.False);
+        var codeRequired = new OperationResult(false, LoginRateLimit.SecondFactorRequiredMessage);
+        Assert.That(LoginRateLimit.CountsAsFailure(codeRequired, null), Is.False);
+        Assert.That(LoginRateLimit.CountsAsFailure(codeRequired, ""), Is.False);
+        Assert.That(LoginRateLimit.CountsAsFailure(codeRequired, "123456"), Is.True, "a code was sent");
     }
 
     // ---- which requests ---------------------------------------------------------------------------------------
@@ -317,7 +338,9 @@ public class LoginRateLimitTests
             Is.EqualTo("10.0.0.5"), "never the leftmost");
 
         for (var i = 0; i < Limit; i++)
+        {
             Assert.That(await Send(Request(Ingress, $"10.9.9.{i}, 198.51.100.7"), loginFails: true), Is.EqualTo(200));
+        }
         Assert.That(await Send(Request(Ingress, "10.9.9.200, 198.51.100.7"), loginFails: true), Is.EqualTo(429));
     }
 
@@ -355,7 +378,9 @@ public class LoginRateLimitTests
             Is.EqualTo("203.0.113.5"));
 
         for (var i = 0; i < Limit; i++)
+        {
             Assert.That(await Send(Request("203.0.113.5", $"198.51.100.{i}"), loginFails: true), Is.EqualTo(200));
+        }
         Assert.That(await Send(Request("203.0.113.5", "198.51.100.200"), loginFails: true), Is.EqualTo(429));
     }
 
@@ -381,9 +406,11 @@ public class LoginRateLimitTests
     {
         // Development (local test runs) exempts loopback by default.
         var limit = New(new LoginRateLimitOptions { ExemptLoopback = true });
-        Assert.That(LoginRateLimit.ClientKey(Request(ip), DefaultTrusted, exemptLoopback: true), Is.Null);
+        Assert.That(LoginRateLimit.ClientKey(Request(ip), DefaultTrusted, 1, true), Is.Null);
         for (var i = 0; i < Limit * 3; i++)
+        {
             Assert.That(await Send(limit, Request(ip), loginFails: true), Is.EqualTo(200));
+        }
     }
 
     [TestCase("127.0.0.1", "127.0.0.1")]
@@ -397,7 +424,9 @@ public class LoginRateLimitTests
         Assert.That(limit.ClientKey(Request(ip)), Is.EqualTo(key));
 
         for (var i = 0; i < Limit; i++)
+        {
             Assert.That(await Send(limit, Request(ip), loginFails: true), Is.EqualTo(200));
+        }
         Assert.That(await Send(limit, Request(ip), loginFails: true), Is.EqualTo(429));
 
         Assert.That(logger.Warnings, Has.Count.EqualTo(1), "one warning per process");
@@ -421,7 +450,10 @@ public class LoginRateLimitTests
         public void Log<TState>(Microsoft.Extensions.Logging.LogLevel logLevel, Microsoft.Extensions.Logging.EventId eventId,
             TState state, Exception exception, Func<TState, Exception, string> formatter)
         {
-            if (logLevel == Microsoft.Extensions.Logging.LogLevel.Warning) Warnings.Add(formatter(state, exception));
+            if (logLevel == Microsoft.Extensions.Logging.LogLevel.Warning)
+            {
+                Warnings.Add(formatter(state, exception));
+            }
         }
     }
 
@@ -447,7 +479,9 @@ public class LoginRateLimitTests
     public async Task IPv6ClientsInOneSlash64_ShareABucket()
     {
         for (var i = 1; i <= Limit; i++)
+        {
             Assert.That(await Send(Request($"2001:db8:1:2::{i:x}"), loginFails: true), Is.EqualTo(200));
+        }
         Assert.That(await Send(Request("2001:db8:1:2:ffff::1"), loginFails: true), Is.EqualTo(429));
         Assert.That(await Send(Request("2001:db8:1:3::1"), loginFails: true), Is.EqualTo(200));
     }
@@ -457,7 +491,9 @@ public class LoginRateLimitTests
     {
         Assert.That(LoginRateLimit.ClientKey(Request(ip: null), DefaultTrusted), Is.Null);
         for (var i = 0; i < Limit * 2; i++)
+        {
             Assert.That(await Send(Request(ip: null), loginFails: true), Is.EqualTo(200));
+        }
     }
 
     // ---- configuration ----------------------------------------------------------------------------------------
@@ -498,7 +534,10 @@ public class LoginRateLimitTests
     public void ExemptLoopback_DefaultsToDevelopmentOnly(string environment, string configured, bool expected)
     {
         var settings = new Dictionary<string, string>();
-        if (configured != null) settings["LoginRateLimit:ExemptLoopback"] = configured;
+        if (configured != null)
+        {
+            settings["LoginRateLimit:ExemptLoopback"] = configured;
+        }
         var sp = Services(settings, environment);
         Assert.That(sp.GetRequiredService<IOptions<LoginRateLimitOptions>>().Value.ExemptLoopback, Is.EqualTo(expected));
         Assert.That(sp.GetRequiredService<LoginRateLimit>().ClientKey(Request("127.0.0.1")),
@@ -543,6 +582,8 @@ public class LoginRateLimitTests
     {
         using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
         while (!condition())
+        {
             await Task.Delay(5, timeout.Token);
+        }
     }
 }

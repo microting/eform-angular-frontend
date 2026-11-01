@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Grpc;
@@ -35,7 +36,7 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         var failed = true; // unless the call completes with a non-failure
         try
         {
-            var response = await Authenticate(request);
+            var response = await Authenticate(request, context.CancellationToken);
             failed = response.failed;
             return response.response;
         }
@@ -57,7 +58,8 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
         }
     }
 
-    private async Task<(AuthenticateUserResponse response, bool failed)> Authenticate(AuthenticateUserRequest request)
+    private async Task<(AuthenticateUserResponse response, bool failed)> Authenticate(AuthenticateUserRequest request,
+        CancellationToken callCancelled)
     {
         try
         {
@@ -85,16 +87,17 @@ public class EformAuthGrpcService : Grpc.EformAuthService.EformAuthServiceBase
                 };
             }
 
-            return (response, LoginRateLimit.CountsAsFailure(result));
+            return (response, LoginRateLimit.CountsAsFailure(result, loginModel.Code));
         }
         catch (Exception ex)
         {
-            // Counted: the service may have checked the password before it threw.
+            // Counted: the service may have checked the password before it threw — unless the client cancelled
+            // the call (it went away; not a guess), as on the REST path.
             return (new AuthenticateUserResponse
             {
                 Success = false,
                 Message = ex.Message
-            }, true);
+            }, !callCancelled.IsCancellationRequested);
         }
     }
 
