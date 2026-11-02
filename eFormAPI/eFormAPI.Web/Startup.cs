@@ -231,6 +231,8 @@ public class Startup(IConfiguration configuration)
             .AddDefaultTokenProviders();
         // Authentication
         services.AddEFormAuth(Configuration, GetPluginsPermissions());
+        // Login brute-force brake (failed password checks per client: REST login, google-auth-key, gRPC login)
+        LoginRateLimit.Register(services, Configuration);
         // Localization
         services.AddTransient<IEformLocalizerFactory, JsonStringLocalizerFactory>();
         services.AddTransient<IStringLocalizerFactory, ResourceManagerStringLocalizerFactory>();
@@ -341,6 +343,9 @@ public class Startup(IConfiguration configuration)
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        // First: the login brake keys on the TCP peer and X-Forwarded-For as they arrived, before
+        // UseForwardedHeaders (Development) rewrites them.
+        app.Use(LoginRateLimit.CaptureOriginalConnection);
         if (env.IsDevelopment())
         {
             app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -371,6 +376,9 @@ public class Startup(IConfiguration configuration)
         app.UseDefaultFiles();
         app.UseStaticFiles();
         app.UseAuthentication();
+        // Resolved here so its configuration warnings are logged at startup, not at the first login.
+        app.ApplicationServices.GetRequiredService<LoginRateLimit>();
+        app.UseMiddleware<LoginRateLimit>();
         app.UseSentryHost();
         // Plugins
         app.UseEFormLocalization();

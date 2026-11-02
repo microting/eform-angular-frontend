@@ -25,6 +25,7 @@ SOFTWARE.
 using System;
 using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
+using eFormAPI.Web.Hosting.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -47,7 +48,12 @@ public class AuthController(
     public async Task<OperationResult> AuthenticateUser(LoginModel model)
     {
         Log.LogEvent("api/auth/token called");
-        return await authService.AuthenticateUser(model);
+        var result = await authService.AuthenticateUser(model);
+        if (LoginRateLimit.CountsAsFailure(result, model?.Code))
+        {
+            LoginRateLimit.MarkFailed(HttpContext);
+        }
+        return result;
     }
 
     [HttpGet]
@@ -122,10 +128,17 @@ public class AuthController(
         // check model
         if (!ModelState.IsValid)
         {
+            LoginRateLimit.MarkFailed(HttpContext);
             return new OperationDataResult<GoogleAuthenticatorModel>(false,
                 localizationService.GetString("InvalidUserNameOrPassword"));
         }
 
-        return await authService.GetGoogleAuthenticator(loginModel);
+        // Anonymous password check: braked like the login itself (LoginRateLimit covers this path).
+        var result = await authService.GetGoogleAuthenticator(loginModel);
+        if (LoginRateLimit.CountsAsFailure(result, loginModel?.Code))
+        {
+            LoginRateLimit.MarkFailed(HttpContext);
+        }
+        return result;
     }
 }

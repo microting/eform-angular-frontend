@@ -270,6 +270,13 @@ public class MenuService(
                 menuItemsForFilter = FilterMenuForUser(menuItemsForFilter, userClaims);
             }
 
+            // Plugin-only accounts (a role, but neither admin nor user, e.g. the kanban plugin's "kanban" role) see only plugin pages.
+            var pluginOnly = IsPluginOnly(userService);
+            if (pluginOnly)
+            {
+                menuItemsForFilter = KeepPluginItemsOnly(menuItemsForFilter);
+            }
+
             var menuItems = menuItemsForFilter
                 .Where(x => x.ParentId == null)
                 .OrderBy(x => x.Position)
@@ -297,6 +304,8 @@ public class MenuService(
                     MenuItems = dbContext.MenuItems
                         .Include(p => p.MenuTemplate)
                         .Where(p => p.ParentId == x.Id)
+                        // Children are re-read here, so a kept dropdown must drop its main-app links for plugin-only users too.
+                        .Where(p => !pluginOnly || p.MenuTemplate.EformPluginId != null)
                         .OrderBy(p => p.Position)
                         .Select(p => new MenuItemModel
                         {
@@ -499,6 +508,20 @@ public class MenuService(
             }
         }
 
+    }
+
+    /// <summary>A plugin-only account has at least one role and neither the admin nor the user role.
+    /// A user without any role keeps the full (claim-filtered) menu, exactly as before.</summary>
+    public static bool IsPluginOnly(IUserService user) =>
+        !string.IsNullOrEmpty(user.Role) && !user.IsInRole(EformRole.Admin) && !user.IsInRole(EformRole.User);
+
+    /// <summary>Plugin menu items, plus the top-level dropdowns that hold one; everything of the main application is dropped.</summary>
+    public static List<MenuItem> KeepPluginItemsOnly(List<MenuItem> items)
+    {
+        var pluginIds = items.Where(x => x.MenuTemplate?.EformPluginId != null).Select(x => x.Id).ToHashSet();
+        return items.Where(x => pluginIds.Contains(x.Id)
+                                || (x.ParentId == null && items.Any(c => c.ParentId == x.Id && pluginIds.Contains(c.Id))))
+            .ToList();
     }
 
     private List<MenuItem> FilterMenuForUser(IEnumerable<MenuItem> items, ICollection<string> claims)

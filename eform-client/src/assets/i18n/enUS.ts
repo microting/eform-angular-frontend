@@ -468,4 +468,6 @@ export const enUS = {
   'Go to the start page': 'Go to the start page',
   'This link matches no page in the app': 'This link matches no page in the app',
   'Restore default link': 'Restore default link',
+  'Too many failed sign-ins': 'Too many failed sign-ins',
+  'Too many failed sign-in attempts. Try again in {{seconds}} seconds.': 'Too many failed sign-in attempts. Try again in {{seconds}} seconds.',
 };

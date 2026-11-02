@@ -1,4 +1,10 @@
+using System;
+using System.Net;
 using System.Threading.Tasks;
+using eFormAPI.Web.Hosting.Security;
+using Grpc.Core;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Grpc;
 using eFormAPI.Web.Infrastructure.Models.Auth;
@@ -21,7 +27,9 @@ public class EformAuthGrpcServiceTests
     public void SetUp()
     {
         _authService = Substitute.For<IAuthService>();
-        _grpcService = new EformAuthGrpcService(_authService);
+        var loginRateLimit = new LoginRateLimit(
+            Options.Create(new LoginRateLimitOptions { FailedAttemptsPerMinute = 3 }), TimeProvider.System);
+        _grpcService = new EformAuthGrpcService(_authService, loginRateLimit);
     }
 
     [Test]
@@ -111,5 +119,130 @@ public class EformAuthGrpcServiceTests
         Assert.That(response.Success, Is.False);
         Assert.That(response.Message, Is.EqualTo("Token expired"));
         Assert.That(response.Model, Is.Null);
+    }
+
+    private static ServerCallContext CallFrom(string ip, System.Threading.CancellationToken callCancelled = default)
+    {
+        var context = TestServerCallContextFactory.Create(null, callCancelled);
+        var http = new DefaultHttpContext();
+        http.Connection.RemoteIpAddress = IPAddress.Parse(ip);
+        context.UserState["__HttpContext"] = http; // where Grpc.AspNetCore exposes the HttpContext
+        return context;
+    }
+
+    private static AuthenticateUserRequest Login() => new() { Username = "someone@example.com", Password = "x" };
+
+    [Test]
+    public async Task AuthenticateUser_FailedLogins_AreBraked_WithResourceExhausted()
+    {
+        _authService.AuthenticateUser(Arg.Any<LoginModel>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(false, "Invalid credentials"));
+
+        for (var i = 0; i < 3; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.False);
+        }
+
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
+        Assert.That(ex.Trailers.GetValue("retry-after"), Is.EqualTo("60"), "like the REST Retry-After header");
+        await _authService.Received(3).AuthenticateUser(Arg.Any<LoginModel>());
+
+        // Another client is not affected.
+        Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.6"))).Message,
+            Is.EqualTo("Invalid credentials"));
+    }
+
+    [Test]
+    public async Task AuthenticateUser_SuccessesAndSecondFactorRequired_AreNotCounted()
+    {
+        _authService.AuthenticateUser(Arg.Any<LoginModel>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(true, "OK", new EformAuthorizeResult()));
+        for (var i = 0; i < 10; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.True);
+        }
+
+        _authService.AuthenticateUser(Arg.Any<LoginModel>()).Returns(
+            new OperationDataResult<EformAuthorizeResult>(false, LoginRateLimit.SecondFactorRequiredMessage));
+        for (var i = 0; i < 10; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.False);
+        }
+    }
+
+    [Test]
+    public async Task AuthenticateUser_ExceptionInTheService_IsCounted_AndReleasesTheSlot()
+    {
+        // The service may have checked the password before it threw.
+        _authService.AuthenticateUser(Arg.Any<LoginModel>()).Returns<OperationDataResult<EformAuthorizeResult>>(
+            _ => throw new InvalidOperationException("db down"));
+        for (var i = 0; i < 3; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Message, Is.EqualTo("db down"));
+        }
+
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
+        Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.6"))).Message, Is.EqualTo("db down"),
+            "slots were released; another client is not affected");
+    }
+
+    [Test]
+    public async Task AuthenticateUser_CallCancelledByTheClient_IsNotCounted_AndReleasesTheSlot()
+    {
+        using var cancelled = new System.Threading.CancellationTokenSource();
+        cancelled.Cancel();
+        _authService.AuthenticateUser(Arg.Any<LoginModel>()).Returns<OperationDataResult<EformAuthorizeResult>>(
+            _ => throw new OperationCanceledException(cancelled.Token));
+
+        for (var i = 0; i < 10; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5", cancelled.Token))).Success,
+                Is.False);
+        }
+
+        _authService.AuthenticateUser(Arg.Any<LoginModel>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(true, "OK", new EformAuthorizeResult()));
+        Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5"))).Success, Is.True,
+            "not throttled: cancelled calls were not failures");
+    }
+
+    [Test]
+    public async Task AuthenticateUser_FailedResultAfterTheClientCancelled_IsCounted()
+    {
+        // AuthService ignores the call's token and returns an ordinary failure: the password was checked, so it
+        // counts — cancelling every call must not buy unlimited password hashing.
+        using var cancelled = new System.Threading.CancellationTokenSource();
+        cancelled.Cancel();
+        _authService.AuthenticateUser(Arg.Any<LoginModel>())
+            .Returns(new OperationDataResult<EformAuthorizeResult>(false, "Invalid credentials"));
+
+        for (var i = 0; i < 3; i++)
+        {
+            Assert.That((await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5", cancelled.Token))).Success,
+                Is.False);
+        }
+
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
+    }
+
+    [Test]
+    public async Task AuthenticateUser_OtherExceptionWhileCancelled_IsCounted()
+    {
+        // Only an OperationCanceledException ends the call "before a result"; anything else may follow the check.
+        using var cancelled = new System.Threading.CancellationTokenSource();
+        cancelled.Cancel();
+        _authService.AuthenticateUser(Arg.Any<LoginModel>()).Returns<OperationDataResult<EformAuthorizeResult>>(
+            _ => throw new InvalidOperationException("db down"));
+
+        for (var i = 0; i < 3; i++)
+        {
+            await _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5", cancelled.Token));
+        }
+
+        var ex = await Assert.ThrowsAsync<RpcException>(() => _grpcService.AuthenticateUser(Login(), CallFrom("203.0.113.5")));
+        Assert.That(ex!.StatusCode, Is.EqualTo(StatusCode.ResourceExhausted));
     }
 }

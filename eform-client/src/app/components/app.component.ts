@@ -15,6 +15,13 @@ import {TranslateService} from '@ngx-translate/core';
 import { SpinnerComponent } from './eform-spinner/spinner.component';
 import {MatPaginatorShowAllService} from 'src/app/common/modules/eform-shared/components/eform-pagination/mat_paginator_show_all.service';
 
+/** Pages a signed-out visitor may stay on: password restoration, and anonymous plugin pages under /p
+ * (signup, invitation links). Anything else sends a signed-out visitor to /auth or /landing. */
+export function staysOpenWhenSignedOut(url: string): boolean {
+  const path = (url ?? '').split(/[?#]/)[0];
+  return path.includes('restore-password') || path === '/p' || path.startsWith('/p/');
+}
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -59,8 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
             }
           });
       } else {
-        if (this.router.url.includes('restore-password-confirmation') ||
-          this.router.url.includes('restore-password')) {} else {
+        if (!staysOpenWhenSignedOut(this.router.url)) {
           this.authStateService.logout();
         }
       }

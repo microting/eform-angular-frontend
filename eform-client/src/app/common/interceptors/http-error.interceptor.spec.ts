@@ -11,7 +11,8 @@ import {
 } from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
-import {HttpErrorInterceptor} from './http-error.interceptor';
+import {HttpErrorInterceptor, isLoginRateLimitedUrl, retryAfterSeconds} from './http-error.interceptor';
+import {TranslateService} from '@ngx-translate/core';
 import {AuthStateService} from 'src/app/common/store';
 import {LoaderService} from 'src/app/common/services';
 import * as Sentry from '@sentry/angular';
@@ -49,6 +50,7 @@ describe('HttpErrorInterceptor', () => {
   let authStateService: {refreshToken: Mock; logout: Mock};
   let loaderService: {setLoading: Mock};
   let toastrService: {error: Mock; warning: Mock};
+  let translateService: {instant: Mock};
 
   const url = '/api/templates/index';
   const request = new HttpRequest('GET', url, {
@@ -72,6 +74,8 @@ describe('HttpErrorInterceptor', () => {
     };
     loaderService = {setLoading: vi.fn()};
     toastrService = {error: vi.fn(), warning: vi.fn()};
+    // Echo the key with its parameters, so assertions see which text and which wait were asked for.
+    translateService = {instant: vi.fn((key: string, params?: any) => (params ? `${key}|${JSON.stringify(params)}` : key))};
 
     TestBed.configureTestingModule({
       providers: [
@@ -79,6 +83,7 @@ describe('HttpErrorInterceptor', () => {
         {provide: AuthStateService, useValue: authStateService},
         {provide: LoaderService, useValue: loaderService},
         {provide: ToastrService, useValue: toastrService},
+        {provide: TranslateService, useValue: translateService},
       ],
     });
 
@@ -245,5 +250,57 @@ describe('HttpErrorInterceptor', () => {
       interceptor.intercept(new HttpRequest('POST', badUrl, {}), handler).subscribe({})
     ).not.toThrow();
     expect(authStateService.logout).toHaveBeenCalled();
+  });
+
+  describe('login rate limit (429)', () => {
+    const rateLimited = (loginUrl: string, retryAfter?: string) =>
+      throwError(() => new HttpErrorResponse({
+        status: 429,
+        statusText: 'Too Many Requests',
+        url: loginUrl,
+        headers: retryAfter ? new HttpHeaders({'Retry-After': retryAfter}) : new HttpHeaders(),
+      }));
+
+    it.each(['api/auth/token', '/api/auth/google-auth-key', 'api/auth/token/'])(
+      'shows the wait from Retry-After and does not replay %s', (loginUrl) => {
+        const handler = new ScriptedHandler([() => rateLimited(loginUrl, '42')]);
+        const errors: any[] = [];
+
+        interceptor.intercept(new HttpRequest('POST', loginUrl, {}), handler).subscribe({error: (e) => errors.push(e)});
+
+        expect(handler.requests).toHaveLength(1);
+        expect(errors).toHaveLength(1);
+        expect(errors[0].status).toBe(429);
+        expect(toastrService.error).toHaveBeenCalledWith(
+          'Too many failed sign-in attempts. Try again in {{seconds}} seconds.|{"seconds":42}',
+          'Too many failed sign-ins',
+          {timeOut: 10000},
+        );
+        expect(loaderService.setLoading).toHaveBeenCalledWith(false);
+        expect(authStateService.logout).not.toHaveBeenCalled();
+        expect(Sentry.captureException).not.toHaveBeenCalled();
+      });
+
+    it('falls back to 60 seconds without Retry-After', () => {
+      const handler = new ScriptedHandler([() => rateLimited('api/auth/token')]);
+      interceptor.intercept(new HttpRequest('POST', 'api/auth/token', {}), handler).subscribe({error: () => {}});
+      expect(toastrService.error.mock.calls[0][0]).toContain('{"seconds":60}');
+    });
+
+    it('matches only the login endpoints', () => {
+      expect(isLoginRateLimitedUrl('api/auth/token')).toBe(true);
+      expect(isLoginRateLimitedUrl('/API/Auth/Google-Auth-Key/')).toBe(true);
+      expect(isLoginRateLimitedUrl('api/auth/token/refresh')).toBe(false);
+      expect(isLoginRateLimitedUrl('api/templates/index')).toBe(false);
+    });
+
+    it('reads Retry-After as seconds or as an HTTP date', () => {
+      expect(retryAfterSeconds('15')).toBe(15);
+      expect(retryAfterSeconds('0')).toBe(1);
+      const now = Date.parse('2026-11-01T12:00:00Z');
+      expect(retryAfterSeconds('Sun, 01 Nov 2026 12:00:30 GMT', now)).toBe(30);
+      expect(retryAfterSeconds('soon')).toBe(60);
+      expect(retryAfterSeconds(null)).toBe(60);
+    });
   });
 });

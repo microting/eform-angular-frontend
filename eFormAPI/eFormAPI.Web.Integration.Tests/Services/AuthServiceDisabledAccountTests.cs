@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using eFormAPI.Web.Abstractions;
 using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
+using eFormAPI.Web.Hosting.Security;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Cache.AuthCache;
 using Microsoft.AspNetCore.Identity;
@@ -252,6 +253,38 @@ namespace eFormAPI.Web.Integration.Tests.Services
             Assert.That(result.Success, Is.False,
                 "a disabled account must not be able to roll its session forward");
             Assert.That(result.Message, Is.EqualTo(GenericMessageKey));
+        }
+
+        // The login brake (LoginRateLimit) counts failed guesses only: a correct password that still needs the
+        // second factor must not count, or 2FA users and non-web clients posting without a code get throttled.
+        // AuthService.cs is byte-frozen, so the brake recognises this step by its text; this test pins
+        // LoginRateLimit.SecondFactorRequiredMessage to AuthService's real answer, so wording drift fails CI.
+        [Test]
+        public async Task AuthenticateUser_CorrectPasswordWithoutSecondFactor_IsNotAFailedGuess()
+        {
+            var user = User(isActive: true);
+            user.TwoFactorEnabled = true;
+            user.GoogleAuthenticatorSecretKey = "JBSWY3DPEHPK3PXP";
+            GivenUser(user);
+            GivenSignInResult(SignInResult.TwoFactorRequired);
+
+            var result = await _authService.AuthenticateUser(Login());
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.Message, Is.EqualTo(LoginRateLimit.SecondFactorRequiredMessage),
+                "AuthService's wording changed: update LoginRateLimit.SecondFactorRequiredMessage");
+            Assert.That(LoginRateLimit.CountsAsFailure(result, Login().Code), Is.False);
+            // The same text after a request that DID carry a code is a failure (not the "code required" step).
+            Assert.That(LoginRateLimit.CountsAsFailure(result, "123456"), Is.True);
+        }
+
+        [Test]
+        public async Task AuthenticateUser_WrongPassword_IsAFailedGuess()
+        {
+            GivenUser(User(isActive: true));
+            GivenSignInResult(SignInResult.Failed);
+
+            Assert.That(LoginRateLimit.CountsAsFailure(await _authService.AuthenticateUser(Login()), Login().Code), Is.True);
         }
     }
 }
