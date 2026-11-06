@@ -116,9 +116,10 @@ public static class UserManagerLockoutExtensions
     /// null login list (a substituted UserManager) counts as no logins.
     ///
     /// This is a deliberate, allowlisted use of the link API (see
-    /// NoRuntimeBindingSourceTests.TheExternalLoginApiIsCalledOnlyFromTheFourAllowlistedFiles). It is on
-    /// the password-WRITE path, not the login path: a link is consulted only to REFUSE a
-    /// write, so it can never grant authentication to anyone.</summary>
+    /// NoRuntimeBindingSourceTests.TheExternalLoginApiIsCalledOnlyFromTheFourAllowlistedFiles). It is
+    /// never on the login path: a link is consulted only to REFUSE a write (password
+    /// and preference writes) or to withhold UI (menu filtering), and in neither case can it grant
+    /// authentication or anything else to anyone.</summary>
     public static async Task<bool> IsDelegatedPrincipalAsync(this UserManager<EformUser> userManager,
         EformUser user)
     {
@@ -136,5 +137,18 @@ public static class UserManagerLockoutExtensions
     {
         Code = CredentialLessAccountCode,
         Description = "An account with no password cannot be given one through the API."
+    });
+
+    /// <summary>The Identity error code returned when a preferences write is refused on a
+    /// delegated principal.</summary>
+    public static readonly string DelegatedPreferencesCode = "DelegatedPreferencesReadOnly";
+
+    /// <summary>The failed result for a refused preferences write on a delegated principal.
+    /// A separate reason from <see cref="CredentialLessAccountResult"/>, whose text is about
+    /// credentials.</summary>
+    public static IdentityResult DelegatedPreferencesResult() => IdentityResult.Failed(new IdentityError
+    {
+        Code = DelegatedPreferencesCode,
+        Description = "A delegated session's preferences come from my.microting.com and cannot be changed here."
     });
 }

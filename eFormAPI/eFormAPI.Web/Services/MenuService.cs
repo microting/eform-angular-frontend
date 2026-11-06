@@ -41,7 +41,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using eFormAPI.Web.Hosting.Security;
 using Microting.EformAngularFrontendBase.Infrastructure.Const;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
@@ -54,7 +56,8 @@ public class MenuService(
     IClaimsService claimsService,
     IUserService userService,
     IServiceProvider serviceProvider,
-    ILocalizationService localizationService)
+    ILocalizationService localizationService,
+    UserManager<EformUser> userManager)
     : IMenuService
 {
     public async Task<OperationDataResult<NavigationMenuModel>> UpdateCurrentUserMenu(
@@ -367,6 +370,17 @@ public class MenuService(
             // Add user first and last name
             var rightMenuItem = orderedRightMenu.First(x => x.Name == "user");
             rightMenuItem.Name = await userService.GetCurrentUserFullName();
+
+            // A delegated principal has no password and takes its preferences from the
+            // portal, so these two entries cannot work for it. Keyed on E2EId (stable),
+            // not Name (localised). The parent node stays: it is looked up above and
+            // the footer iterates its children. UpdateUserSettings and ChangePassword
+            // refuse server-side too; this only removes the doors.
+            var currentUser = await userService.GetCurrentUserAsync();
+            if (currentUser != null && await userManager.IsDelegatedPrincipalAsync(currentUser))
+            {
+                rightMenuItem.MenuItems.RemoveAll(x => x.E2EId == "settings" || x.E2EId == "change-password");
+            }
 
             // Create result
             var result = new MenuModel

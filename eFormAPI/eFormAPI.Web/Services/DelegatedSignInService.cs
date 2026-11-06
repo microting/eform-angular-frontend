@@ -42,8 +42,10 @@ using Infrastructure.Models.Auth;
 /// real account is disambiguated, never reused.</item>
 /// <item><b>The advisor's real email never enters the customer's database.</b> The row
 /// carries a generated identifier derived from <c>sub</c> plus a non-deliverable address
-/// (Business Central's precedent, spec §8.4). The display name is stored for audit
-/// attribution only and is never an identifier.</item>
+/// (Business Central's precedent, spec §8.4). The assertion's display name and customer
+/// name are never persisted: they reach the advisor's session through
+/// <c>EformAuthorizeResult</c> only, and the stored row always holds the generic
+/// "Delegated advisor" / "(delegated &lt;8 hex&gt;)" pair.</item>
 /// <item><b>The role is chosen server-side.</b> Nothing in the assertion names a role;
 /// the asserted template is looked up in <see cref="RolesByTemplate"/>, which contains no
 /// administrative entry and is additionally guarded against one. User Id 1 is never a
@@ -107,10 +109,6 @@ public sealed class DelegatedSignInService(
 
     /// <summary>Characters of the digest used in the audit display name.</summary>
     private const int ShortDigestChars = 8;
-
-    /// <summary>Longest display name stored on the row. Audit attribution, not a
-    /// document; a megabyte <c>name</c> claim must not become a megabyte column.</summary>
-    private const int MaxDisplayNameChars = 128;
 
     /// <summary>
     /// How many addresses to try before giving up. Attempt 1 is the deterministic address;
@@ -212,10 +210,19 @@ public sealed class DelegatedSignInService(
 
         // GenerateToken reads SecurityGroupUsers -> GroupPermissions ->
         // Permission.ClaimName through ClaimsService and freezes the result into this
-        // session's auth cache entry. Nothing touches group membership from here on: a
+        // session's auth cache entry. It also adds the user's locale claim (from
+        // user.Locale), the user's own claims and role claims. Nothing touches group membership from here on: a
         // newly provisioned principal got its group inside ProvisionAsync, which
         // committed long before this line, so the FIRST session is already populated. An
         // existing principal's membership is whatever the customer has left it as.
+        //
+        // The profile write goes BEFORE it because GenerateToken stamps user.Locale into
+        // the token's locale claim: a write afterwards would issue a token carrying the
+        // previous locale. TimeZone, Formats and DarkTheme do not reach the token, and the
+        // client reads all four through a separate GetUserSettings call after login, so
+        // for those three the placement is conservative rather than required.
+        await ApplyProfileAsync(user, assertion);
+
         var token = await authService.GenerateToken(user);
         var firstUserIdInDb = await userService.GetFirstUserIdInDb();
 
@@ -232,6 +239,9 @@ public sealed class DelegatedSignInService(
             DelegatedAssertionValidator.ForLog(assertion.RoleTemplate),
             created ? "created" : "reused");
 
+        var hasSessionName = !string.IsNullOrEmpty(assertion.DisplayName)
+                             && !string.IsNullOrEmpty(assertion.CustomerName);
+
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
             Id = user.Id,
@@ -239,13 +249,72 @@ public sealed class DelegatedSignInService(
             UserName = user.UserName,
             Role = roles.FirstOrDefault(),
             ExpiresIn = token.expireIn,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            // Session-only: the name and its customer appear together or not at all, and
+            // neither is ever written to the tenant's database.
+            FirstName = hasSessionName ? assertion.DisplayName : user.FirstName,
+            LastName = hasSessionName ? $"({assertion.CustomerName})" : user.LastName,
             IsFirstUser = user.Id == firstUserIdInDb,
             AvatarUrl = user.ProfilePictureSnapshot != null
                 ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
                 : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"
         });
+    }
+
+    /// <summary>
+    /// Applies the advisor's language, theme and timezone to her local principal on EVERY
+    /// sign-in, so a change in the portal reaches the tenant on her next visit and a
+    /// principal provisioned before the assertion carried these corrects itself.
+    ///
+    /// Writes only what the assertion carries: "" means the portal said nothing and leaves
+    /// the stored column alone. Never refuses -- a failed preference write is logged and the
+    /// session is issued regardless.
+    /// </summary>
+    private async Task ApplyProfileAsync(EformUser user, DelegatedAssertion assertion)
+    {
+        var changed = false;
+
+        if (assertion.Locale.Length > 0)
+        {
+            var formats = DelegatedProfile.FormatsForLocale(assertion.Locale);
+            if (user.Locale != assertion.Locale || user.Formats != formats)
+            {
+                user.Locale = assertion.Locale;
+                user.Formats = formats;
+                changed = true;
+            }
+        }
+
+        if (assertion.TimeZone.Length > 0 && user.TimeZone != assertion.TimeZone)
+        {
+            user.TimeZone = assertion.TimeZone;
+            changed = true;
+        }
+
+        // Only the two values the portal mints. Anything else is "said nothing"; it must
+        // not be read as "not dark".
+        if (assertion.Theme is "dark" or "light")
+        {
+            var dark = assertion.Theme == "dark";
+            if (user.DarkTheme != dark)
+            {
+                user.DarkTheme = dark;
+                changed = true;
+            }
+        }
+
+        if (!changed)
+        {
+            return;
+        }
+
+        var updated = await userManager.UpdateAsync(user);
+        if (!updated.Succeeded)
+        {
+            logger.LogWarning(
+                "Delegated sign-in could not store the profile preferences for local user {UserId}; "
+                + "the session is issued regardless.",
+                user.Id);
+        }
     }
 
     /// <summary>
@@ -695,40 +764,17 @@ public sealed class DelegatedSignInService(
     }
 
     /// <summary>
-    /// The name stored on the row, for audit attribution only. Never an identifier, and
-    /// never trusted: it is an attacker-chosen string until the portal is trustworthy, so
-    /// control characters go and the length is bounded. The "(delegated …)" suffix makes
-    /// the row recognisable in the customer's own user list, and carries the short digest
-    /// so two advisors without a <c>name</c> claim are still distinguishable.
+    /// The name stored on the row. Deliberately generic and independent of the assertion's
+    /// display name: the advisor's real name reaches her session through the result only,
+    /// so no customer database ever holds it (nothing to scrub when a partner relationship
+    /// ends). The "(delegated …)" suffix makes the row recognisable in the customer's own
+    /// user list, and carries the short digest so advisors stay distinguishable.
     /// </summary>
     private static (string FirstName, string LastName) AuditName(DelegatedAssertion assertion)
     {
         var shortId = SubjectDigest(assertion.Subject, ShortDigestChars);
-        var cleaned = Sanitise(assertion.DisplayName);
 
-        return (cleaned.Length == 0 ? "Delegated advisor" : cleaned, $"(delegated {shortId})");
-    }
-
-    private static string Sanitise(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return "";
-        }
-
-        var trimmed = value.Trim();
-        if (trimmed.Length > MaxDisplayNameChars)
-        {
-            trimmed = trimmed[..MaxDisplayNameChars];
-        }
-
-        var builder = new StringBuilder(trimmed.Length);
-        foreach (var c in trimmed)
-        {
-            builder.Append(char.IsControl(c) ? ' ' : c);
-        }
-
-        return builder.ToString().Trim();
+        return ("Delegated advisor", $"(delegated {shortId})");
     }
 
     /// <summary>Lower-case hex prefix of SHA-256(provider | subject). The provider is

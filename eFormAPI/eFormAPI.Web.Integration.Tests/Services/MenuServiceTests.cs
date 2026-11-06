@@ -23,6 +23,8 @@ SOFTWARE.
 */
 
 using NUnit.Framework;
+using eFormAPI.Web.Integration.Tests.Identity;
+using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
 using eFormAPI.Web.Services;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -36,7 +38,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microting.eFormApi.BasePn.Infrastructure.Consts;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
+using Microting.eFormApi.BasePn.Infrastructure.Models.API;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
+using MenuModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuModel;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 
@@ -51,6 +55,7 @@ namespace eFormAPI.Web.Integration.Tests.Services
         private IServiceProvider _serviceProvider;
         private ILocalizationService _localizationService;
         private MenuService _menuService;
+        private IdentityTestHost _identityHost;
 
         public override void DoSetup()
         {
@@ -63,13 +68,26 @@ namespace eFormAPI.Web.Integration.Tests.Services
             _localizationService.GetString(Arg.Any<string>())
                 .Returns(args => args.Arg<string>());
 
+            _identityHost = new IdentityTestHost(DbContext);
+
             _menuService = new MenuService(
                 _logger,
                 DbContext,
                 _claimsService,
                 _userService,
                 _serviceProvider,
-                _localizationService);
+                _localizationService,
+                _identityHost.UserManager);
+        }
+
+        // Runs before the base TearDown, which disposes DbContext.
+        [TearDown]
+        public async Task DisposeIdentityHost()
+        {
+            if (_identityHost != null)
+            {
+                await _identityHost.DisposeAsync();
+            }
         }
 
         [Test]
@@ -101,6 +119,67 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 { MenuItemId = item.Id, Name = name, LocaleName = LocaleNames.English, Language = "English" });
             DbContext.SaveChanges();
             return item;
+        }
+
+        private async Task<OperationDataResult<MenuModel>> GetMenuForAsync(bool delegated)
+        {
+            var email = $"menu-{Guid.NewGuid():N}@example.test";
+            var user = new EformUser
+            {
+                UserName = email, Email = email, FirstName = "Menu", LastName = "Tester",
+                Locale = "en-US", TimeZone = "Europe/Copenhagen", Formats = "de-DE", EmailConfirmed = true
+            };
+            var created = await _identityHost.UserManager.CreateAsync(user);
+            Assert.That(created.Succeeded, Is.True, string.Join(" ", created.Errors.Select(e => e.Description)));
+            _identityHost.TrackForCleanup(user.Id);
+            if (delegated)
+            {
+                await _identityHost.AddLinkAsync(user.Id, ExternalLoginProviders.MyMicrotingDelegated,
+                    Guid.NewGuid().ToString("N"));
+            }
+
+            _userService.Role.Returns(EformRole.Admin);
+            _userService.IsInRole(Arg.Any<string>()).Returns(ci => ci.Arg<string>() == EformRole.Admin);
+            _userService.GetCurrentUserLocale().Returns(LocaleNames.English);
+            _userService.GetCurrentUserFullName().Returns("Stored Name");
+            _userService.GetCurrentUserAsync().Returns(user);
+            _claimsService.GetUserClaimsNames(Arg.Any<int>()).Returns(new List<string>());
+
+            var result = await _menuService.GetCurrentUserMenu();
+            Assert.That(result.Success, Is.True, result.Message);
+            return result;
+        }
+
+        private static IEnumerable<string> RightMenuE2EIds(OperationDataResult<MenuModel> result)
+            => result.Model.RightMenu.SelectMany(x => x.MenuItems.Select(c => c.E2EId).Prepend(x.E2EId));
+
+        [Test]
+        public async Task GetCurrentMenu_ForADelegatedPrincipal_OmitsSettingsAndChangePassword()
+        {
+            var result = await GetMenuForAsync(delegated: true);
+
+            Assert.That(RightMenuE2EIds(result), Has.None.EqualTo("settings"));
+            Assert.That(RightMenuE2EIds(result), Has.None.EqualTo("change-password"));
+        }
+
+        [Test]
+        public async Task GetCurrentMenu_ForADelegatedPrincipal_KeepsTheUserNodeAndTheRest()
+        {
+            var result = await GetMenuForAsync(delegated: true);
+
+            var userNode = result.Model.RightMenu.Single(x => x.Name == "Stored Name");
+            Assert.That(userNode.MenuItems, Is.Not.Empty);
+            Assert.That(RightMenuE2EIds(result), Does.Contain("sign-out"));
+            Assert.That(RightMenuE2EIds(result), Does.Contain("open-source-licenses"));
+        }
+
+        [Test]
+        public async Task GetCurrentMenu_ForAnOrdinaryUser_KeepsSettingsAndChangePassword()
+        {
+            var result = await GetMenuForAsync(delegated: false);
+
+            Assert.That(RightMenuE2EIds(result), Does.Contain("settings"));
+            Assert.That(RightMenuE2EIds(result), Does.Contain("change-password"));
         }
 
         [TestCase("kanban", new[] { "PluginOnlyTest-Boards" })] // the dropdown also holds a main-app link (Sites)

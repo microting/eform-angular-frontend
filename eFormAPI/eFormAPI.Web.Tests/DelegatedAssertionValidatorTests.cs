@@ -286,8 +286,9 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
     [Test]
     public async Task ValidateAsync_MissingNameClaim_StillSucceedsWithAnEmptyDisplayName()
     {
-        // name is audit-only and never an identifier, so a missing one is a poorer audit
-        // line, not a security decision taken on a guess.
+        // name is for session rendering only, is never stored and is never an identifier,
+        // so a missing one is a plainer session header, not a security decision taken on
+        // a guess.
         var result = await CreateValidator().ValidateAsync(
             MintToken(displayName: null), CancellationToken.None);
 
@@ -700,6 +701,68 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
         Assert.That(capture.Messages.Exists(m => m.Contains('\n') || m.Contains('\r')), Is.False);
     }
 
+    [Test]
+    public async Task ValidateAsync_ReadsAndNormalisesTheProfileClaims()
+    {
+        var token = MintToken(displayName: "  Sara Vest ", customerName: "Go-Gris I/S", locale: "da",
+            theme: "DARK", timeZone: "Europe/Copenhagen");
+
+        var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Model.DisplayName, Is.EqualTo("Sara Vest"));
+            Assert.That(result.Model.CustomerName, Is.EqualTo("Go-Gris I/S"));
+            Assert.That(result.Model.Locale, Is.EqualTo("da"));
+            Assert.That(result.Model.Theme, Is.EqualTo("dark"));
+            Assert.That(result.Model.TimeZone, Is.EqualTo("Europe/Copenhagen"));
+        });
+    }
+
+    [Test]
+    public async Task ValidateAsync_WithNoProfileClaims_ReturnsThemAllEmptyAndStillSucceeds()
+    {
+        var result = await CreateValidator().ValidateAsync(MintToken(displayName: null), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Model.DisplayName, Is.EqualTo(""));
+            Assert.That(result.Model.CustomerName, Is.EqualTo(""));
+            Assert.That(result.Model.Locale, Is.EqualTo(""));
+            Assert.That(result.Model.Theme, Is.EqualTo(""));
+            Assert.That(result.Model.TimeZone, Is.EqualTo(""));
+        });
+    }
+
+    [Test]
+    public async Task ValidateAsync_WithAnUnrecognisedThemeOrTimeZone_SucceedsAndDropsOnlyThatValue()
+    {
+        var token = MintToken(customerName: "Go-Gris I/S", locale: "Danish", theme: "system", timeZone: "Not/AZone");
+
+        var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Model.Theme, Is.EqualTo(""));
+            Assert.That(result.Model.TimeZone, Is.EqualTo(""));
+            Assert.That(result.Model.CustomerName, Is.EqualTo("Go-Gris I/S"));
+            Assert.That(result.Model.Locale, Is.EqualTo(""));
+        });
+    }
+
+    [Test]
+    public async Task ValidateAsync_WithAnAbsurdlyLongCustomerName_CapsItRatherThanRefusing()
+    {
+        var result = await CreateValidator().ValidateAsync(
+            MintToken(customerName: new string('A', 5000)), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.That(result.Model.CustomerName, Has.Length.EqualTo(128));
+    }
+
     // ----------------------------------------------------------------- helpers
 
     private static void AssertRefused(OperationDataResult<DelegatedAssertion> result)
@@ -721,7 +784,11 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
         DateTime? expires = null,
         SigningCredentials credentials = null,
         IEnumerable<string> extraAudiences = null,
-        bool includeJti = true)
+        bool includeJti = true,
+        string customerName = null,
+        string locale = null,
+        string theme = null,
+        string timeZone = null)
     {
         var claims = new List<Claim>();
         if (subject != null)
@@ -746,6 +813,17 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
         if (state != null)
         {
             claims.Add(new Claim("state", state));
+        }
+
+        foreach (var (type, value) in new[]
+                 {
+                     ("customer_name", customerName), ("locale", locale), ("theme", theme), ("timezone", timeZone),
+                 })
+        {
+            if (value != null)
+            {
+                claims.Add(new Claim(type, value));
+            }
         }
 
         foreach (var extra in extraAudiences ?? [])

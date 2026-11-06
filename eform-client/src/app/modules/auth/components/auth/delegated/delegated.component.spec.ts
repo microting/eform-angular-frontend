@@ -8,6 +8,8 @@ import {DelegatedComponent} from './delegated.component';
 import {AuthService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
 import {provideMockStore} from '@ngrx/store/testing';
+import {Store} from '@ngrx/store';
+import {logout} from 'src/app/state/auth/auth.actions';
 import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
 import {captureDelegatedAssertion, resetDelegatedAssertion} from '../../../delegated-assertion';
 import {DELEGATED_STATE_STORAGE_KEY} from '../../../delegated-state';
@@ -16,6 +18,8 @@ describe('DelegatedComponent', () => {
   const token = {accessToken: 'tok', tokenType: 'bearer', role: 'admin'};
   let authService: {loginDelegated: ReturnType<typeof vi.fn>};
   let authState: {completeLogin: ReturnType<typeof vi.fn>};
+  /** Every store dispatch and every completeLogin, in the order they happened. */
+  let events: string[];
 
   /** An assertion carrying `state`, shaped like the portal's but unsigned: the route never verifies it. */
   function assertionWithState(state: string): string {
@@ -43,6 +47,9 @@ describe('DelegatedComponent', () => {
         {provide: AuthStateService, useValue: authState},
       ],
     });
+    vi.spyOn(TestBed.inject(Store), 'dispatch').mockImplementation(((action: {type: string}) => {
+      events.push(`dispatch:${action.type}`);
+    }) as never);
     const fixture = TestBed.createComponent(DelegatedComponent);
     fixture.detectChanges();
     return fixture;
@@ -57,7 +64,8 @@ describe('DelegatedComponent', () => {
     resetDelegatedAssertion();
     sessionStorage.clear();
     authService = {loginDelegated: vi.fn().mockReturnValue(of(token))};
-    authState = {completeLogin: vi.fn()};
+    events = [];
+    authState = {completeLogin: vi.fn().mockImplementation(() => events.push('completeLogin'))};
   });
 
   it('stores the returned token through the auth-state path on success', () => {
@@ -94,12 +102,47 @@ describe('DelegatedComponent', () => {
     expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in missing assertion');
   });
 
-  it('refuses to replace an already-authenticated session', () => {
+  it('replaces a live session when the assertion carries the expected state', () => {
     seedState('nonce-1');
+    const assertion = assertionWithState('nonce-1');
+    const fixture = create(`/auth/delegated#assertion=${assertion}`, true);
+    expect(authService.loginDelegated).toHaveBeenCalledWith(assertion);
+    expect(authState.completeLogin).toHaveBeenCalledWith(token);
+    expect(fixture.componentInstance.errorKey).toBeNull();
+  });
+
+  it('clears the previous session before storing the new one', () => {
+    seedState('nonce-1');
+    create(`/auth/delegated#assertion=${assertionWithState('nonce-1')}`, true);
+    expect(events).toEqual([`dispatch:${logout().type}`, 'completeLogin']);
+  });
+
+  it('leaves the existing session untouched when the sign-in request fails', () => {
+    seedState('nonce-1');
+    authService.loginDelegated.mockReturnValue(
+      throwError(() => new HttpErrorResponse({status: 401, error: {message: 'DelegatedSignInRefused'}})));
     const fixture = create(`/auth/delegated#assertion=${assertionWithState('nonce-1')}`, true);
+    expect(authService.loginDelegated).toHaveBeenCalledTimes(1);
+    expect(events).not.toContain(`dispatch:${logout().type}`);
+    expect(authState.completeLogin).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in refused');
+  });
+
+  it('still refuses a live session when the state does not match', () => {
+    seedState('nonce-1');
+    const fixture = create(`/auth/delegated#assertion=${assertionWithState('nonce-attacker')}`, true);
     expect(authService.loginDelegated).not.toHaveBeenCalled();
     expect(authState.completeLogin).not.toHaveBeenCalled();
-    expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in session exists');
+    expect(events).toEqual([]);
+    expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in refused');
+  });
+
+  it('still refuses a live session when no state is stored at all', () => {
+    const fixture = create(`/auth/delegated#assertion=${assertionWithState('nonce-attacker')}`, true);
+    expect(authService.loginDelegated).not.toHaveBeenCalled();
+    expect(authState.completeLogin).not.toHaveBeenCalled();
+    expect(events).toEqual([]);
+    expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in refused');
   });
 
   it('delegated route refuses when the assertion\'s state does not match the stored one', () => {

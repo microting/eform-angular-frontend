@@ -519,9 +519,10 @@ public class NoRuntimeBindingSourceTests
     // to the login path to "look up the link" is a violation by construction.
     //
     // The allowlist has FOUR entries and that is not a looser rule. UserManagerLockoutExtensions
-    // is on the PASSWORD-WRITE path, not the login path: it reads a link only to REFUSE a
-    // password write for a delegated principal (GetLoginsAsync in IsDelegatedPrincipalAsync),
-    // so it can never grant authentication to anyone. It sits at the shared
+    // is never on the login path: it reads a link (GetLoginsAsync in IsDelegatedPrincipalAsync)
+    // only to REFUSE a password or preference write for a delegated principal, or to
+    // withhold UI (MenuService filters menu items on a read path), so it can never grant
+    // authentication or anything else to anyone. It sits at the shared
     // ReplacePasswordAsync chokepoint on purpose; moving the check into each caller would put
     // the link API into AdminService and scatter a security check across call sites.
     //

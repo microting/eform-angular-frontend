@@ -11,8 +11,9 @@ namespace eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 /// </summary>
 /// <param name="Subject">The portal's stable, never-reassigned identifier for the advisor
 /// (<c>sub</c>). The ONLY safe key for the local principal: never key on email.</param>
-/// <param name="DisplayName">The advisor's display name (<c>name</c>), for audit
-/// attribution only. May be empty; it is never an identifier.</param>
+/// <param name="DisplayName">The advisor's display name (<c>name</c>), for rendering
+/// in the advisor's own session only; it is never stored. May be empty; it is never an
+/// identifier.</param>
 /// <param name="RoleTemplate">The role template the portal asserts (<c>role_template</c>).
 /// Never empty: an assertion that omits it is refused rather than defaulted, because the
 /// caller trusts this result completely and an empty template would silently become
@@ -24,9 +25,13 @@ namespace eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 /// the portal, echoed back by the portal (<c>state</c>). Never empty: it is what makes the
 /// flow tenant-initiated, so an assertion that omits it is one no browser on this tenant
 /// can have asked for.</param>
+/// <param name="CustomerName">The customer's name (<c>customer_name</c>), cleaned, or "".</param>
+/// <param name="Locale">An ngx-translate language id (<c>locale</c>), shape-validated, or "".</param>
+/// <param name="Theme">"light", "dark" or "" (<c>theme</c>).</param>
+/// <param name="TimeZone">A resolvable time zone id (<c>timezone</c>), or "".</param>
 public sealed record DelegatedAssertion(
     string Subject, string DisplayName, string RoleTemplate, string JwtId, DateTimeOffset ExpiresAt,
-    string State);
+    string State, string CustomerName = "", string Locale = "", string Theme = "", string TimeZone = "");
 
 /// <summary>
 /// The claim names the portal mints and this tenant reads. The portal lives in another
@@ -45,9 +50,10 @@ public static class DelegatedAssertionClaims
     /// replay defence at all, so an assertion that omits it is refused.</summary>
     public static readonly string JwtId = "jti";
 
-    /// <summary>Advisor display name, for audit attribution. Optional, and deliberately
-    /// so: it is never an identifier and never drives a permission, so a missing one is a
-    /// poorer audit line rather than a security decision made on a guess.</summary>
+    /// <summary>Advisor display name, for rendering in the advisor's own session; it is
+    /// never stored. Optional, and deliberately so: it is never an identifier and never
+    /// drives a permission, so a missing one is a plainer session header rather than a
+    /// security decision made on a guess.</summary>
     public static readonly string DisplayName = "name";
 
     /// <summary>
@@ -74,4 +80,16 @@ public static class DelegatedAssertionClaims
     /// raw claim names (MapInboundClaims = false), so no claim-type mapping is involved.
     /// </summary>
     public static readonly string State = "state";
+
+    /// <summary>Customer name, for display. Optional.</summary>
+    public static readonly string CustomerName = "customer_name";
+
+    /// <summary>Advisor's language id. Optional.</summary>
+    public static readonly string Locale = "locale";
+
+    /// <summary>"light" or "dark". Optional.</summary>
+    public static readonly string Theme = "theme";
+
+    /// <summary>Advisor's time zone id. Optional.</summary>
+    public static readonly string TimeZone = "timezone";
 }

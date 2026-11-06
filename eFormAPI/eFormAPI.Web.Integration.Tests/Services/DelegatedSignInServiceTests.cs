@@ -71,9 +71,27 @@ public class DelegatedSignInServiceTests : DbTestFixture
     /// <param name="displayName">The audit-only display name. Overloads rather than an
     /// optional parameter because SonarC# S2360 is on in CI.</param>
     private static DelegatedAssertion Assertion(string subject, string displayName)
+        => Assertion(subject, displayName, "", "", "");
+
+    /// <param name="locale">Normalised locale, or "" for none.</param>
+    /// <param name="theme">"light", "dark" or "" -- anything else is for the tests that
+    /// hand the service a value the validator would already have dropped.</param>
+    /// <param name="timeZone">IANA id, or "" for none.</param>
+    private static DelegatedAssertion Assertion(string subject, string displayName,
+        string locale, string theme, string timeZone)
+        => Assertion(subject, displayName, "", locale, theme, timeZone);
+
+    /// <param name="customerName">The customer the advisor is inside, or "" for none. The
+    /// session shows name and customer together or not at all.</param>
+    /// <param name="locale">Normalised locale, or "" for none.</param>
+    /// <param name="theme">"light", "dark" or "" for none.</param>
+    /// <param name="timeZone">IANA id, or "" for none.</param>
+    private static DelegatedAssertion Assertion(string subject, string displayName,
+        string customerName, string locale, string theme, string timeZone)
         => new(subject, displayName, DelegatedSignInService.AdvisorRoleTemplate,
             $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2),
-            $"state-{Guid.NewGuid():N}");
+            $"state-{Guid.NewGuid():N}", CustomerName: customerName, Locale: locale,
+            Theme: theme, TimeZone: timeZone);
 
     /// <summary>
     /// The service under test, wired to a REAL AuthService so the token it returns is the
@@ -184,6 +202,265 @@ public class DelegatedSignInServiceTests : DbTestFixture
         => DbContext.Users.AsNoTracking().SingleAsync(x => x.Id == userId);
 
     [Test]
+    public async Task SignInAsync_AppliesTheLocaleThemeAndTimeZoneFromTheAssertion()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.Locale, Is.EqualTo("en-US"));
+        Assert.That(stored.Formats, Is.EqualTo("en-US"));
+        Assert.That(stored.TimeZone, Is.EqualTo("Europe/Berlin"));
+        Assert.That(stored.DarkTheme, Is.True);
+    }
+
+    [Test]
+    public async Task SignInAsync_SecondTimeWithChangedPreferences_UpdatesTheExistingRow()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "da", "light", "Europe/Copenhagen"),
+            CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id), "the same principal is reused");
+        var stored = await StoredUserAsync(first.Model.Id);
+        Assert.That(stored.DarkTheme, Is.False);
+        Assert.That(stored.Locale, Is.EqualTo("da"));
+        Assert.That(stored.Formats, Is.EqualTo("da"));
+        Assert.That(stored.TimeZone, Is.EqualTo("Europe/Copenhagen"));
+    }
+
+    [Test]
+    public async Task SignInAsync_WithNoProfileClaims_LeavesTheStoredPreferencesAlone()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        // A claimless assertion says nothing: it must not reset the row to the creation
+        // defaults (da / de-DE / Europe/Copenhagen / light).
+        var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        var stored = await StoredUserAsync(first.Model.Id);
+        Assert.That(stored.Locale, Is.EqualTo("en-US"));
+        Assert.That(stored.Formats, Is.EqualTo("en-US"));
+        Assert.That(stored.TimeZone, Is.EqualTo("Europe/Berlin"));
+        Assert.That(stored.DarkTheme, Is.True);
+    }
+
+    [Test]
+    public async Task SignInAsync_WithAnUnrecognisedTheme_LeavesDarkThemeUntouched()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "", "dark", ""), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "", "system", ""), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That((await StoredUserAsync(first.Model.Id)).DarkTheme, Is.True,
+            "\"system\" is not \"light\"; it must not switch the theme off");
+    }
+
+    /// <summary>A validator that fails every user validation. Added to the REAL
+    /// UserManager's validators after the principal exists, so UpdateAsync -- which
+    /// validates -- returns Failed while the earlier create had succeeded.</summary>
+    private static IUserValidator<EformUser> RejectEveryUpdate()
+    {
+        var validator = Substitute.For<IUserValidator<EformUser>>();
+        validator.ValidateAsync(Arg.Any<UserManager<EformUser>>(), Arg.Any<EformUser>())
+            .Returns(Task.FromResult(IdentityResult.Failed(
+                new IdentityError { Description = "rejected" })));
+        return validator;
+    }
+
+    [Test]
+    public async Task SignInAsync_WhenTheProfileWriteFails_StillIssuesAToken()
+    {
+        await using var host = await NewHostAsync();
+        var logger = new CapturingLogger<DelegatedSignInService>();
+        var service = BuildService(host, logger);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "da", "light", "Europe/Copenhagen"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        host.UserManager.UserValidators.Add(RejectEveryUpdate());
+
+        // The first sign-in already logged an unrelated "local user {id}" warning (no
+        // security group in this tenant); only what the second one logs counts.
+        logger.Entries.Clear();
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, "a failed preference write must not cost the session");
+        Assert.That(second.Model.AccessToken, Is.Not.Empty);
+        Assert.That(logger.Entries.Exists(e => e.Level == LogLevel.Warning
+                && e.Message.Contains("profile preferences")
+                && e.Message.Contains($"local user {first.Model.Id}")),
+            Is.True, "the failure must be logged, naming the user id");
+        Assert.That((await StoredUserAsync(first.Model.Id)).Locale, Is.EqualTo("da"),
+            "the validator really did reject the write");
+    }
+
+    [Test]
+    public async Task SignInAsync_WhenNothingChanged_DoesNotWriteTheProfile()
+    {
+        await using var host = await NewHostAsync();
+        var logger = new CapturingLogger<DelegatedSignInService>();
+        var service = BuildService(host, logger);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        // Any attempted write now fails and logs the profile warning, so a write that
+        // should not have happened is observable as that warning.
+        host.UserManager.UserValidators.Add(RejectEveryUpdate());
+        logger.Entries.Clear();
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(logger.Entries.Exists(e => e.Message.Contains("profile preferences")),
+            Is.False, "identical preferences must not trigger a write");
+    }
+
+    [Test]
+    public async Task SignInAsync_ReturnsTheAdvisorsNameAndTheCustomerName_WithoutStoringEither()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Sara Vest", "Go-Gris I/S", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.FirstName, Is.EqualTo("Sara Vest"));
+        Assert.That(result.Model.LastName, Is.EqualTo("(Go-Gris I/S)"));
+
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(stored.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
+    }
+
+    [Test]
+    public async Task SignInAsync_FirstTime_StoresTheGenericNameEvenWhenTheAssertionCarriesARealOne()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Sara Vest", "Go-Gris I/S", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(stored.FirstName + stored.LastName, Does.Not.Contain("Sara"));
+        Assert.That(stored.FirstName + stored.LastName, Does.Not.Contain("Go-Gris"));
+    }
+
+    [TestCase("Sara Vest", "")]
+    [TestCase("", "Go-Gris I/S")]
+    [TestCase("", "")]
+    public async Task SignInAsync_WithOnlyOneOfTheTwoNameClaims_FallsBackToTheStoredName(
+        string displayName, string customerName)
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), displayName, customerName, "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(result.Model.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
+    }
+
+    [Test]
+    public async Task SignInAsync_WithAMarkupBearingCustomerName_ReturnsItAsALiteralString()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        // The server does not HTML-escape; Angular's interpolation does on render. What
+        // the backend owns is that the value round-trips verbatim, un-encoded and
+        // un-mangled, into the session fields only.
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Sara Vest", "<b>Go</b>", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.LastName, Is.EqualTo("(<b>Go</b>)"));
+    }
+
+    [Test]
+    public async Task SignInAsync_SecondSignInCarryingTheNames_ShowsThemInTheSessionAndStillStoresTheGenericRow()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Sara Vest", "Go-Gris I/S", "", "", ""), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id), "must be the reuse path");
+        Assert.That(second.Model.FirstName, Is.EqualTo("Sara Vest"));
+        Assert.That(second.Model.LastName, Is.EqualTo("(Go-Gris I/S)"));
+
+        var stored = await StoredUserAsync(second.Model.Id);
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(stored.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
+    }
+
+    [Test]
     public async Task SignInAsync_FirstTime_CreatesPrincipalWithNullPasswordHash()
     {
         await using var host = await NewHostAsync();
@@ -276,8 +553,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
         Assert.That(stored.Email, Does.Not.Contain("jane.advisor"));
         Assert.That(stored.Email, Does.Not.Contain("partner.example"));
         Assert.That(stored.UserName, Does.Not.Contain(address));
-        // The display name is kept — it is the audit attribution — and is never an identifier.
-        Assert.That(stored.FirstName, Is.EqualTo("Jane Advisor"));
+        // The stored name is generic; the real one only ever reaches the session.
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
         Assert.That(stored.LastName, Does.StartWith("(delegated "));
         Assert.That(stored.EmailConfirmed, Is.True, "the host's login gate rejects an unconfirmed row");
     }

@@ -166,6 +166,14 @@ public class AccountService(
             return new OperationResult(false, localizationService.GetString("UserNotFound"));
         }
 
+        if (await userManager.IsDelegatedPrincipalAsync(user))
+        {
+            logger.LogWarning("Refused to change the settings of user {UserId}: the account is a delegated principal",
+                user.Id);
+            return new OperationResult(false, UserManagerLockoutExtensions.DelegatedPreferencesResult()
+                .Errors.First().Description);
+        }
+
         user.Locale = model.Locale;
         user.TimeZone = model.TimeZone;
         user.Formats = model.Formats;
