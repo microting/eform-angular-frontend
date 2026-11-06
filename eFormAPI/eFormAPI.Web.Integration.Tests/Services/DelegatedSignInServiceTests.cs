@@ -291,14 +291,16 @@ public class DelegatedSignInServiceTests : DbTestFixture
             "\"system\" is not \"light\"; it must not switch the theme off");
     }
 
-    /// <summary>Fails every user validation. Added to the REAL UserManager's validators
-    /// after the principal exists, so UpdateAsync -- which validates -- returns Failed
-    /// while the earlier create had succeeded.</summary>
-    private sealed class RejectEveryUpdate : IUserValidator<EformUser>
+    /// <summary>A validator that fails every user validation. Added to the REAL
+    /// UserManager's validators after the principal exists, so UpdateAsync -- which
+    /// validates -- returns Failed while the earlier create had succeeded.</summary>
+    private static IUserValidator<EformUser> RejectEveryUpdate()
     {
-        public Task<IdentityResult> ValidateAsync(UserManager<EformUser> manager, EformUser user)
-            => Task.FromResult(IdentityResult.Failed(
-                new IdentityError { Description = $"rejected {user.Id}" }));
+        var validator = Substitute.For<IUserValidator<EformUser>>();
+        validator.ValidateAsync(Arg.Any<UserManager<EformUser>>(), Arg.Any<EformUser>())
+            .Returns(Task.FromResult(IdentityResult.Failed(
+                new IdentityError { Description = "rejected" })));
+        return validator;
     }
 
     [Test]
@@ -315,7 +317,7 @@ public class DelegatedSignInServiceTests : DbTestFixture
         Assert.That(first.Success, Is.True, first.Message);
         host.TrackForCleanup(first.Model.Id);
 
-        host.UserManager.UserValidators.Add(new RejectEveryUpdate());
+        host.UserManager.UserValidators.Add(RejectEveryUpdate());
 
         // The first sign-in already logged an unrelated "local user {id}" warning (no
         // security group in this tenant); only what the second one logs counts.
@@ -351,7 +353,7 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         // Any attempted write now fails and logs the profile warning, so a write that
         // should not have happened is observable as that warning.
-        host.UserManager.UserValidators.Add(new RejectEveryUpdate());
+        host.UserManager.UserValidators.Add(RejectEveryUpdate());
         logger.Entries.Clear();
 
         var second = await service.SignInAsync(
