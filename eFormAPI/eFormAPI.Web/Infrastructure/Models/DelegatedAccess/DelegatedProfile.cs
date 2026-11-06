@@ -15,13 +15,13 @@ namespace eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 /// </summary>
 public static class DelegatedProfile
 {
-    private const int MaxLocaleChars = 16;
     private const string DefaultFormats = "de-DE";
 
-    // Case-sensitive on the language subtag on purpose: it is what makes "Danish" (the
-    // menu-translation domain) fail while "da" and "en-US" pass.
+    // Case-sensitive on the language subtag on purpose: it is what makes "Danish", "DA" and
+    // "Da" fail while "da" and "en-US" pass. Anchored with \z, not $, because $ also
+    // matches before a trailing newline. The pattern itself bounds the length (max 7).
     private static readonly Regex LocalePattern = new(
-        "^[a-z]{2}(-[A-Za-z]{2,4})?$", RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
+        @"^[a-z]{2}(-[A-Za-z]{2,4})?\z", RegexOptions.CultureInvariant, TimeSpan.FromMilliseconds(100));
 
     private static readonly string[] FormatLocales = ["da", "de-DE", "en-GB", "en-US"];
 
@@ -57,7 +57,7 @@ public static class DelegatedProfile
     /// </summary>
     public static string NormaliseLocale(string raw)
     {
-        if (string.IsNullOrEmpty(raw) || raw.Length > MaxLocaleChars)
+        if (string.IsNullOrEmpty(raw))
         {
             return "";
         }

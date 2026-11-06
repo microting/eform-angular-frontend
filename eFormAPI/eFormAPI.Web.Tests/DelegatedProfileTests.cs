@@ -24,14 +24,14 @@ public class DelegatedProfileTests
     [TestCase("da; DROP TABLE", "")]
     [TestCase("../../etc/passwd", "")]
     [TestCase("Danish", "")] // the menu-translation domain, not a language id
+    [TestCase("DA", "")] // language subtag is case-sensitive
+    [TestCase("Da", "")]
+    [TestCase("da\n", "")] // $ would accept a trailing newline
+    [TestCase("da ", "")]
     [TestCase("", "")]
     [TestCase(null, "")]
     public void NormaliseLocale_AcceptsOnlyWellFormedLanguageIds(string raw, string expected)
         => Assert.That(DelegatedProfile.NormaliseLocale(raw), Is.EqualTo(expected));
-
-    [Test]
-    public void NormaliseLocale_RejectsAnythingLongerThanSixteenCharacters()
-        => Assert.That(DelegatedProfile.NormaliseLocale(new string('a', 17)), Is.EqualTo(""));
 
     [TestCase("Europe/Copenhagen", "Europe/Copenhagen")]
     [TestCase("Not/AZone", "")]
