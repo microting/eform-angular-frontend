@@ -108,10 +108,6 @@ public sealed class DelegatedSignInService(
     /// <summary>Characters of the digest used in the audit display name.</summary>
     private const int ShortDigestChars = 8;
 
-    /// <summary>Longest display name stored on the row. Audit attribution, not a
-    /// document; a megabyte <c>name</c> claim must not become a megabyte column.</summary>
-    private const int MaxDisplayNameChars = 128;
-
     /// <summary>
     /// How many addresses to try before giving up. Attempt 1 is the deterministic address;
     /// the rest carry random disambiguators, so the only way to exhaust this is a database
@@ -237,6 +233,9 @@ public sealed class DelegatedSignInService(
             DelegatedAssertionValidator.ForLog(assertion.RoleTemplate),
             created ? "created" : "reused");
 
+        var hasSessionName = !string.IsNullOrEmpty(assertion.DisplayName)
+                             && !string.IsNullOrEmpty(assertion.CustomerName);
+
         return new OperationDataResult<EformAuthorizeResult>(true, new EformAuthorizeResult
         {
             Id = user.Id,
@@ -244,8 +243,10 @@ public sealed class DelegatedSignInService(
             UserName = user.UserName,
             Role = roles.FirstOrDefault(),
             ExpiresIn = token.expireIn,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
+            // Session-only: the name and its customer appear together or not at all, and
+            // neither is ever written to the tenant's database.
+            FirstName = hasSessionName ? assertion.DisplayName : user.FirstName,
+            LastName = hasSessionName ? $"({assertion.CustomerName})" : user.LastName,
             IsFirstUser = user.Id == firstUserIdInDb,
             AvatarUrl = user.ProfilePictureSnapshot != null
                 ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
@@ -757,40 +758,17 @@ public sealed class DelegatedSignInService(
     }
 
     /// <summary>
-    /// The name stored on the row, for audit attribution only. Never an identifier, and
-    /// never trusted: it is an attacker-chosen string until the portal is trustworthy, so
-    /// control characters go and the length is bounded. The "(delegated …)" suffix makes
-    /// the row recognisable in the customer's own user list, and carries the short digest
-    /// so two advisors without a <c>name</c> claim are still distinguishable.
+    /// The name stored on the row. Deliberately generic and independent of the assertion's
+    /// display name: the advisor's real name reaches her session through the result only,
+    /// so no customer database ever holds it (nothing to scrub when a partner relationship
+    /// ends). The "(delegated …)" suffix makes the row recognisable in the customer's own
+    /// user list, and carries the short digest so advisors stay distinguishable.
     /// </summary>
     private static (string FirstName, string LastName) AuditName(DelegatedAssertion assertion)
     {
         var shortId = SubjectDigest(assertion.Subject, ShortDigestChars);
-        var cleaned = Sanitise(assertion.DisplayName);
 
-        return (cleaned.Length == 0 ? "Delegated advisor" : cleaned, $"(delegated {shortId})");
-    }
-
-    private static string Sanitise(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return "";
-        }
-
-        var trimmed = value.Trim();
-        if (trimmed.Length > MaxDisplayNameChars)
-        {
-            trimmed = trimmed[..MaxDisplayNameChars];
-        }
-
-        var builder = new StringBuilder(trimmed.Length);
-        foreach (var c in trimmed)
-        {
-            builder.Append(char.IsControl(c) ? ' ' : c);
-        }
-
-        return builder.ToString().Trim();
+        return ("Delegated advisor", $"(delegated {shortId})");
     }
 
     /// <summary>Lower-case hex prefix of SHA-256(provider | subject). The provider is

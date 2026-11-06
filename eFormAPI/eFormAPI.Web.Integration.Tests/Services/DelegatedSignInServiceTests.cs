@@ -79,9 +79,14 @@ public class DelegatedSignInServiceTests : DbTestFixture
     /// <param name="timeZone">IANA id, or "" for none.</param>
     private static DelegatedAssertion Assertion(string subject, string displayName,
         string locale, string theme, string timeZone)
+        => Assertion(subject, displayName, "", locale, theme, timeZone);
+
+    private static DelegatedAssertion Assertion(string subject, string displayName,
+        string customerName, string locale, string theme, string timeZone)
         => new(subject, displayName, DelegatedSignInService.AdvisorRoleTemplate,
             $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2),
-            $"state-{Guid.NewGuid():N}", Locale: locale, Theme: theme, TimeZone: timeZone);
+            $"state-{Guid.NewGuid():N}", CustomerName: customerName, Locale: locale,
+            Theme: theme, TimeZone: timeZone);
 
     /// <summary>
     /// The service under test, wired to a REAL AuthService so the token it returns is the
@@ -353,6 +358,95 @@ public class DelegatedSignInServiceTests : DbTestFixture
     }
 
     [Test]
+    public async Task SignInAsync_ReturnsTheAdvisorsNameAndTheCustomerName_WithoutStoringEither()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Sara Vest", "Go-Gris I/S", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.FirstName, Is.EqualTo("Sara Vest"));
+        Assert.That(result.Model.LastName, Is.EqualTo("(Go-Gris I/S)"));
+
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(stored.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
+    }
+
+    [Test]
+    public async Task SignInAsync_FirstTime_StoresTheGenericNameEvenWhenTheAssertionCarriesARealOne()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Sara Vest", "Go-Gris I/S", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(stored.FirstName + stored.LastName, Does.Not.Contain("Sara"));
+        Assert.That(stored.FirstName + stored.LastName, Does.Not.Contain("Go-Gris"));
+    }
+
+    [TestCase("Sara Vest", "")]
+    [TestCase("", "Go-Gris I/S")]
+    public async Task SignInAsync_WithOnlyOneOfTheTwoNameClaims_FallsBackToTheStoredName(
+        string displayName, string customerName)
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), displayName, customerName, "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(result.Model.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
+    }
+
+    [Test]
+    public async Task SignInAsync_WithNoNameClaims_ReturnsExactlyTodaysNames()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "", "", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(result.Model.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(result.Model.FirstName, Is.EqualTo(stored.FirstName));
+        Assert.That(result.Model.LastName, Is.EqualTo(stored.LastName));
+    }
+
+    [Test]
+    public async Task SignInAsync_WithAMarkupBearingCustomerName_ReturnsItAsALiteralString()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        // The server does not HTML-escape; Angular's interpolation does on render. What
+        // the backend owns is that the value round-trips verbatim, un-encoded and
+        // un-mangled, into the session fields only.
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Sara Vest", "<b>Go</b>", "", "", ""), CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        Assert.That(result.Model.LastName, Is.EqualTo("(<b>Go</b>)"));
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.LastName, Does.Not.Contain("Go"));
+    }
+
+    [Test]
     public async Task SignInAsync_FirstTime_CreatesPrincipalWithNullPasswordHash()
     {
         await using var host = await NewHostAsync();
@@ -445,8 +539,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
         Assert.That(stored.Email, Does.Not.Contain("jane.advisor"));
         Assert.That(stored.Email, Does.Not.Contain("partner.example"));
         Assert.That(stored.UserName, Does.Not.Contain(address));
-        // The display name is kept — it is the audit attribution — and is never an identifier.
-        Assert.That(stored.FirstName, Is.EqualTo("Jane Advisor"));
+        // The stored name is generic; the real one only ever reaches the session.
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
         Assert.That(stored.LastName, Does.StartWith("(delegated "));
         Assert.That(stored.EmailConfirmed, Is.True, "the host's login gate rejects an unconfirmed row");
     }
