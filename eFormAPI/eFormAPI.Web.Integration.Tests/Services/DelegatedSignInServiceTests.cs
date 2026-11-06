@@ -306,6 +306,10 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
         host.UserManager.UserValidators.Add(new RejectEveryUpdate());
 
+        // The first sign-in already logged an unrelated "local user {id}" warning (no
+        // security group in this tenant); only what the second one logs counts.
+        logger.Entries.Clear();
+
         var second = await service.SignInAsync(
             Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
             CancellationToken.None);
@@ -313,10 +317,39 @@ public class DelegatedSignInServiceTests : DbTestFixture
         Assert.That(second.Success, Is.True, "a failed preference write must not cost the session");
         Assert.That(second.Model.AccessToken, Is.Not.Empty);
         Assert.That(logger.Entries.Exists(e => e.Level == LogLevel.Warning
+                && e.Message.Contains("profile preferences")
                 && e.Message.Contains($"local user {first.Model.Id}")),
             Is.True, "the failure must be logged, naming the user id");
         Assert.That((await StoredUserAsync(first.Model.Id)).Locale, Is.EqualTo("da"),
             "the validator really did reject the write");
+    }
+
+    [Test]
+    public async Task SignInAsync_WhenNothingChanged_DoesNotWriteTheProfile()
+    {
+        await using var host = await NewHostAsync();
+        var logger = new CapturingLogger<DelegatedSignInService>();
+        var service = BuildService(host, logger);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        // Any attempted write now fails and logs the profile warning, so a write that
+        // should not have happened is observable as that warning.
+        host.UserManager.UserValidators.Add(new RejectEveryUpdate());
+        logger.Entries.Clear();
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(logger.Entries.Exists(e => e.Message.Contains("profile preferences")),
+            Is.False, "identical preferences must not trigger a write");
     }
 
     [Test]
