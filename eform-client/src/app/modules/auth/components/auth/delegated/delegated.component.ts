@@ -5,10 +5,9 @@ import {TranslatePipe} from '@ngx-translate/core';
 import {AuthService} from 'src/app/common/services';
 import {AuthStateService} from 'src/app/common/store';
 import {Store} from '@ngrx/store';
-import {selectAuthIsAuth} from 'src/app/state/auth/auth.selector';
+import {logout} from 'src/app/state/auth/auth.actions';
 import {takeDelegatedAssertion} from '../../../delegated-assertion';
 import {readAssertionState, takeDelegatedState} from '../../../delegated-state';
-import {take} from 'rxjs';
 
 /**
  * Landing route for a partner advisor arriving from my.microting.com.
@@ -16,8 +15,8 @@ import {take} from 'rxjs';
  * The portal redirects to `/auth/delegated#assertion=<jwt>`. The assertion is
  * credential-equivalent, so it travels in the URL FRAGMENT only. main.ts lifts it out of the
  * URL before Sentry initialises (see delegated-assertion.ts); this component reads the
- * in-memory value. A `?assertion=` query parameter is ignored. If a session already exists the
- * route refuses rather than replacing it.
+ * in-memory value. A `?assertion=` query parameter is ignored. A valid assertion replaces any
+ * existing session, but only after the state check below has passed.
  *
  * The flow is tenant-initiated, so this route is NOT reachable on its own terms: it only
  * accepts an assertion echoing the `state` that /auth/delegated/start left on this origin
@@ -47,13 +46,6 @@ export class DelegatedComponent implements OnInit {
     // for exactly one attempt, and no refusal path may leave a usable one behind for a
     // second one to spend.
     const expectedState = takeDelegatedState();
-    let alreadySignedIn = false;
-    this.store.select(selectAuthIsAuth).pipe(take(1)).subscribe((isAuth) => (alreadySignedIn = isAuth));
-    if (alreadySignedIn) {
-      // Never silently swap a live session (login CSRF): the assertion is dropped unused.
-      this.errorKey = 'Delegated sign-in session exists';
-      return;
-    }
     if (!assertion) {
       this.errorKey = 'Delegated sign-in missing assertion';
       return;
@@ -65,6 +57,11 @@ export class DelegatedComponent implements OnInit {
       this.errorKey = 'Delegated sign-in refused';
       return;
     }
+    // Reaching here means this browser, in this tab, asked for this assertion, so replacing
+    // the session is the user's own action. Clear rather than merge: the auth reducer merges
+    // currentUser on login success, so a previous session's fields would otherwise survive.
+    // logout() resets the slice and nothing listens on it, so it does not navigate.
+    this.store.dispatch(logout());
     const sub = this.authService.loginDelegated(assertion).subscribe({
       next: (response) => {
         if (response) {
