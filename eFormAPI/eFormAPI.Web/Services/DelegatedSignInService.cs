@@ -216,6 +216,11 @@ public sealed class DelegatedSignInService(
         // newly provisioned principal got its group inside ProvisionAsync, which
         // committed long before this line, so the FIRST session is already populated. An
         // existing principal's membership is whatever the customer has left it as.
+        //
+        // The profile write goes BEFORE it for the same reason: a write afterwards would
+        // not reach the session being issued.
+        await ApplyProfileAsync(user, assertion);
+
         var token = await authService.GenerateToken(user);
         var firstUserIdInDb = await userService.GetFirstUserIdInDb();
 
@@ -246,6 +251,63 @@ public sealed class DelegatedSignInService(
                 ? $"api/images/login-page-images?fileName={user.ProfilePictureSnapshot}"
                 : $"https://www.gravatar.com/avatar/{user.EmailSha256}?s=32&d=identicon"
         });
+    }
+
+    /// <summary>
+    /// Applies the advisor's language, theme and timezone to her local principal on EVERY
+    /// sign-in, so a change in the portal reaches the tenant on her next visit and a
+    /// principal provisioned before the assertion carried these corrects itself.
+    ///
+    /// Writes only what the assertion carries: "" means the portal said nothing and leaves
+    /// the stored column alone. Never refuses -- a failed preference write is logged and the
+    /// session is issued regardless.
+    /// </summary>
+    private async Task ApplyProfileAsync(EformUser user, DelegatedAssertion assertion)
+    {
+        var changed = false;
+
+        if (assertion.Locale.Length > 0)
+        {
+            var formats = DelegatedProfile.FormatsForLocale(assertion.Locale);
+            if (user.Locale != assertion.Locale || user.Formats != formats)
+            {
+                user.Locale = assertion.Locale;
+                user.Formats = formats;
+                changed = true;
+            }
+        }
+
+        if (assertion.TimeZone.Length > 0 && user.TimeZone != assertion.TimeZone)
+        {
+            user.TimeZone = assertion.TimeZone;
+            changed = true;
+        }
+
+        // Only the two values the portal mints. Anything else is "said nothing"; it must
+        // not be read as "not dark".
+        if (assertion.Theme is "dark" or "light")
+        {
+            var dark = assertion.Theme == "dark";
+            if (user.DarkTheme != dark)
+            {
+                user.DarkTheme = dark;
+                changed = true;
+            }
+        }
+
+        if (!changed)
+        {
+            return;
+        }
+
+        var updated = await userManager.UpdateAsync(user);
+        if (!updated.Succeeded)
+        {
+            logger.LogWarning(
+                "Delegated sign-in could not store the profile preferences for local user {UserId}; "
+                + "the session is issued regardless.",
+                user.Id);
+        }
     }
 
     /// <summary>

@@ -71,9 +71,17 @@ public class DelegatedSignInServiceTests : DbTestFixture
     /// <param name="displayName">The audit-only display name. Overloads rather than an
     /// optional parameter because SonarC# S2360 is on in CI.</param>
     private static DelegatedAssertion Assertion(string subject, string displayName)
+        => Assertion(subject, displayName, "", "", "");
+
+    /// <param name="locale">Normalised locale, or "" for none.</param>
+    /// <param name="theme">"light", "dark" or "" -- anything else is for the tests that
+    /// hand the service a value the validator would already have dropped.</param>
+    /// <param name="timeZone">IANA id, or "" for none.</param>
+    private static DelegatedAssertion Assertion(string subject, string displayName,
+        string locale, string theme, string timeZone)
         => new(subject, displayName, DelegatedSignInService.AdvisorRoleTemplate,
             $"jti-{Guid.NewGuid():N}", DateTimeOffset.UtcNow.AddMinutes(2),
-            $"state-{Guid.NewGuid():N}");
+            $"state-{Guid.NewGuid():N}", Locale: locale, Theme: theme, TimeZone: timeZone);
 
     /// <summary>
     /// The service under test, wired to a REAL AuthService so the token it returns is the
@@ -182,6 +190,134 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
     private Task<EformUser> StoredUserAsync(int userId)
         => DbContext.Users.AsNoTracking().SingleAsync(x => x.Id == userId);
+
+    [Test]
+    public async Task SignInAsync_AppliesTheLocaleThemeAndTimeZoneFromTheAssertion()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+
+        var result = await service.SignInAsync(
+            Assertion(Subject(), "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+
+        Assert.That(result.Success, Is.True, result.Message);
+        host.TrackForCleanup(result.Model.Id);
+        var stored = await StoredUserAsync(result.Model.Id);
+        Assert.That(stored.Locale, Is.EqualTo("en-US"));
+        Assert.That(stored.Formats, Is.EqualTo("en-US"));
+        Assert.That(stored.TimeZone, Is.EqualTo("Europe/Berlin"));
+        Assert.That(stored.DarkTheme, Is.True);
+    }
+
+    [Test]
+    public async Task SignInAsync_SecondTimeWithChangedPreferences_UpdatesTheExistingRow()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "da", "light", "Europe/Copenhagen"),
+            CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id), "the same principal is reused");
+        var stored = await StoredUserAsync(first.Model.Id);
+        Assert.That(stored.DarkTheme, Is.False);
+        Assert.That(stored.Locale, Is.EqualTo("da"));
+        Assert.That(stored.Formats, Is.EqualTo("da"));
+        Assert.That(stored.TimeZone, Is.EqualTo("Europe/Copenhagen"));
+    }
+
+    [Test]
+    public async Task SignInAsync_WithNoProfileClaims_LeavesTheStoredPreferencesAlone()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        // A claimless assertion says nothing: it must not reset the row to the creation
+        // defaults (da / de-DE / Europe/Copenhagen / light).
+        var second = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        var stored = await StoredUserAsync(first.Model.Id);
+        Assert.That(stored.Locale, Is.EqualTo("en-US"));
+        Assert.That(stored.Formats, Is.EqualTo("en-US"));
+        Assert.That(stored.TimeZone, Is.EqualTo("Europe/Berlin"));
+        Assert.That(stored.DarkTheme, Is.True);
+    }
+
+    [Test]
+    public async Task SignInAsync_WithAnUnrecognisedTheme_LeavesDarkThemeUntouched()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "", "dark", ""), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "", "system", ""), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That((await StoredUserAsync(first.Model.Id)).DarkTheme, Is.True,
+            "\"system\" is not \"light\"; it must not switch the theme off");
+    }
+
+    /// <summary>Fails every user validation. Added to the REAL UserManager's validators
+    /// after the principal exists, so UpdateAsync -- which validates -- returns Failed
+    /// while the earlier create had succeeded.</summary>
+    private sealed class RejectEveryUpdate : IUserValidator<EformUser>
+    {
+        public Task<IdentityResult> ValidateAsync(UserManager<EformUser> manager, EformUser user)
+            => Task.FromResult(IdentityResult.Failed(new IdentityError { Description = "rejected" }));
+    }
+
+    [Test]
+    public async Task SignInAsync_WhenTheProfileWriteFails_StillIssuesAToken()
+    {
+        await using var host = await NewHostAsync();
+        var logger = new CapturingLogger<DelegatedSignInService>();
+        var service = BuildService(host, logger);
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "da", "light", "Europe/Copenhagen"),
+            CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        host.UserManager.UserValidators.Add(new RejectEveryUpdate());
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "en-US", "dark", "Europe/Berlin"),
+            CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, "a failed preference write must not cost the session");
+        Assert.That(second.Model.AccessToken, Is.Not.Empty);
+        Assert.That(logger.Entries.Exists(e => e.Level == LogLevel.Warning
+                && e.Message.Contains($"local user {first.Model.Id}")),
+            Is.True, "the failure must be logged, naming the user id");
+        Assert.That((await StoredUserAsync(first.Model.Id)).Locale, Is.EqualTo("da"),
+            "the validator really did reject the write");
+    }
 
     [Test]
     public async Task SignInAsync_FirstTime_CreatesPrincipalWithNullPasswordHash()
