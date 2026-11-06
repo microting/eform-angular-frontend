@@ -297,7 +297,8 @@ public class DelegatedSignInServiceTests : DbTestFixture
     private sealed class RejectEveryUpdate : IUserValidator<EformUser>
     {
         public Task<IdentityResult> ValidateAsync(UserManager<EformUser> manager, EformUser user)
-            => Task.FromResult(IdentityResult.Failed(new IdentityError { Description = "rejected" }));
+            => Task.FromResult(IdentityResult.Failed(
+                new IdentityError { Description = $"rejected {user.Id}" }));
     }
 
     [Test]
