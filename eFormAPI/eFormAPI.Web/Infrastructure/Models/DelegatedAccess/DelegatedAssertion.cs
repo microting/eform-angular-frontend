@@ -24,9 +24,13 @@ namespace eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 /// the portal, echoed back by the portal (<c>state</c>). Never empty: it is what makes the
 /// flow tenant-initiated, so an assertion that omits it is one no browser on this tenant
 /// can have asked for.</param>
+/// <param name="CustomerName">The customer's name (<c>customer_name</c>), cleaned, or "".</param>
+/// <param name="Locale">An ngx-translate language id (<c>locale</c>), shape-validated, or "".</param>
+/// <param name="Theme">"light", "dark" or "" (<c>theme</c>).</param>
+/// <param name="TimeZone">A resolvable time zone id (<c>timezone</c>), or "".</param>
 public sealed record DelegatedAssertion(
     string Subject, string DisplayName, string RoleTemplate, string JwtId, DateTimeOffset ExpiresAt,
-    string State);
+    string State, string CustomerName = "", string Locale = "", string Theme = "", string TimeZone = "");
 
 /// <summary>
 /// The claim names the portal mints and this tenant reads. The portal lives in another
@@ -74,4 +78,16 @@ public static class DelegatedAssertionClaims
     /// raw claim names (MapInboundClaims = false), so no claim-type mapping is involved.
     /// </summary>
     public static readonly string State = "state";
+
+    /// <summary>Customer name, for display. Optional.</summary>
+    public static readonly string CustomerName = "customer_name";
+
+    /// <summary>Advisor's language id. Optional.</summary>
+    public static readonly string Locale = "locale";
+
+    /// <summary>"light" or "dark". Optional.</summary>
+    public static readonly string Theme = "theme";
+
+    /// <summary>Advisor's time zone id. Optional.</summary>
+    public static readonly string TimeZone = "timezone";
 }

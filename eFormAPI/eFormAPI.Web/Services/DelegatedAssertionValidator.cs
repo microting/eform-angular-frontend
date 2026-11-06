@@ -110,6 +110,8 @@ public sealed class DelegatedAssertionValidator(
     /// </summary>
     private static readonly TimeSpan MaxAssertionLifetime = TimeSpan.FromHours(24);
 
+    private const int ProfileTextMaxChars = 128;
+
     /// <summary>
     /// Serialises the replay check-and-reserve. <see cref="IMemoryCache"/> has no atomic
     /// add, so a bare TryGetValue-then-Set lets two concurrent requests carrying the SAME
@@ -339,11 +341,15 @@ public sealed class DelegatedAssertionValidator(
 
         var assertion = new DelegatedAssertion(
             subject,
-            ClaimOrEmpty(jwt, DelegatedAssertionClaims.DisplayName),
+            DelegatedProfile.Clean(ClaimOrEmpty(jwt, DelegatedAssertionClaims.DisplayName), ProfileTextMaxChars),
             roleTemplate,
             jwtId,
             expiresAt,
-            state);
+            state,
+            DelegatedProfile.Clean(ClaimOrEmpty(jwt, DelegatedAssertionClaims.CustomerName), ProfileTextMaxChars),
+            DelegatedProfile.NormaliseLocale(ClaimOrEmpty(jwt, DelegatedAssertionClaims.Locale)),
+            DelegatedProfile.NormaliseTheme(ClaimOrEmpty(jwt, DelegatedAssertionClaims.Theme)),
+            DelegatedProfile.NormaliseTimeZone(ClaimOrEmpty(jwt, DelegatedAssertionClaims.TimeZone)));
 
         logger.LogInformation(
             "Delegated assertion accepted for subject {Subject} (jti {JwtId}, expires {ExpiresAt:o}).",
