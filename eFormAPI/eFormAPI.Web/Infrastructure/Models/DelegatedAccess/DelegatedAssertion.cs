@@ -11,8 +11,9 @@ namespace eFormAPI.Web.Infrastructure.Models.DelegatedAccess;
 /// </summary>
 /// <param name="Subject">The portal's stable, never-reassigned identifier for the advisor
 /// (<c>sub</c>). The ONLY safe key for the local principal: never key on email.</param>
-/// <param name="DisplayName">The advisor's display name (<c>name</c>), for audit
-/// attribution only. May be empty; it is never an identifier.</param>
+/// <param name="DisplayName">The advisor's display name (<c>name</c>), for rendering
+/// in the advisor's own session only; it is never stored. May be empty; it is never an
+/// identifier.</param>
 /// <param name="RoleTemplate">The role template the portal asserts (<c>role_template</c>).
 /// Never empty: an assertion that omits it is refused rather than defaulted, because the
 /// caller trusts this result completely and an empty template would silently become
@@ -49,9 +50,10 @@ public static class DelegatedAssertionClaims
     /// replay defence at all, so an assertion that omits it is refused.</summary>
     public static readonly string JwtId = "jti";
 
-    /// <summary>Advisor display name, for audit attribution. Optional, and deliberately
-    /// so: it is never an identifier and never drives a permission, so a missing one is a
-    /// poorer audit line rather than a security decision made on a guess.</summary>
+    /// <summary>Advisor display name, for rendering in the advisor's own session; it is
+    /// never stored. Optional, and deliberately so: it is never an identifier and never
+    /// drives a permission, so a missing one is a plainer session header rather than a
+    /// security decision made on a guess.</summary>
     public static readonly string DisplayName = "name";
 
     /// <summary>

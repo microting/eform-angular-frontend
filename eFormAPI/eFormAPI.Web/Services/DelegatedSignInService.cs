@@ -42,8 +42,10 @@ using Infrastructure.Models.Auth;
 /// real account is disambiguated, never reused.</item>
 /// <item><b>The advisor's real email never enters the customer's database.</b> The row
 /// carries a generated identifier derived from <c>sub</c> plus a non-deliverable address
-/// (Business Central's precedent, spec §8.4). The display name is stored for audit
-/// attribution only and is never an identifier.</item>
+/// (Business Central's precedent, spec §8.4). The assertion's display name and customer
+/// name are never persisted: they reach the advisor's session through
+/// <c>EformAuthorizeResult</c> only, and the stored row always holds the generic
+/// "Delegated advisor" / "(delegated &lt;8 hex&gt;)" pair.</item>
 /// <item><b>The role is chosen server-side.</b> Nothing in the assertion names a role;
 /// the asserted template is looked up in <see cref="RolesByTemplate"/>, which contains no
 /// administrative entry and is additionally guarded against one. User Id 1 is never a
@@ -213,8 +215,11 @@ public sealed class DelegatedSignInService(
         // committed long before this line, so the FIRST session is already populated. An
         // existing principal's membership is whatever the customer has left it as.
         //
-        // The profile write goes BEFORE it for the same reason: a write afterwards would
-        // not reach the session being issued.
+        // The profile write also goes BEFORE it, but that placement is conservative
+        // rather than required: the Locale/TimeZone/Formats/DarkTheme columns do not feed
+        // the claim set (GenerateToken reads only group permissions), and the client reads
+        // them in a separate GetUserSettings call made after login. It stays here so it is
+        // still correct if anything ever reads those columns at token time.
         await ApplyProfileAsync(user, assertion);
 
         var token = await authService.GenerateToken(user);
