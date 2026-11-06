@@ -81,6 +81,11 @@ public class DelegatedSignInServiceTests : DbTestFixture
         string locale, string theme, string timeZone)
         => Assertion(subject, displayName, "", locale, theme, timeZone);
 
+    /// <param name="customerName">The customer the advisor is inside, or "" for none. The
+    /// session shows name and customer together or not at all.</param>
+    /// <param name="locale">Normalised locale, or "" for none.</param>
+    /// <param name="theme">"light", "dark" or "" for none.</param>
+    /// <param name="timeZone">IANA id, or "" for none.</param>
     private static DelegatedAssertion Assertion(string subject, string displayName,
         string customerName, string locale, string theme, string timeZone)
         => new(subject, displayName, DelegatedSignInService.AdvisorRoleTemplate,
@@ -395,6 +400,7 @@ public class DelegatedSignInServiceTests : DbTestFixture
 
     [TestCase("Sara Vest", "")]
     [TestCase("", "Go-Gris I/S")]
+    [TestCase("", "")]
     public async Task SignInAsync_WithOnlyOneOfTheTwoNameClaims_FallsBackToTheStoredName(
         string displayName, string customerName)
     {
@@ -408,23 +414,6 @@ public class DelegatedSignInServiceTests : DbTestFixture
         host.TrackForCleanup(result.Model.Id);
         Assert.That(result.Model.FirstName, Is.EqualTo("Delegated advisor"));
         Assert.That(result.Model.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
-    }
-
-    [Test]
-    public async Task SignInAsync_WithNoNameClaims_ReturnsExactlyTodaysNames()
-    {
-        await using var host = await NewHostAsync();
-        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
-
-        var result = await service.SignInAsync(
-            Assertion(Subject(), "", "", "", "", ""), CancellationToken.None);
-
-        Assert.That(result.Success, Is.True, result.Message);
-        host.TrackForCleanup(result.Model.Id);
-        var stored = await StoredUserAsync(result.Model.Id);
-        Assert.That(result.Model.FirstName, Is.EqualTo("Delegated advisor"));
-        Assert.That(result.Model.FirstName, Is.EqualTo(stored.FirstName));
-        Assert.That(result.Model.LastName, Is.EqualTo(stored.LastName));
     }
 
     [Test]
@@ -442,8 +431,30 @@ public class DelegatedSignInServiceTests : DbTestFixture
         Assert.That(result.Success, Is.True, result.Message);
         host.TrackForCleanup(result.Model.Id);
         Assert.That(result.Model.LastName, Is.EqualTo("(<b>Go</b>)"));
-        var stored = await StoredUserAsync(result.Model.Id);
-        Assert.That(stored.LastName, Does.Not.Contain("Go"));
+    }
+
+    [Test]
+    public async Task SignInAsync_SecondSignInCarryingTheNames_ShowsThemInTheSessionAndStillStoresTheGenericRow()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(Assertion(subject), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
+            Assertion(subject, "Sara Vest", "Go-Gris I/S", "", "", ""), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        Assert.That(second.Model.Id, Is.EqualTo(first.Model.Id), "must be the reuse path");
+        Assert.That(second.Model.FirstName, Is.EqualTo("Sara Vest"));
+        Assert.That(second.Model.LastName, Is.EqualTo("(Go-Gris I/S)"));
+
+        var stored = await StoredUserAsync(second.Model.Id);
+        Assert.That(stored.FirstName, Is.EqualTo("Delegated advisor"));
+        Assert.That(stored.LastName, Does.Match(@"^\(delegated [0-9a-f]{8}\)$"));
     }
 
     [Test]
