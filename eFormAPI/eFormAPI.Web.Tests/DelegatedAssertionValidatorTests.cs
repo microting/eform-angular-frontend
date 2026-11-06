@@ -286,8 +286,9 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
     [Test]
     public async Task ValidateAsync_MissingNameClaim_StillSucceedsWithAnEmptyDisplayName()
     {
-        // name is audit-only and never an identifier, so a missing one is a poorer audit
-        // line, not a security decision taken on a guess.
+        // name is for session rendering only, is never stored and is never an identifier,
+        // so a missing one is a plainer session header, not a security decision taken on
+        // a guess.
         var result = await CreateValidator().ValidateAsync(
             MintToken(displayName: null), CancellationToken.None);
 

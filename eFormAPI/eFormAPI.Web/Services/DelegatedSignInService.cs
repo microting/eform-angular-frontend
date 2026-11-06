@@ -210,16 +210,17 @@ public sealed class DelegatedSignInService(
 
         // GenerateToken reads SecurityGroupUsers -> GroupPermissions ->
         // Permission.ClaimName through ClaimsService and freezes the result into this
-        // session's auth cache entry. Nothing touches group membership from here on: a
+        // session's auth cache entry. It also adds the user's locale claim (from
+        // user.Locale), the user's own claims and role claims. Nothing touches group membership from here on: a
         // newly provisioned principal got its group inside ProvisionAsync, which
         // committed long before this line, so the FIRST session is already populated. An
         // existing principal's membership is whatever the customer has left it as.
         //
-        // The profile write also goes BEFORE it, but that placement is conservative
-        // rather than required: the Locale/TimeZone/Formats/DarkTheme columns do not feed
-        // the claim set (GenerateToken reads only group permissions), and the client reads
-        // them in a separate GetUserSettings call made after login. It stays here so it is
-        // still correct if anything ever reads those columns at token time.
+        // The profile write goes BEFORE it because GenerateToken stamps user.Locale into
+        // the token's locale claim: a write afterwards would issue a token carrying the
+        // previous locale. TimeZone, Formats and DarkTheme do not reach the token, and the
+        // client reads all four through a separate GetUserSettings call after login, so
+        // for those three the placement is conservative rather than required.
         await ApplyProfileAsync(user, assertion);
 
         var token = await authService.GenerateToken(user);
