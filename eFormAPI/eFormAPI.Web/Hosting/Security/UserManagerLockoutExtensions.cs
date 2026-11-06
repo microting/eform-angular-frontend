@@ -137,4 +137,17 @@ public static class UserManagerLockoutExtensions
         Code = CredentialLessAccountCode,
         Description = "An account with no password cannot be given one through the API."
     });
+
+    /// <summary>The Identity error code returned when a preferences write is refused on a
+    /// delegated principal.</summary>
+    public static readonly string DelegatedPreferencesCode = "DelegatedPreferencesReadOnly";
+
+    /// <summary>The failed result for a refused preferences write on a delegated principal.
+    /// A separate reason from <see cref="CredentialLessAccountResult"/>, whose text is about
+    /// credentials.</summary>
+    public static IdentityResult DelegatedPreferencesResult() => IdentityResult.Failed(new IdentityError
+    {
+        Code = DelegatedPreferencesCode,
+        Description = "A delegated session's preferences come from my.microting.com and cannot be changed here."
+    });
 }

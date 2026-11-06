@@ -6,6 +6,7 @@ using eFormAPI.Web.Abstractions.Security;
 using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Hosting.Security;
 using eFormAPI.Web.Infrastructure.Models.ExternalLinks;
+using eFormAPI.Web.Infrastructure.Models.Settings.User;
 using eFormAPI.Web.Integration.Tests.Identity;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.Mailing.EmailService;
@@ -159,5 +160,51 @@ public class DelegatedPrincipalPasswordRefusalTests : DbTestFixture
 
         Assert.That(result.Success, Is.False);
         Assert.That(await StoredHashAsync(host, user.Id), Is.Null);
+    }
+
+    private static async Task<(string Locale, string TimeZone, string Formats, bool DarkTheme)> StoredPreferencesAsync(
+        IdentityTestHost host, int userId)
+    {
+        var row = await host.DbContext.Users.AsNoTracking().Where(u => u.Id == userId)
+            .Select(u => new { u.Locale, u.TimeZone, u.Formats, u.DarkTheme }).SingleAsync();
+        return (row.Locale, row.TimeZone, row.Formats, row.DarkTheme);
+    }
+
+    private static UserSettingsModel DifferentSettings() => new()
+    {
+        Locale = "da",
+        TimeZone = "Asia/Tokyo",
+        Formats = "en-US",
+        DarkTheme = true
+    };
+
+    [Test]
+    public async Task UpdateUserSettings_DelegatedUser_Refuses()
+    {
+        await using var host = new IdentityTestHost(DbContext);
+        var user = await CreateNullHashUserAsync(host, delegated: true);
+        var before = await StoredPreferencesAsync(host, user.Id);
+        Assert.That(before.DarkTheme, Is.False);
+        var service = BuildService(host, user);
+
+        var result = await service.UpdateUserSettings(DifferentSettings());
+
+        Assert.That(result.Success, Is.False);
+        Assert.That(result.Message, Is.EqualTo(UserManagerLockoutExtensions.DelegatedPreferencesResult()
+            .Errors.First().Description));
+        Assert.That(await StoredPreferencesAsync(host, user.Id), Is.EqualTo(before));
+    }
+
+    [Test]
+    public async Task UpdateUserSettings_OrdinaryUser_StillSaves()
+    {
+        await using var host = new IdentityTestHost(DbContext);
+        var user = await CreateNullHashUserAsync(host, delegated: false);
+        var service = BuildService(host, user);
+
+        var result = await service.UpdateUserSettings(DifferentSettings());
+
+        Assert.That(result.Success, Is.True, result.Message);
+        Assert.That(await StoredPreferencesAsync(host, user.Id), Is.EqualTo(("da", "Asia/Tokyo", "en-US", true)));
     }
 }
