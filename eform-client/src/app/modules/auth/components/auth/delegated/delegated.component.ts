@@ -57,14 +57,16 @@ export class DelegatedComponent implements OnInit {
       this.errorKey = 'Delegated sign-in refused';
       return;
     }
-    // Reaching here means this browser, in this tab, asked for this assertion, so replacing
-    // the session is the user's own action. Clear rather than merge: the auth reducer merges
-    // currentUser on login success, so a previous session's fields would otherwise survive.
-    // logout() resets the slice and nothing listens on it, so it does not navigate.
-    this.store.dispatch(logout());
     const sub = this.authService.loginDelegated(assertion).subscribe({
       next: (response) => {
         if (response) {
+          // Reaching here means this browser, in this tab, asked for this assertion, so
+          // replacing the session is the user's own action. Clear rather than merge: the auth
+          // reducer merges currentUser on login success, so a previous session's fields would
+          // otherwise survive. Done only once the sign-in has succeeded, so a failed request
+          // leaves the existing session as it was. logout() resets the slice and nothing
+          // listens on it, so it does not navigate.
+          this.store.dispatch(logout());
           this.authStateService.completeLogin(response);
         } else {
           this.errorKey = 'Delegated sign-in refused';

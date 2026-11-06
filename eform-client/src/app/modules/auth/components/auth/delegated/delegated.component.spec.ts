@@ -117,6 +117,17 @@ describe('DelegatedComponent', () => {
     expect(events).toEqual([`dispatch:${logout().type}`, 'completeLogin']);
   });
 
+  it('leaves the existing session untouched when the sign-in request fails', () => {
+    seedState('nonce-1');
+    authService.loginDelegated.mockReturnValue(
+      throwError(() => new HttpErrorResponse({status: 401, error: {message: 'DelegatedSignInRefused'}})));
+    const fixture = create(`/auth/delegated#assertion=${assertionWithState('nonce-1')}`, true);
+    expect(authService.loginDelegated).toHaveBeenCalledTimes(1);
+    expect(events).not.toContain(`dispatch:${logout().type}`);
+    expect(authState.completeLogin).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.errorKey).toBe('Delegated sign-in refused');
+  });
+
   it('still refuses a live session when the state does not match', () => {
     seedState('nonce-1');
     const fixture = create(`/auth/delegated#assertion=${assertionWithState('nonce-attacker')}`, true);
