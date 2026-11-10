@@ -1188,8 +1188,11 @@ body.theme-workspace {
     }
   }
 
-  // Task board table (native table inside .table-scroll)
-  .task-table td {
+  // Task board table (native table inside .table-scroll). Selectors carry
+  // `.table-scroll table` so they outrank the shared
+  // `.table-scroll table td` cell rules in _workspace-utilities.scss.
+  .task-table td,
+  .table-scroll table.task-table td {
     vertical-align: top;
   }
   .task-table__group-row > th {
@@ -1200,15 +1203,18 @@ body.theme-workspace {
     color: var(--md-on-surface);
     position: static;
   }
-  .task-table__title {
+  .task-table__title,
+  .table-scroll table.task-table td.task-table__title {
     font-weight: 600;
     min-width: 220px;
   }
-  .task-table__row--done .task-table__title {
+  .task-table__row--done .task-table__title,
+  .table-scroll table.task-table .task-table__row--done td.task-table__title {
     text-decoration: line-through;
     color: var(--md-on-surface-variant);
   }
-  .task-table__row--muted td {
+  .task-table__row--muted td,
+  .table-scroll table.task-table .task-table__row--muted td {
     color: var(--md-on-surface-variant);
   }
   .due-button {
