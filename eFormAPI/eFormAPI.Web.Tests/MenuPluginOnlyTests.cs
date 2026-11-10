@@ -3,6 +3,8 @@ using eFormAPI.Web.Services;
 using Microting.eFormApi.BasePn.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Database.Entities;
 using NSubstitute;
+using System.Collections.Generic;
+using MenuItemModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuItemModel;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
 using NUnit.Framework;
 
@@ -34,6 +36,22 @@ public class MenuPluginOnlyTests
         var kept = MenuService.KeepPluginItemsOnly([myEforms, boards]);
 
         Assert.That(kept.Select(i => i.Id), Is.EquivalentTo(new[] { 2 }));
+    }
+
+    private static MenuItemModel Child(params string[] guards) => new() { Guards = guards.ToList() };
+
+    [Test]
+    public void DropdownGuards_AreTheDistinctUnionOfTheChildrensGuards()
+    {
+        var guards = MenuService.DropdownGuards([Child("a"), Child("b", "a")]);
+
+        Assert.That(guards, Is.EqualTo(new[] { "a", "b" }));
+    }
+
+    [Test]
+    public void DropdownGuards_AreEmptyWhenAnyChildIsUnguarded()
+    {
+        Assert.That(MenuService.DropdownGuards([Child("a"), Child()]), Is.Empty);
     }
 
     private static IUserService User(string role)

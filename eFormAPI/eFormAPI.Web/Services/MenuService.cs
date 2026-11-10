@@ -337,6 +337,11 @@ public class MenuService(
                 })
                 .ToList();
 
+            foreach (var item in menuItems.Where(x => x.Guards.Count == 0 && x.MenuItems.Count > 0))
+            {
+                item.Guards = DropdownGuards(item.MenuItems);
+            }
+
             var orderedRightMenu = RightMenuStorage.GetRightMenu().Select(x => new MenuItemModel
             {
                 Name = x.Translations.FirstOrDefault(y => y.LocaleName == currentLocale)?.Name ?? x.Name,
@@ -522,6 +527,16 @@ public class MenuService(
             }
         }
 
+    }
+
+    /// <summary>
+    /// A dropdown is visible when any child is, so its guards are the distinct union of its children's guards.
+    /// One unguarded child keeps it always visible, so the result is empty then (empty means no guard).
+    /// </summary>
+    public static List<string> DropdownGuards(IEnumerable<MenuItemModel> children)
+    {
+        var childGuards = children.Select(c => c.Guards ?? []).ToList();
+        return childGuards.Any(g => g.Count == 0) ? [] : childGuards.SelectMany(g => g).Distinct().ToList();
     }
 
     /// <summary>A plugin-only account has at least one role and neither the admin nor the user role.
