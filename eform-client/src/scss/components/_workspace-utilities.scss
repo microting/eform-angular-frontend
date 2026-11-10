@@ -208,7 +208,7 @@ body.theme-workspace {
   .tag-primary {
     display: inline-block;
     white-space: nowrap;
-    padding: 1px 8px;
+    padding: 1px var(--spacing-md);
     border-radius: var(--radius-sm);
     font-family: var(--font-family);
     font-size: 0.75rem;
@@ -478,7 +478,7 @@ body.theme-workspace {
   }
   .kpi-grid--auto {
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 12px;
+    gap: var(--spacing-lg);
   }
   .kpi-card {
     border: 1px solid var(--md-surface-variant);
@@ -1036,15 +1036,15 @@ body.theme-workspace {
     display: grid;
     gap: 10px;
     margin: 14px 0 0;
-    div {
+    > div {
       display: grid;
       gap: 1px;
     }
-    dt {
+    > div > dt {
       font-size: 0.78rem;
       color: var(--text-quaternary);
     }
-    dd {
+    > div > dd {
       margin: 0;
       font-size: 0.92rem;
       overflow-wrap: anywhere;
@@ -1053,8 +1053,8 @@ body.theme-workspace {
   .empty-panel {
     display: grid;
     justify-items: center;
-    gap: 6px;
-    padding: 40px 16px;
+    gap: var(--spacing-sm);
+    padding: 40px var(--spacing-xl);
     text-align: center;
   }
   .empty-panel__icon {
@@ -1076,8 +1076,7 @@ body.theme-workspace {
   // Used inside a table cell.
   .empty-panel--compact {
     display: block;
-    padding: 32px 16px;
-    text-align: center;
+    padding: 32px var(--spacing-xl);
     color: var(--md-on-surface-variant);
   }
   .cell-sub {
