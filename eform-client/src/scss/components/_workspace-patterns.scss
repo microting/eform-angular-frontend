@@ -1061,8 +1061,7 @@ body.theme-workspace {
     gap: var(--spacing-sm);
     font-size: 0.8rem;
     color: var(--md-on-surface-variant);
-    .mat-icon,
-    mat-icon {
+    .mat-icon {
       width: 18px;
       height: 18px;
       font-size: 18px;
@@ -1075,8 +1074,7 @@ body.theme-workspace {
     font-variant-numeric: tabular-nums;
   }
   .journey-step--todo .journey-step__label {
-    .mat-icon,
-    mat-icon {
+    .mat-icon {
       color: var(--md-outline);
     }
   }
@@ -1104,7 +1102,8 @@ body.theme-workspace {
       margin: 2px 0 0;
     }
   }
-  .media-row__meta {
+  .media-row__meta,
+  .ticket-card__meta {
     font-size: 0.8rem;
     color: var(--text-quaternary);
   }
@@ -1166,10 +1165,6 @@ body.theme-workspace {
     color: var(--md-on-surface-variant);
     overflow-wrap: anywhere;
   }
-  .ticket-card__meta {
-    font-size: 0.8rem;
-    color: var(--text-quaternary);
-  }
   .ticket-card__end {
     display: flex;
     align-items: center;
@@ -1194,10 +1189,8 @@ body.theme-workspace {
   }
 
   // Task board table (native table inside .table-scroll)
-  .task-table {
-    td {
-      vertical-align: top;
-    }
+  .task-table td {
+    vertical-align: top;
   }
   .task-table__group-row > th {
     background: color-mix(in srgb, var(--md-primary) 6%, var(--md-surface));
