@@ -14,6 +14,10 @@
 //   4. Filter panel (.filter-panel[.open])
 //   5. Table toolbar (.employee-table-toolbar-*)
 //   6. Dashboard executive card (.card.dashboard-exec, .dashboard-traffic, etc.)
+//   7. CRM patterns: record layout/identity (.record-layout, .record-id,
+//      .record-head), .journey, activity feed (.activity-feed, .media-row),
+//      ticket cards (.ticket-list, .ticket-card), task table (.task-table,
+//      .due-button, .latest-note)
 // =============================================================================
 
 @use 'page-gutter' as gutter;
@@ -971,5 +975,284 @@ body.theme-workspace {
 
   mat-tree mat-tree-node a.mat-mdc-button-base.nav-link {
     border-radius: var(--radius-lg, 8px) !important;
+  }
+
+  // ---------------------------------------------------------------------------
+  // CRM patterns (customer card, journey, activity feed, tickets, task table)
+  // ---------------------------------------------------------------------------
+
+  // Customer card layout: side | main [| aside]
+  .record-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: var(--spacing-lg);
+    align-items: start;
+  }
+  .record-layout--with-aside {
+    grid-template-columns: 300px minmax(0, 1fr) 300px;
+  }
+  .record-layout__side,
+  .record-layout__main,
+  .record-layout__aside {
+    display: grid;
+    gap: var(--spacing-lg);
+    min-width: 0;
+  }
+  @media (max-width: 1480px) {
+    .record-layout--with-aside {
+      grid-template-columns: 280px minmax(0, 1fr);
+    }
+    .record-layout--with-aside .record-layout__aside {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+  }
+  @media (max-width: 900px) {
+    .record-layout,
+    .record-layout--with-aside {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  // Record identity + card header row
+  .record-id {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+  }
+  .record-id__text {
+    min-width: 0;
+  }
+  .record-id__title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+  }
+  .record-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    h2,
+    h3 {
+      margin: 0;
+    }
+  }
+
+  // Journey steps
+  .journey {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
+  .journey-step {
+    display: grid;
+    gap: var(--spacing-sm);
+    align-content: start;
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-md);
+    padding: 10px var(--spacing-lg);
+  }
+  .journey-step__label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.8rem;
+    color: var(--md-on-surface-variant);
+    .mat-icon {
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      color: var(--md-primary);
+    }
+  }
+  .journey-step__value {
+    font-size: 0.92rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .journey-step--todo .journey-step__label {
+    .mat-icon {
+      color: var(--md-outline);
+    }
+  }
+
+  // Activity feed (timeline posts, contacts)
+  .activity-feed {
+    display: grid;
+    margin-top: var(--spacing-md);
+  }
+  .media-row {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) 0;
+    border-top: 1px solid var(--md-surface-variant);
+    &:first-child {
+      border-top: 0;
+    }
+  }
+  .media-row__body {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    p {
+      margin: 2px 0 0;
+    }
+  }
+  .media-row__meta,
+  .ticket-card__meta {
+    font-size: 0.8rem;
+    color: var(--text-quaternary);
+  }
+  .media-row__actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+  }
+
+  // Ticket card rows
+  .ticket-list {
+    display: grid;
+    gap: var(--spacing-md);
+  }
+  .ticket-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--spacing-md) var(--spacing-lg);
+    align-items: center;
+    padding: var(--spacing-lg) 14px;
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-md);
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    &:hover {
+      background: var(--table-row-hover);
+      border-color: var(--md-outline);
+    }
+  }
+  .ticket-card__main {
+    display: block;
+    min-width: 0;
+    color: inherit;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    &:hover .ticket-card__title {
+      color: var(--md-primary);
+    }
+  }
+  .ticket-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+  }
+  .ticket-card__title {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-xs) 0 2px;
+    font-size: 1rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  .ticket-card__sub {
+    display: block;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--md-on-surface-variant);
+    overflow-wrap: anywhere;
+  }
+  .ticket-card__end {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    justify-self: end;
+  }
+  .ticket-card__prio--critical {
+    color: var(--md-alert);
+    font-weight: 700;
+  }
+  .ticket-card__prio--high {
+    color: var(--md-on-surface);
+    font-weight: 700;
+  }
+  @media (max-width: 560px) {
+    .ticket-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ticket-card__end {
+      justify-self: start;
+    }
+  }
+
+  // Task board table (native table inside .table-scroll). Selectors carry
+  // `.table-scroll table` so they outrank the shared
+  // `.table-scroll table td` cell rules in _workspace-utilities.scss.
+  .task-table td,
+  .table-scroll table.task-table td {
+    vertical-align: top;
+  }
+  .task-table__group-row > th {
+    background: color-mix(in srgb, var(--md-primary) 6%, var(--md-surface));
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.9rem;
+    color: var(--md-on-surface);
+    position: static;
+  }
+  .task-table__title,
+  .table-scroll table.task-table td.task-table__title {
+    font-weight: 600;
+    min-width: 220px;
+  }
+  .task-table__row--done .task-table__title,
+  .table-scroll table.task-table .task-table__row--done td.task-table__title {
+    text-decoration: line-through;
+    color: var(--md-on-surface-variant);
+  }
+  .task-table__row--muted td,
+  .table-scroll table.task-table .task-table__row--muted td {
+    color: var(--md-on-surface-variant);
+  }
+  .due-button {
+    display: inline-flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+    border: 1px solid var(--md-surface-variant);
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    border-radius: var(--radius-sm);
+    padding: 5px var(--spacing-md);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    &:disabled {
+      cursor: default;
+      opacity: 0.75;
+    }
+  }
+  .due-button--overdue {
+    color: var(--md-alert);
+    border-color: color-mix(in srgb, var(--md-alert) 40%, var(--md-surface));
+  }
+  .latest-note {
+    display: block;
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--md-primary) 6%, var(--md-surface));
+    font-size: 0.8rem;
+    color: var(--md-on-surface-variant);
+    span {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--md-on-surface);
+    }
   }
 }

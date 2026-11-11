@@ -43,6 +43,7 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu
 using MenuModel = eFormAPI.Web.Infrastructure.Models.Menu.MenuModel;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
+using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 
 namespace eFormAPI.Web.Integration.Tests.Services
 {
@@ -221,6 +222,51 @@ namespace eFormAPI.Web.Integration.Tests.Services
                 DbContext.SaveChanges();
                 DbContext.MenuTemplates.RemoveRange(DbContext.MenuTemplates.Where(x => x.Name.StartsWith("PluginOnlyTest-")));
                 DbContext.EformPlugins.Remove(plugin);
+                DbContext.SaveChanges();
+            }
+        }
+
+        [Test]
+        public async Task GetCurrentUserMenu_DropdownGuards_AreUnionOfChildren()
+        {
+            var dropdown = AddItem("GuardUnionTest-Dropdown", null, null, 9100);
+            var first = AddItem("GuardUnionTest-A", dropdown.Id, null, 1);
+            var second = AddItem("GuardUnionTest-B", dropdown.Id, null, 2);
+            var permissions = new List<Permission>();
+            foreach (var (item, claim) in new[] { (first, "guard_union_a"), (second, "guard_union_b") })
+            {
+                var permission = new Permission { PermissionName = claim, ClaimName = claim, PermissionTypeId = 1 };
+                DbContext.Permissions.Add(permission);
+                DbContext.SaveChanges();
+                DbContext.MenuTemplatePermissions.Add(new MenuTemplatePermission
+                    { MenuTemplateId = item.MenuTemplateId.Value, PermissionId = permission.Id });
+                DbContext.SaveChanges();
+                permissions.Add(permission);
+            }
+            var created = DbContext.MenuItems.Where(x => x.Name.StartsWith("GuardUnionTest-")).Select(x => x.Id).ToList();
+            try
+            {
+                _userService.Role.Returns(EformRole.Admin);
+                _userService.IsInRole(Arg.Any<string>()).Returns(ci => ci.Arg<string>() == EformRole.Admin);
+                _userService.GetCurrentUserLocale().Returns(LocaleNames.English);
+                _userService.GetCurrentUserAsync().Returns(new EformUser { Id = 987654 });
+                _claimsService.GetUserClaimsNames(Arg.Any<int>()).Returns(new List<string>());
+
+                var result = await _menuService.GetCurrentUserMenu();
+
+                Assert.That(result.Success, Is.True, result.Message);
+                var kept = result.Model.LeftMenu.Single(x => x.E2EId == "GuardUnionTest-Dropdown");
+                Assert.That(kept.Guards, Is.EquivalentTo(new[] { "guard_union_a", "guard_union_b" }));
+            }
+            finally
+            {
+                DbContext.MenuTemplatePermissions.RemoveRange(DbContext.MenuTemplatePermissions
+                    .Where(x => permissions.Select(p => p.Id).Contains(x.PermissionId)));
+                DbContext.Permissions.RemoveRange(permissions);
+                DbContext.MenuItemTranslations.RemoveRange(DbContext.MenuItemTranslations.Where(x => created.Contains(x.MenuItemId)));
+                DbContext.MenuItems.RemoveRange(DbContext.MenuItems.Where(x => created.Contains(x.Id)));
+                DbContext.SaveChanges();
+                DbContext.MenuTemplates.RemoveRange(DbContext.MenuTemplates.Where(x => x.Name.StartsWith("GuardUnionTest-")));
                 DbContext.SaveChanges();
             }
         }

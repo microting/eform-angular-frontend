@@ -175,6 +175,23 @@ body.theme-workspace {
     background: var(--status-inaktiv-bg);
     color: var(--status-inaktiv-fg);
   }
+  .status-chip--info {
+    background: var(--md-primary-container);
+    color: var(--md-primary);
+  }
+  .status-chip--neutral {
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface);
+  }
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+  .chip__count {
+    font-weight: 700;
+    opacity: 0.8;
+  }
   .tag {
     display: inline-flex;
     align-items: center;
@@ -187,6 +204,17 @@ body.theme-workspace {
     border: 1px solid transparent;
     background: var(--md-surface-variant);
     color: var(--md-on-surface);
+  }
+  .tag-primary {
+    display: inline-block;
+    white-space: nowrap;
+    padding: 1px var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: color-mix(in srgb, var(--md-primary) 10%, var(--md-surface));
+    color: var(--md-primary);
   }
   .tag-success {
     // Maps to documented green band; uses status-aktiv tokens to stay token-driven.
@@ -416,7 +444,8 @@ body.theme-workspace {
     font: inherit;
     font-family: var(--font-family);
     &.active,
-    &[aria-selected="true"] {
+    &[aria-selected="true"],
+    &[aria-pressed="true"] {
       background: var(--md-primary-container);
       color: var(--md-primary);
     }
@@ -447,6 +476,10 @@ body.theme-workspace {
     display: grid;
     gap: 10px;
   }
+  .kpi-grid--auto {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: var(--spacing-lg);
+  }
   .kpi-card {
     border: 1px solid var(--md-surface-variant);
     border-radius: var(--radius-sm, 4px);
@@ -459,6 +492,20 @@ body.theme-workspace {
       font-size: 1.4rem;
       font-weight: 700;
     }
+  }
+  .kpi-card__label {
+    font-size: 0.8rem;
+    color: var(--md-on-surface-variant);
+  }
+  .kpi-card__value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .kpi-card__hint {
+    font-size: 0.8rem;
+    color: var(--text-quaternary);
   }
   .card {
     background: var(--md-surface-container);
@@ -489,6 +536,11 @@ body.theme-workspace {
     &:last-child {
       border-bottom: none;
     }
+  }
+  .list-item__main {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-inline-end: var(--spacing-md);
   }
   .badge {
     display: inline-flex;
@@ -876,6 +928,10 @@ body.theme-workspace {
     border-left-color: var(--md-alert);
     background: color-mix(in srgb, var(--md-alert) 14%, transparent);
   }
+  .alert--info {
+    border-left-color: var(--md-primary);
+    background: color-mix(in srgb, var(--md-primary) 8%, var(--md-surface));
+  }
   // Toast snackbar — toggle visibility via `.show`. Token-driven (no #323232).
   .snackbar {
     position: fixed;
@@ -944,5 +1000,92 @@ body.theme-workspace {
       padding: 0;
       list-style: none;
     }
+  }
+
+  // 11. CRM primitives — avatars, detail lists, empty panels, table cell helpers.
+  .avatar-initials {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-rounded-full);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    background: var(--md-primary-container);
+    color: var(--md-primary);
+    flex-shrink: 0;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+  }
+  .avatar-initials--sm {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+  .avatar-initials--logo {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    background: var(--md-surface-variant);
+    color: var(--md-on-surface-variant);
+  }
+  .detail-list {
+    display: grid;
+    gap: 10px;
+    margin: 14px 0 0;
+    > div {
+      display: grid;
+      gap: 1px;
+    }
+    > div > dt {
+      font-size: 0.78rem;
+      color: var(--text-quaternary);
+    }
+    > div > dd {
+      margin: 0;
+      font-size: 0.92rem;
+      overflow-wrap: anywhere;
+    }
+  }
+  .empty-panel {
+    display: grid;
+    justify-items: center;
+    gap: var(--spacing-sm);
+    padding: 40px var(--spacing-xl);
+    text-align: center;
+  }
+  .empty-panel__icon {
+    font-size: 40px;
+    color: var(--md-outline);
+  }
+  .empty-panel__title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+  .empty-panel__text {
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--md-on-surface-variant);
+  }
+  // Used inside a table cell.
+  .empty-panel--compact {
+    display: block;
+    padding: 32px var(--spacing-xl);
+    color: var(--md-on-surface-variant);
+  }
+  .cell-sub {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--md-on-surface-variant);
+  }
+  .text-overdue {
+    color: var(--md-alert);
+    font-weight: 600;
   }
 }

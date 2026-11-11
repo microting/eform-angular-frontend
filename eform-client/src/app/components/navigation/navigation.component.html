@@ -32,7 +32,7 @@
     </ng-container>
   </mat-tree-node>
   <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding="">
-    <mat-accordion *ngIf="checkGuards(node.guards)">
+    <mat-accordion *ngIf="checkGuards(node.guards) | async">
       <mat-expansion-panel [expanded]="treeControl.isExpanded(node)">
         <mat-expansion-panel-header>
           <a
