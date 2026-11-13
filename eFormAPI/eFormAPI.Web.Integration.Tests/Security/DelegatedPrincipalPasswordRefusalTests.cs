@@ -162,12 +162,12 @@ public class DelegatedPrincipalPasswordRefusalTests : DbTestFixture
         Assert.That(await StoredHashAsync(host, user.Id), Is.Null);
     }
 
-    private static async Task<(string Locale, string TimeZone, string Formats, bool DarkTheme)> StoredPreferencesAsync(
+    private static async Task<(string Locale, string TimeZone, string Formats, bool DarkTheme, string ThemeMode)> StoredPreferencesAsync(
         IdentityTestHost host, int userId)
     {
         var row = await host.DbContext.Users.AsNoTracking().Where(u => u.Id == userId)
-            .Select(u => new { u.Locale, u.TimeZone, u.Formats, u.DarkTheme }).SingleAsync();
-        return (row.Locale, row.TimeZone, row.Formats, row.DarkTheme);
+            .Select(u => new { u.Locale, u.TimeZone, u.Formats, u.DarkTheme, u.ThemeMode }).SingleAsync();
+        return (row.Locale, row.TimeZone, row.Formats, row.DarkTheme, row.ThemeMode);
     }
 
     private static UserSettingsModel DifferentSettings() => new()
@@ -175,7 +175,10 @@ public class DelegatedPrincipalPasswordRefusalTests : DbTestFixture
         Locale = "da",
         TimeZone = "Asia/Tokyo",
         Formats = "en-US",
-        DarkTheme = true
+        // The posted bool contradicts the posted mode on purpose: a stored true can only come from the
+        // server deriving it from ThemeMode.
+        DarkTheme = false,
+        ThemeMode = "dark"
     };
 
     [Test]
@@ -205,6 +208,6 @@ public class DelegatedPrincipalPasswordRefusalTests : DbTestFixture
         var result = await service.UpdateUserSettings(DifferentSettings());
 
         Assert.That(result.Success, Is.True, result.Message);
-        Assert.That(await StoredPreferencesAsync(host, user.Id), Is.EqualTo(("da", "Asia/Tokyo", "en-US", true)));
+        Assert.That(await StoredPreferencesAsync(host, user.Id), Is.EqualTo(("da", "Asia/Tokyo", "en-US", true, "dark")));
     }
 }
