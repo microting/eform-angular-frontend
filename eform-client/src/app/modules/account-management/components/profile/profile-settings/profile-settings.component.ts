@@ -243,7 +243,7 @@ export class ProfileSettingsComponent implements OnInit {
                 locale: this.userSettingsModel.locale,
                 formats: this.userSettingsModel.formats,
                 timeZone: this.userSettingsModel.timeZone,
-                themeMode: this.userSettingsModel.themeMode,
+                themeMode: this.userSettingsModel.themeMode ?? 'system',
                 isTwoFactorEnabled: this.googleAuthInfoModel.isTwoFactorEnabled,
               });
             });
