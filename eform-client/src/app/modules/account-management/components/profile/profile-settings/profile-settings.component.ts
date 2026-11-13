@@ -20,8 +20,10 @@ import {
   loadAppMenu,
   selectBearerToken,
   selectCurrentUserIsAdmin,
-  updateCurrentUserLocaleAndDarkTheme
+  updateCurrentUserLocaleAndDarkTheme,
+  updateThemeMode
 } from 'src/app/state';
+import { ThemeMode } from 'src/app/common/services/theme-mode.service';
 import { FileItem, FileUploader, FileUploaderOptions, FileUploadModule } from 'ng2-file-upload';
 import {v4 as uuid} from 'uuid';
 import * as R from 'ramda';
@@ -33,6 +35,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MtxSelect } from '@ng-matero/extensions/select';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButton } from '@angular/material/button';
 import { AuthImagePipe } from 'src/app/common/pipes';
 
@@ -40,7 +43,7 @@ import { AuthImagePipe } from 'src/app/common/pipes';
     selector: 'app-profile-settings',
     templateUrl: './profile-settings.component.html',
     styleUrls: ['./profile-settings.component.scss'],
-    imports: [EformNewSubheaderComponent, ReactiveFormsModule, MatCard, NgIf, MatIcon, FileUploadModule, MatTooltip, MatFormField, MatLabel, MtxSelect, MatCheckbox, MatButton, AsyncPipe, AuthImagePipe, TranslatePipe]
+    imports: [EformNewSubheaderComponent, ReactiveFormsModule, MatCard, NgIf, MatIcon, FileUploadModule, MatTooltip, MatFormField, MatLabel, MtxSelect, MatCheckbox, MatButtonToggleModule, MatButton, AsyncPipe, AuthImagePipe, TranslatePipe]
 })
 export class ProfileSettingsComponent implements OnInit {
   private fb = inject(FormBuilder);
@@ -71,7 +74,7 @@ export class ProfileSettingsComponent implements OnInit {
     locale: new FormControl(''),
     formats: new FormControl(''),
     timeZone: new FormControl(''),
-    darkTheme: new FormControl(false),
+    themeMode: new FormControl('system'),
     isTwoFactorEnabled: new FormControl(false),
   });
 
@@ -185,7 +188,7 @@ export class ProfileSettingsComponent implements OnInit {
     this.userSettingsModel.locale = formValue.locale;
     this.userSettingsModel.formats = formValue.formats;
     this.userSettingsModel.timeZone = formValue.timeZone;
-    this.userSettingsModel.darkTheme = formValue.darkTheme;
+    this.userSettingsModel.themeMode = formValue.themeMode;
 
     if (this.profilePictureUploader.queue.length > 0) {
       this.profilePictureUploader.queue[0].upload();
@@ -201,6 +204,7 @@ export class ProfileSettingsComponent implements OnInit {
             languageId: this.userSettingsModel.languageId,
           })
         );
+        this.store.dispatch(updateThemeMode(this.userSettingsModel.themeMode as ThemeMode));
         this.getUserSettings();
       });
       this.store.dispatch(loadAppMenu());
@@ -239,7 +243,7 @@ export class ProfileSettingsComponent implements OnInit {
                 locale: this.userSettingsModel.locale,
                 formats: this.userSettingsModel.formats,
                 timeZone: this.userSettingsModel.timeZone,
-                darkTheme: this.userSettingsModel.darkTheme,
+                themeMode: this.userSettingsModel.themeMode,
                 isTwoFactorEnabled: this.googleAuthInfoModel.isTwoFactorEnabled,
               });
             });
