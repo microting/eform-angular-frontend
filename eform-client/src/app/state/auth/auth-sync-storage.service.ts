@@ -27,25 +27,45 @@ export class AuthSyncStorageService {
       select(authFeatureSelector),
       filter(state => !!state)
     ).subscribe(state => {
-      localStorage.setItem(AUTH_LOCALSTORAGE_KEY, JSON.stringify(state));
       try {
-        localStorage.setItem(THEME_MODE_LOCALSTORAGE_KEY, state.currentUser?.themeMode || 'system');
+        // storage can be unavailable (private window, blocked site data); the store must keep working
+        localStorage.setItem(AUTH_LOCALSTORAGE_KEY, JSON.stringify(state));
+        localStorage.setItem(THEME_MODE_LOCALSTORAGE_KEY, AuthSyncStorageService.mirroredMode(state));
       } catch (e) {
-        // blocked or full storage must not break the store
+        // ignore
       }
     });
 
     window.addEventListener('storage', () => this.loadFromStorage()); // sync storage between tabs
   }
 
-  private loadFromStorage() {
-    const state = localStorage.getItem(AUTH_LOCALSTORAGE_KEY);
-    if (state) {
-      try {
-        this.store$.dispatch(loadAuthState({state: JSON.parse(state)}));
-      } catch (e) {
-        // an unparseable blob is ignored; the initial state stands
-      }
+  // Blobs saved before the mode existed carry only the darkTheme bool: derive the mode from it so nobody's
+  // appearance changes on upgrade. 'system' only when neither field is present.
+  private static mirroredMode(state: AuthState): string {
+    const user = state.currentUser;
+    if (user?.themeMode) {
+      return user.themeMode;
     }
+    if (user?.darkTheme === true) {
+      return 'dark';
+    }
+    if (user?.darkTheme === false) {
+      return 'light';
+    }
+    return 'system';
+  }
+
+  private loadFromStorage() {
+    const raw = localStorage.getItem(AUTH_LOCALSTORAGE_KEY);
+    if (!raw) {
+      return;
+    }
+    let parsed: AuthState;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (e) {
+      return; // an unparseable blob is ignored; the initial state stands
+    }
+    this.store$.dispatch(loadAuthState({state: parsed}));
   }
 }
