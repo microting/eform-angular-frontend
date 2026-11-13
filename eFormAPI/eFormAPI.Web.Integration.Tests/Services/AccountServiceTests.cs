@@ -158,6 +158,77 @@ namespace eFormAPI.Web.Integration.Tests.Services
             Assert.That(result.Success, Is.True);
         }
 
+        // GetUserSettings also needs the SDK core for the language lookup, which is a concrete class that
+        // cannot be stubbed here, so the read-side normalisation is tested through its static helper.
+        [TestCase("dark", "dark")]
+        [TestCase("light", "light")]
+        [TestCase("system", "system")]
+        public void GetUserSettings_ReturnsTheStoredThemeMode(string stored, string expected)
+        {
+            Assert.That(AccountService.NormalizeThemeMode(stored) ?? "system", Is.EqualTo(expected));
+        }
+
+        [TestCase("")]
+        [TestCase(null)]
+        [TestCase("sepia")]
+        public void GetUserSettings_WhenThemeModeIsEmptyOrUnknown_ReturnsSystem(string stored)
+        {
+            Assert.That(AccountService.NormalizeThemeMode(stored) ?? "system", Is.EqualTo("system"));
+        }
+
+        [TestCase("dark", true)]
+        [TestCase("light", false)]
+        public async Task UpdateUserSettings_WithAFixedMode_SetsDarkThemeToMatch(string mode, bool expectedDark)
+        {
+            var user = new EformUser { Id = 1, Email = "t@example.com", DarkTheme = !expectedDark, ThemeMode = "system" };
+            _userService.GetCurrentUserAsync().Returns(user);
+            _userManager.UpdateAsync(Arg.Any<EformUser>()).Returns(IdentityResult.Success);
+
+            // The posted DarkTheme deliberately contradicts the mode: it must be ignored.
+            var result = await _accountService.UpdateUserSettings(new UserSettingsModel
+            {
+                Locale = "en", TimeZone = "UTC", Formats = "en-US", ThemeMode = mode, DarkTheme = !expectedDark
+            });
+
+            Assert.That(result.Success, Is.True);
+            Assert.That(user.ThemeMode, Is.EqualTo(mode));
+            Assert.That(user.DarkTheme, Is.EqualTo(expectedDark));
+        }
+
+        [Test]
+        public async Task UpdateUserSettings_WithSystem_LeavesDarkThemeUntouched()
+        {
+            var user = new EformUser { Id = 1, Email = "t@example.com", DarkTheme = true, ThemeMode = "dark" };
+            _userService.GetCurrentUserAsync().Returns(user);
+            _userManager.UpdateAsync(Arg.Any<EformUser>()).Returns(IdentityResult.Success);
+
+            await _accountService.UpdateUserSettings(new UserSettingsModel
+            {
+                Locale = "en", TimeZone = "UTC", Formats = "en-US", ThemeMode = "system", DarkTheme = false
+            });
+
+            Assert.That(user.ThemeMode, Is.EqualTo("system"));
+            Assert.That(user.DarkTheme, Is.True);
+        }
+
+        [TestCase("")]
+        [TestCase(null)]
+        [TestCase("sepia")]
+        public async Task UpdateUserSettings_WithEmptyOrUnknownMode_ChangesNeitherField(string mode)
+        {
+            var user = new EformUser { Id = 1, Email = "t@example.com", DarkTheme = true, ThemeMode = "dark" };
+            _userService.GetCurrentUserAsync().Returns(user);
+            _userManager.UpdateAsync(Arg.Any<EformUser>()).Returns(IdentityResult.Success);
+
+            await _accountService.UpdateUserSettings(new UserSettingsModel
+            {
+                Locale = "en", TimeZone = "UTC", Formats = "en-US", ThemeMode = mode, DarkTheme = false
+            });
+
+            Assert.That(user.ThemeMode, Is.EqualTo("dark"));
+            Assert.That(user.DarkTheme, Is.True);
+        }
+
         [Test]
         public async Task GetUserSettings_WithNoUser_ShouldReturnError()
         {

@@ -100,6 +100,13 @@ public class AccountService(
         };
     }
 
+    /// <summary>Returns "system", "light" or "dark" (case-insensitive), or null for anything else.</summary>
+    public static string NormalizeThemeMode(string value)
+    {
+        var mode = value?.Trim().ToLowerInvariant();
+        return mode is "system" or "light" or "dark" ? mode : null;
+    }
+
     public async Task<OperationDataResult<UserSettingsModel>> GetUserSettings()
     {
         var user = await userService.GetCurrentUserAsync();
@@ -112,6 +119,7 @@ public class AccountService(
         var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
         var darkTheme = user.DarkTheme;
         var themeVariant = string.IsNullOrEmpty(user.ThemeVariant) ? "eform" : user.ThemeVariant;
+        var themeMode = NormalizeThemeMode(user.ThemeMode) ?? "system";
         var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
         var core = await coreHelper.GetCore();
         var dbContextHelper = core.DbContextHelper;
@@ -132,6 +140,7 @@ public class AccountService(
             Locale = locale,
             LanguageId = languageId,
             DarkTheme = darkTheme,
+            ThemeMode = themeMode,
             ThemeVariant = themeVariant,
             Formats = formats,
             TimeZone = timeZone,
@@ -177,7 +186,18 @@ public class AccountService(
         user.Locale = model.Locale;
         user.TimeZone = model.TimeZone;
         user.Formats = model.Formats;
-        user.DarkTheme = model.DarkTheme;
+        // The server derives DarkTheme from ThemeMode; a posted DarkTheme is never trusted. Empty or
+        // unknown ThemeMode means "said nothing" and changes neither field. "system" keeps the last
+        // concrete DarkTheme so plugins on older packages still see a sensible value.
+        var postedMode = NormalizeThemeMode(model.ThemeMode);
+        if (postedMode != null)
+        {
+            user.ThemeMode = postedMode;
+            if (postedMode != "system")
+            {
+                user.DarkTheme = postedMode == "dark";
+            }
+        }
         if (!string.IsNullOrEmpty(model.ThemeVariant))
         {
             user.ThemeVariant = model.ThemeVariant;
