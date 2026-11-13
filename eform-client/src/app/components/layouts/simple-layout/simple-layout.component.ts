@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
-import {take} from 'rxjs';
+import {Subscription, take} from 'rxjs';
+import {ThemeModeService} from 'src/app/common/services/theme-mode.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import { Router, RouterOutlet } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {AppSettingsService} from 'src/app/common/services';
-import {connectionStringExistCount} from 'src/app/state';
+import {connectionStringExistCount, selectIsDarkMode} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -19,6 +20,8 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
   settingsService = inject(AppSettingsService);
   router = inject(Router);
+  private themeModeService = inject(ThemeModeService);
+  private appearanceSub$: Subscription;
 
 
   constructor() {
@@ -28,9 +31,20 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.debug('SimpleLayoutComponent - ngOnInit');
     this.getSettings();
-    this.switchToLightTheme();
+    // before sign-in there is no stored preference, so the OS is the only signal
+    this.appearanceSub$ = this.themeModeService.appearance$.subscribe(
+      (appearance) => appearance === 'dark' ? this.switchToDarkTheme() : this.switchToLightTheme()
+    );
+    this.authStore.select(selectIsDarkMode).pipe(take(1)).subscribe(
+      (isDark) => this.themeModeService.setMode('system', !!isDark)
+    );
     this.authStateService.initLocale();
     console.debug('SimpleLayoutComponent - ngOnInit - done');
+  }
+
+  switchToDarkTheme() {
+    this.renderer.addClass(document.body, 'theme-dark');
+    this.renderer.removeClass(document.body, 'theme-light');
   }
 
   switchToLightTheme() {
@@ -54,5 +68,6 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.appearanceSub$?.unsubscribe();
   }
 }

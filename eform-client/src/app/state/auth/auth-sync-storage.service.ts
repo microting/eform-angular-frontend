@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {authFeatureSelector, AuthState, loadAuthState} from 'src/app/state';
 import {select, Store} from '@ngrx/store';
 import {filter} from 'rxjs/operators';
+import {deriveThemeMode} from './theme-mode-derivation';
 
 export const AUTH_LOCALSTORAGE_KEY = 'auth';
 // read synchronously by the inline script in index.html before Angular boots
@@ -30,29 +31,13 @@ export class AuthSyncStorageService {
       try {
         // storage can be unavailable (private window, blocked site data); the store must keep working
         localStorage.setItem(AUTH_LOCALSTORAGE_KEY, JSON.stringify(state));
-        localStorage.setItem(THEME_MODE_LOCALSTORAGE_KEY, AuthSyncStorageService.mirroredMode(state));
+        localStorage.setItem(THEME_MODE_LOCALSTORAGE_KEY, deriveThemeMode(state.currentUser));
       } catch (e) {
         // ignore
       }
     });
 
     window.addEventListener('storage', () => this.loadFromStorage()); // sync storage between tabs
-  }
-
-  // Blobs saved before the mode existed carry only the darkTheme bool: derive the mode from it so nobody's
-  // appearance changes on upgrade. 'system' only when neither field is present.
-  private static mirroredMode(state: AuthState): string {
-    const user = state.currentUser;
-    if (user?.themeMode) {
-      return user.themeMode;
-    }
-    if (user?.darkTheme === true) {
-      return 'dark';
-    }
-    if (user?.darkTheme === false) {
-      return 'light';
-    }
-    return 'system';
   }
 
   private loadFromStorage() {

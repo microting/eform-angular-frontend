@@ -73,6 +73,28 @@ describe('AuthSyncStorageService theme mode', () => {
     expect(localStorage.getItem(THEME_MODE_LOCALSTORAGE_KEY)).toBe('dark');
   });
 
+  it('derivesLight_FromDarkThemeFalse_WhenTheHydratedBlobPredatesTheMode', () => {
+    const {themeMode, ...user} = {...authInitialState.currentUser, darkTheme: false} as any;
+    localStorage.setItem(AUTH_LOCALSTORAGE_KEY, JSON.stringify({...authInitialState, currentUser: user}));
+    setup();
+    service.init();
+    let mode: string;
+    store.select(selectThemeMode).subscribe(m => mode = m).unsubscribe();
+    expect(mode).toBe('light');
+    expect(localStorage.getItem(THEME_MODE_LOCALSTORAGE_KEY)).toBe('light');
+  });
+
+  it('selectThemeMode_AgreesWithTheMirror_ForADarkPreFeatureBlob', () => {
+    const {themeMode, ...user} = {...authInitialState.currentUser, darkTheme: true} as any;
+    localStorage.setItem(AUTH_LOCALSTORAGE_KEY, JSON.stringify({...authInitialState, currentUser: user}));
+    setup();
+    service.init();
+    let mode: string;
+    store.select(selectThemeMode).subscribe(m => mode = m).unsubscribe();
+    expect(mode).toBe(localStorage.getItem(THEME_MODE_LOCALSTORAGE_KEY));
+    expect(mode).toBe('dark');
+  });
+
   it('keepsWriting_TheStore_WhenStorageThrows', () => {
     setup();
     const spy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('blocked'); });
