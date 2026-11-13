@@ -284,11 +284,34 @@ public class DelegatedSignInServiceTests : DbTestFixture
         host.TrackForCleanup(first.Model.Id);
 
         var second = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "", "true", ""), CancellationToken.None);
+
+        Assert.That(second.Success, Is.True, second.Message);
+        var stored = await StoredUserAsync(first.Model.Id);
+        Assert.That(stored.DarkTheme, Is.True,
+            "an unrecognised value is not \"light\"; it must not switch the theme off");
+        Assert.That(stored.ThemeMode, Is.EqualTo("dark"), "an unrecognised value changes nothing");
+    }
+
+    [Test]
+    public async Task SignInAsync_WithSystem_WritesTheModeAndLeavesDarkThemeUntouched()
+    {
+        await using var host = await NewHostAsync();
+        var service = BuildService(host, new CapturingLogger<DelegatedSignInService>());
+        var subject = Subject();
+
+        var first = await service.SignInAsync(
+            Assertion(subject, "Jane Advisor", "", "dark", ""), CancellationToken.None);
+        Assert.That(first.Success, Is.True, first.Message);
+        host.TrackForCleanup(first.Model.Id);
+
+        var second = await service.SignInAsync(
             Assertion(subject, "Jane Advisor", "", "system", ""), CancellationToken.None);
 
         Assert.That(second.Success, Is.True, second.Message);
-        Assert.That((await StoredUserAsync(first.Model.Id)).DarkTheme, Is.True,
-            "\"system\" is not \"light\"; it must not switch the theme off");
+        var stored = await StoredUserAsync(first.Model.Id);
+        Assert.That(stored.ThemeMode, Is.EqualTo("system"));
+        Assert.That(stored.DarkTheme, Is.True, "a system claim must leave the fallback bool as it was");
     }
 
     /// <summary>A validator that fails every user validation. Added to the REAL

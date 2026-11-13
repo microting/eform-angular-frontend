@@ -9,11 +9,11 @@ public class DelegatedProfileTests
     [TestCase("light", "light")]
     [TestCase("dark", "dark")]
     [TestCase("DARK", "dark")]
-    [TestCase("system", "")]
+    [TestCase("system", "system")]
     [TestCase("true", "")]
     [TestCase("", "")]
     [TestCase(null, "")]
-    public void NormaliseTheme_AcceptsOnlyLightAndDark(string raw, string expected)
+    public void NormaliseTheme_AcceptsSystemLightAndDark(string raw, string expected)
         => Assert.That(DelegatedProfile.NormaliseTheme(raw), Is.EqualTo(expected));
 
     [TestCase("da", "da")]

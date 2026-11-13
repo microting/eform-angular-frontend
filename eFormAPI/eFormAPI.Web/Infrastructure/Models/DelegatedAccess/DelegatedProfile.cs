@@ -69,7 +69,7 @@ public static class DelegatedProfile
     {
         var lowered = (raw ?? "").Trim().ToLowerInvariant();
 
-        return lowered is "light" or "dark" ? lowered : "";
+        return lowered is "light" or "dark" or "system" ? lowered : "";
     }
 
     public static string NormaliseTimeZone(string raw)
