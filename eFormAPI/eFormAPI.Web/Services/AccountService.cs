@@ -115,11 +115,6 @@ public class AccountService(
             return new OperationDataResult<UserSettingsModel>(false, localizationService.GetString("UserNotFound"));
         }
 
-        var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
-        var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
-        var darkTheme = user.DarkTheme;
-        var themeVariant = string.IsNullOrEmpty(user.ThemeVariant) ? "eform" : user.ThemeVariant;
-        var themeMode = NormalizeThemeMode(user.ThemeMode) ?? "system";
         var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
         var core = await coreHelper.GetCore();
         var dbContextHelper = core.DbContextHelper;
@@ -135,20 +130,27 @@ public class AccountService(
             .Select(x => x.SecurityGroup.RedirectLink)
             .FirstOrDefaultAsync();
 
-        return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
+        return new OperationDataResult<UserSettingsModel>(true,
+            BuildUserSettingsModel(user, languageId, securityGroupRedirectLink));
+    }
+
+    /// <summary>Builds the settings response from already-resolved inputs, applying the stored-value defaults.</summary>
+    public static UserSettingsModel BuildUserSettingsModel(EformUser user, int languageId, string loginRedirectUrl)
+    {
+        return new UserSettingsModel()
         {
-            Locale = locale,
+            Locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale,
             LanguageId = languageId,
-            DarkTheme = darkTheme,
-            ThemeMode = themeMode,
-            ThemeVariant = themeVariant,
-            Formats = formats,
-            TimeZone = timeZone,
-            LoginRedirectUrl = securityGroupRedirectLink,
+            DarkTheme = user.DarkTheme,
+            ThemeMode = NormalizeThemeMode(user.ThemeMode) ?? "system",
+            ThemeVariant = string.IsNullOrEmpty(user.ThemeVariant) ? "eform" : user.ThemeVariant,
+            Formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats,
+            TimeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone,
+            LoginRedirectUrl = loginRedirectUrl,
             ProfilePicture = user.ProfilePicture,
             ProfilePictureSnapshot = user.ProfilePictureSnapshot,
             EmailSha256 = user.EmailSha256
-        });
+        };
     }
 
     public OperationDataResult<TimeZonesModel> AllTimeZones()

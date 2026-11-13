@@ -176,6 +176,30 @@ namespace eFormAPI.Web.Integration.Tests.Services
             Assert.That(AccountService.NormalizeThemeMode(stored) ?? "system", Is.EqualTo("system"));
         }
 
+        [Test]
+        public void BuildUserSettingsModel_CarriesTheNormalisedThemeMode()
+        {
+            var model = AccountService.BuildUserSettingsModel(new EformUser { ThemeMode = "dark" }, 3, null);
+            Assert.That(model.ThemeMode, Is.EqualTo("dark"));
+        }
+
+        [TestCase("")]
+        [TestCase(null)]
+        [TestCase("banana")]
+        public void BuildUserSettingsModel_WhenThemeModeIsEmptyOrUnknown_CarriesSystem(string stored)
+        {
+            var model = AccountService.BuildUserSettingsModel(new EformUser { ThemeMode = stored }, 3, null);
+            Assert.That(model.ThemeMode, Is.EqualTo("system"));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void BuildUserSettingsModel_StillCarriesDarkTheme(bool dark)
+        {
+            var model = AccountService.BuildUserSettingsModel(new EformUser { DarkTheme = dark, ThemeMode = "system" }, 3, null);
+            Assert.That(model.DarkTheme, Is.EqualTo(dark));
+        }
+
         [TestCase("dark", true)]
         [TestCase("light", false)]
         public async Task UpdateUserSettings_WithAFixedMode_SetsDarkThemeToMatch(string mode, bool expectedDark)
