@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {distinctUntilChanged} from 'rxjs/operators';
 
 export type ThemeMode = 'system' | 'light' | 'dark';
@@ -9,7 +9,7 @@ const DARK_QUERY = '(prefers-color-scheme: dark)';
 
 @Injectable({providedIn: 'root'})
 export class ThemeModeService {
-  private readonly appearanceSubject = new BehaviorSubject<Appearance>('light');
+  private readonly appearanceSubject = new ReplaySubject<Appearance>(1);
   private mode: ThemeMode = 'system';
   private fallbackDark = false;
   private mql: MediaQueryList | null = null;
@@ -19,7 +19,7 @@ export class ThemeModeService {
     }
   };
 
-  /** What to paint, right now and on every change. */
+  /** What to paint. Emits nothing until the first setMode, so no guessed value can flash the wrong theme. */
   readonly appearance$: Observable<Appearance> = this.appearanceSubject.pipe(distinctUntilChanged());
 
   /**

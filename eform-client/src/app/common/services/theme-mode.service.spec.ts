@@ -60,6 +60,15 @@ describe('ThemeModeService', () => {
     expect(service.resolve('sepia' as any, false)).toBe('dark');
   });
 
+  it('appearance$_EmitsNothingBeforeTheFirstSetMode', () => {
+    matches = true;
+    const seen: Appearance[] = [];
+    service.appearance$.subscribe(a => seen.push(a));
+    expect(seen).toEqual([]);
+    service.setMode('system');
+    expect(seen).toEqual(['dark']);
+  });
+
   it('appearance$_EmitsAgainWhenTheMediaQueryChanges', () => {
     const seen: Appearance[] = [];
     service.appearance$.subscribe(a => seen.push(a));
@@ -72,13 +81,25 @@ describe('ThemeModeService', () => {
     expect(seen).toEqual(['light', 'dark', 'light']);
   });
 
+  it('appearance$_EmitsAgainWhenTheMediaQueryChanges_StartingDark', () => {
+    matches = true;
+    const seen: Appearance[] = [];
+    service.appearance$.subscribe(a => seen.push(a));
+    service.setMode('system');
+    expect(seen).toEqual(['dark']);
+    listeners[0]({matches: false});
+    listeners[0]({matches: true});
+    expect(seen).toEqual(['dark', 'light', 'dark']);
+  });
+
   it('appearance$_DoesNotEmitWhenTheModeIsFixed', () => {
     service.setMode('system');
+    const captured = listeners[0];
+    expect(captured).toBeDefined();
     service.setMode('dark');
     const seen: Appearance[] = [];
     service.appearance$.subscribe(a => seen.push(a));
-    matches = false;
-    listeners.forEach(l => l({matches: false}));
+    captured({matches: false});
     expect(seen).toEqual(['dark']);
   });
 
@@ -88,5 +109,37 @@ describe('ThemeModeService', () => {
     service.setMode('light');
     expect(removeSpy).toHaveBeenCalledTimes(1);
     expect(listeners.length).toBe(0);
+  });
+
+  it('setMode_WithOnlyTheDeprecatedAddListener_StillFollowsTheOs', () => {
+    const legacy: Array<(e: any) => void> = [];
+    const removeListener = vi.fn((l: any) => { legacy.splice(legacy.indexOf(l), 1); });
+    (window as any).matchMedia = vi.fn(() => ({
+      matches: false,
+      addListener: (l: any) => legacy.push(l),
+      removeListener,
+    }));
+    const seen: Appearance[] = [];
+    service.appearance$.subscribe(a => seen.push(a));
+    service.setMode('system');
+    expect(legacy.length).toBe(1);
+    legacy[0]({matches: true});
+    expect(seen).toEqual(['light', 'dark']);
+    service.setMode('light');
+    expect(removeListener).toHaveBeenCalledTimes(1);
+    expect(legacy.length).toBe(0);
+  });
+
+  it('setMode_WithAMediaQueryListThatCannotListen_DoesNotThrowAndRetriesLater', () => {
+    const bare = {matches: false};
+    (window as any).matchMedia = vi.fn(() => bare);
+    expect(() => service.setMode('system', true)).not.toThrow();
+    const seen: Appearance[] = [];
+    service.appearance$.subscribe(a => seen.push(a));
+    expect(seen).toEqual(['light']);
+    stubMatchMedia();
+    service.setMode('system');
+    expect(addSpy).toHaveBeenCalledTimes(1);
+    expect(listeners.length).toBe(1);
   });
 });
