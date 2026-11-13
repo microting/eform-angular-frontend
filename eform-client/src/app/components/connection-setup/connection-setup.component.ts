@@ -51,7 +51,7 @@ export class ConnectionSetupComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.debug('ConnectionSetupComponent - ngOnInit');
-    this.authStateService.updateDarkTheme(true);
+    this.authStateService.updateThemeMode('dark');
     this.settingsModel.generalAppSetupSettingsModel.defaultLocale = 'en-US';
     this.getApplicationHostOsSub$ = this.settingsService.getApplicationHostOs().subscribe(operation => {
       if (operation && operation.success) {

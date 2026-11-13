@@ -32,6 +32,8 @@ export const selectSideMenuOpened
   = createSelector(selectAuth, (state: AuthState) => state.sideMenuOpened);
 export const selectIsDarkMode
   = createSelector(selectAuthUser, (state) => state.darkTheme);
+export const selectThemeMode
+  = createSelector(selectAuthUser, (state) => state.themeMode || 'system');
 export const selectThemeVariant
   = createSelector(selectAuthUser, (state) => state.themeVariant || 'eform');
 export const selectCurrentUserLocale

@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import {AppSettingsService, AuthService, LocaleService, UserSettingsService} from 'src/app/common/services';
 import {AuthResponseModel, LoginRequestModel, OperationDataResult, UserClaimsModel, UserInfoModel,} from 'src/app/common/models';
 import {BehaviorSubject, catchError, of, switchMap, take, zip} from 'rxjs';
+import {ThemeMode} from 'src/app/common/services/theme-mode.service';
 import {Router} from '@angular/router';
 import {Locale} from 'date-fns';
 import {applicationLanguages, customDaLocale} from 'src/app/common/const';
@@ -19,7 +20,7 @@ import {
   connectionStringExistCount,
   loadAuthFailure,
   loadAuthSuccess,
-  logout, updateCurrentUserLocaleAndDarkTheme, updateDarkTheme,
+  logout, updateCurrentUserLocaleAndDarkTheme, updateDarkTheme, updateThemeMode,
   updateSideMenuOpened,
   updateUserInfo, updateUserLocale
 } from 'src/app/state';
@@ -199,6 +200,7 @@ export class AuthStateService {
       // console.error('Error in logout: ', e);
     }
     this.updateCurrentUserLocaleAndDarkTheme(userLocale, false); // update locale to default locale and theme
+    this.updateThemeMode('system'); // the sign-in page follows the OS, not the previous user
     this.authStore.select(selectIsCmsEnabled).pipe(take(1)).subscribe(isCmsEnabled => {
       this.router.navigate([isCmsEnabled ? '/landing' : '/auth']).then();
     });
@@ -252,6 +254,10 @@ export class AuthStateService {
 
   updateDarkTheme(darkTheme: boolean) {
     this.authStore.dispatch(updateDarkTheme(darkTheme));
+  }
+
+  updateThemeMode(mode: ThemeMode) {
+    this.authStore.dispatch(updateThemeMode(mode));
   }
 
   updateSideMenuOpened(opened: boolean) {

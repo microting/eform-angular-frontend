@@ -1,3 +1,4 @@
+import {ThemeMode} from 'src/app/common/services/theme-mode.service';
 import {createAction} from '@ngrx/store';
 import {
   LoginRequestModel,
@@ -29,6 +30,11 @@ export const updateCurrentUserLocaleAndDarkTheme = createAction(
 export const updateDarkTheme = createAction(
   '[Auth] Update Dark Theme',
   (payload: boolean) => ({payload})
+);
+
+export const updateThemeMode = createAction(
+  '[Auth] Update Theme Mode',
+  (payload: ThemeMode) => ({payload})
 );
 
 export const updateThemeVariant = createAction(
