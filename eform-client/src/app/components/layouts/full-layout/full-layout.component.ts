@@ -114,6 +114,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    this.brokerListener?.ignore();
     this.isDarkThemeAsync$?.unsubscribe();
     this.themeModeSub$?.unsubscribe();
   }
