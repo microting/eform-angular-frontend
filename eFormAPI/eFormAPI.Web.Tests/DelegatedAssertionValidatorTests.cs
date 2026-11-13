@@ -739,7 +739,7 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
     [Test]
     public async Task ValidateAsync_WithAnUnrecognisedThemeOrTimeZone_SucceedsAndDropsOnlyThatValue()
     {
-        var token = MintToken(customerName: "Go-Gris I/S", locale: "Danish", theme: "system", timeZone: "Not/AZone");
+        var token = MintToken(customerName: "Go-Gris I/S", locale: "Danish", theme: "true", timeZone: "Not/AZone");
 
         var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
 
@@ -750,6 +750,22 @@ public sealed class DelegatedAssertionValidatorTests : IDisposable
             Assert.That(result.Model.TimeZone, Is.EqualTo(""));
             Assert.That(result.Model.CustomerName, Is.EqualTo("Go-Gris I/S"));
             Assert.That(result.Model.Locale, Is.EqualTo(""));
+        });
+    }
+
+    [Test]
+    public async Task ValidateAsync_WithASystemTheme_KeepsItAlongsideLocaleAndTimeZone()
+    {
+        var token = MintToken(locale: "da", theme: "system", timeZone: "Europe/Copenhagen");
+
+        var result = await CreateValidator().ValidateAsync(token, CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.Model.Theme, Is.EqualTo("system"));
+            Assert.That(result.Model.Locale, Is.EqualTo("da"));
+            Assert.That(result.Model.TimeZone, Is.EqualTo("Europe/Copenhagen"));
         });
     }
 
