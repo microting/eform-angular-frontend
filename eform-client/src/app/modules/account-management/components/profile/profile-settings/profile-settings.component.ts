@@ -204,7 +204,7 @@ export class ProfileSettingsComponent implements OnInit {
             languageId: this.userSettingsModel.languageId,
           })
         );
-        this.store.dispatch(updateThemeMode(this.userSettingsModel.themeMode as ThemeMode));
+        this.store.dispatch(updateThemeMode((this.userSettingsModel.themeMode ?? 'system') as ThemeMode));
         this.getUserSettings();
       });
       this.store.dispatch(loadAppMenu());

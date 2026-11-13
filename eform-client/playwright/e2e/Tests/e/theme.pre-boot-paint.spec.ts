@@ -74,4 +74,16 @@ test.describe('Pre-boot theme paint', () => {
     expect(cls).toContain('theme-dark');
     expect(cls).not.toContain('theme-light');
   });
+  test('legacy auth blob with darkTheme true and no theme-mode key paints theme-dark on a light OS', async ({ page }) => {
+    const seed = seedMode('dark');
+    delete (seed.auth.currentUser as any).themeMode;
+    await page.addInitScript((auth) => {
+      localStorage.removeItem('theme-mode');
+      localStorage.setItem('auth', JSON.stringify(auth));
+    }, seed.auth);
+    await page.emulateMedia({ colorScheme: 'light' });
+    const cls = await bodyClassAtDomContentLoaded(page);
+    expect(cls).toContain('theme-dark');
+    expect(cls).not.toContain('theme-light');
+  });
 });

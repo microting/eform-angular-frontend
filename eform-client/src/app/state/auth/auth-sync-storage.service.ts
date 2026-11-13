@@ -41,7 +41,12 @@ export class AuthSyncStorageService {
   }
 
   private loadFromStorage() {
-    const raw = localStorage.getItem(AUTH_LOCALSTORAGE_KEY);
+    let raw: string | null = null;
+    try {
+      raw = localStorage.getItem(AUTH_LOCALSTORAGE_KEY);
+    } catch (e) {
+      // storage can throw on read (blocked site data); boot with the default state
+    }
     if (!raw) {
       return;
     }
