@@ -106,12 +106,13 @@
             </mtx-select>
           </mat-form-field>
         </div>
-        <div class="mb-1">
-          <mat-checkbox
-            id="darkTheme"
-            formControlName="darkTheme">
-            {{ 'Dark theme' | translate }}
-          </mat-checkbox>
+        <div class="mb-1 d-flex flex-column gap-1">
+          <mat-label>{{ 'Theme' | translate }}</mat-label>
+          <mat-button-toggle-group id="themeMode" formControlName="themeMode" aria-label="{{ 'Theme' | translate }}">
+            <mat-button-toggle id="themeModeSystem" value="system">{{ 'Follow system' | translate }}</mat-button-toggle>
+            <mat-button-toggle id="themeModeLight" value="light">{{ 'Light' | translate }}</mat-button-toggle>
+            <mat-button-toggle id="themeModeDark" value="dark">{{ 'Dark' | translate }}</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
       </div>
 
@@ -305,12 +306,5 @@
 <!--        [items]="timeZones.timeZoneModels">-->
 <!--      </mtx-select>-->
 <!--    </mat-form-field>-->
-<!--    <div class="mb-1">-->
-<!--      <mat-checkbox-->
-<!--        id="darkTheme"-->
-<!--        formControlName="darkTheme">-->
-<!--        {{ 'Dark theme' | translate }}-->
-<!--      </mat-checkbox>-->
-<!--    </div>-->
 <!--  </mat-card>-->
 </div>

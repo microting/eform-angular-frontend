@@ -3,6 +3,7 @@ export class UserSettingsModel {
   formats: string;
   timeZone: string;
   darkTheme: boolean;
+  themeMode: string;
   themeVariant: string;
   loginRedirectUrl: string;
   languageId: number;

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, Renderer2, inject } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
-import {take} from 'rxjs';
+import {combineLatest, Subscription, take} from 'rxjs';
+import {ThemeModeService} from 'src/app/common/services/theme-mode.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import { Router, RouterOutlet } from '@angular/router';
 import {Store} from '@ngrx/store';
 import {AppSettingsService} from 'src/app/common/services';
-import {connectionStringExistCount} from 'src/app/state';
+import {connectionStringExistCount, selectIsDarkMode, selectThemeMode} from 'src/app/state';
 
 @AutoUnsubscribe()
 @Component({
@@ -19,6 +20,9 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   private renderer = inject(Renderer2);
   settingsService = inject(AppSettingsService);
   router = inject(Router);
+  private themeModeService = inject(ThemeModeService);
+  private appearanceSub$: Subscription;
+  private modeSub$: Subscription;
 
 
   constructor() {
@@ -28,9 +32,21 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.debug('SimpleLayoutComponent - ngOnInit');
     this.getSettings();
-    this.switchToLightTheme();
+    // derive the mode like full-layout does: never assert one into the app-wide singleton. Signed out, the
+    // reducer is back at its initial state (themeMode 'system'), so the sign-in page follows the OS.
+    this.appearanceSub$ = this.themeModeService.appearance$.subscribe(
+      (appearance) => appearance === 'dark' ? this.switchToDarkTheme() : this.switchToLightTheme()
+    );
+    this.modeSub$ = combineLatest([this.authStore.select(selectThemeMode), this.authStore.select(selectIsDarkMode)]).subscribe(
+      ([mode, isDark]) => this.themeModeService.setMode(mode, !!isDark)
+    );
     this.authStateService.initLocale();
     console.debug('SimpleLayoutComponent - ngOnInit - done');
+  }
+
+  switchToDarkTheme() {
+    this.renderer.addClass(document.body, 'theme-dark');
+    this.renderer.removeClass(document.body, 'theme-light');
   }
 
   switchToLightTheme() {
@@ -54,5 +70,7 @@ export class SimpleLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.appearanceSub$?.unsubscribe();
+    this.modeSub$?.unsubscribe();
   }
 }

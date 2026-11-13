@@ -18,8 +18,53 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    // Paints the saved appearance before Angular boots. Always leaves exactly one of theme-light / theme-dark on <body>.
+    (function () {
+      var mode = 'system';
+      try {
+        var stored = window.localStorage.getItem('theme-mode');
+        if (stored === 'light' || stored === 'dark' || stored === 'system') {
+          mode = stored;
+        } else {
+          // 'theme-mode' is new: on the first load after upgrade only the legacy 'auth' blob exists. Mirror
+          // deriveThemeMode (src/app/state/auth/theme-mode-derivation.ts) exactly so the three sites agree.
+          var raw = window.localStorage.getItem('auth');
+          var user = raw ? JSON.parse(raw).currentUser : null;
+          var m = user && user.themeMode;
+          if (m === 'system' || m === 'light' || m === 'dark') { mode = m; }
+          else if (user && user.darkTheme === true) { mode = 'dark'; }
+          else if (user && user.darkTheme === false) { mode = 'light'; }
+        }
+      } catch (e) { /* blocked storage: follow the OS */ }
+      var cls = mode === 'dark' ? 'theme-dark' : 'theme-light';
+      if (mode === 'system') {
+        try {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) { cls = 'theme-dark'; }
+        } catch (e) { /* no matchMedia: light */ }
+      }
+      function paint() {
+        var b = document.body;
+        if (!b) { return false; }
+        b.classList.remove('theme-light', 'theme-dark');
+        b.classList.add(cls);
+        return true;
+      }
+      if (!paint()) {
+        // <body> does not exist yet while <head> is parsed; paint it the moment it is created
+        try {
+          var observer = new MutationObserver(function () { if (paint()) { observer.disconnect(); } });
+          observer.observe(document.documentElement, {childList: true});
+        } catch (e) { /* DOMContentLoaded below still covers it */ }
+        document.addEventListener('DOMContentLoaded', function () {
+          var b = document.body;
+          if (b && !b.classList.contains('theme-light') && !b.classList.contains('theme-dark')) { paint(); }
+        });
+      }
+    })();
+  </script>
 </head>
-<body class="mat-typography theme-light mat-app-background">
+<body class="mat-typography mat-app-background">
   <app-root>
   </app-root>
 </body>

@@ -1,7 +1,8 @@
 import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, Renderer2, ViewChild, inject } from '@angular/core';
 import {AuthStateService} from 'src/app/common/store';
+import {ThemeModeService} from 'src/app/common/services/theme-mode.service';
 import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
-import {Observable, of, Subscription, take, tap} from 'rxjs';
+import {combineLatest, Observable, of, Subscription, take, tap} from 'rxjs';
 import {
   AppSettingsService,
   LoaderService,
@@ -17,6 +18,7 @@ import {
   selectConnectionStringExists,
   selectCurrentUserLocale,
   selectIsDarkMode,
+  selectThemeMode,
   selectSideMenuOpened,
   rightAppMenus, selectCurrentUserClaims, selectCurrentUserName, selectCurrentUserFullName, selectCurrentUserAvatarUrl,
 } from 'src/app/state';
@@ -45,9 +47,11 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   private eventBrokerService = inject(EventBrokerService);
   private settingsService = inject(AppSettingsService);
   private loaderService = inject(LoaderService);
+  private themeModeService = inject(ThemeModeService);
 
   @ViewChild('drawer') drawer: MatDrawer;
   isDarkThemeAsync$: Subscription;
+  private themeModeSub$: Subscription;
   private brokerListener: any;
   logoImage: string;
   headerSettingsModel: HeaderSettingsModel = new HeaderSettingsModel;
@@ -58,6 +62,7 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   public selectConnectionStringExists$ = this.authStore.select(selectConnectionStringExists);
   public selectIsAuth$ = this.authStore.select(selectAuthIsAuth);
   private selectIsDarkMode$ = this.authStore.select(selectIsDarkMode);
+  private selectThemeMode$ = this.authStore.select(selectThemeMode);
   private selectCurrentUserLocale$ = this.authStore.select(selectCurrentUserLocale);
   public selectCurrentUserName$ = this.authStore.select(selectCurrentUserName);
   public selectCurrentUserFullName$ = this.authStore.select(selectCurrentUserFullName);
@@ -109,17 +114,28 @@ export class FullLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    this.brokerListener?.ignore();
+    this.isDarkThemeAsync$?.unsubscribe();
+    this.themeModeSub$?.unsubscribe();
   }
 
   getSettings() {
     this.selectIsAuth$.pipe(take(1)).subscribe((isAuth) => {
       if (isAuth) {
-        this.isDarkThemeAsync$ = this.selectIsDarkMode$.subscribe(
-          (isDarkTheme) => {
-            isDarkTheme
+        // getSettings can run more than once (header-settings broker event): never stack subscriptions
+        this.isDarkThemeAsync$?.unsubscribe();
+        this.themeModeSub$?.unsubscribe();
+        // paint from the resolved appearance; the OS flipping is a media-query event, never an HTTP request
+        this.isDarkThemeAsync$ = this.themeModeService.appearance$.subscribe(
+          (appearance) => {
+            appearance === 'dark'
               ? this.switchToDarkTheme()
               : this.switchToLightTheme();
           }
+        );
+        // always pass the current stored bool: it is the fallback for a browser without matchMedia
+        this.themeModeSub$ = combineLatest([this.selectThemeMode$, this.selectIsDarkMode$]).subscribe(
+          ([mode, isDark]) => this.themeModeService.setMode(mode, !!isDark)
         );
         this.getHeaderSettings();
       }

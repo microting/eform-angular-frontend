@@ -1,6 +1,7 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {AUTH_REDUCER_NODE, AuthState} from 'src/app/state/auth/auth.recuder';
 import {AppState} from 'src/app/state';
+import {deriveThemeMode} from 'src/app/state/auth/theme-mode-derivation';
 
 export const authFeatureSelector = createFeatureSelector<AuthState>(AUTH_REDUCER_NODE);
 
@@ -32,6 +33,8 @@ export const selectSideMenuOpened
   = createSelector(selectAuth, (state: AuthState) => state.sideMenuOpened);
 export const selectIsDarkMode
   = createSelector(selectAuthUser, (state) => state.darkTheme);
+export const selectThemeMode
+  = createSelector(selectAuthUser, (state) => deriveThemeMode(state));
 export const selectThemeVariant
   = createSelector(selectAuthUser, (state) => state.themeVariant || 'eform');
 export const selectCurrentUserLocale

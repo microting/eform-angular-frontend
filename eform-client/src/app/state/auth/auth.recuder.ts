@@ -6,10 +6,11 @@ import {
   loadAuthFailure, loadAuthState,
   loadAuthSuccess, logout,
   refreshToken,
-  updateCurrentUserLocaleAndDarkTheme, updateDarkTheme, updateSideMenuOpened,
+  updateCurrentUserLocaleAndDarkTheme, updateDarkTheme, updateSideMenuOpened, updateThemeMode,
   updateThemeVariant,
   updateUserInfo, updateUserLocale
 } from './';
+import {ThemeMode} from 'src/app/common/services/theme-mode.service';
 import {StoreStatusEnum} from 'src/app/common/const';
 
 export const AUTH_REDUCER_NODE: string = 'auth';
@@ -22,6 +23,7 @@ export interface AuthCurrentUser {
   locale?: string;
   languageId?: number;
   darkTheme?: boolean;
+  themeMode?: ThemeMode;
   themeVariant?: string;
   loginRedirectUrl?: string;
   claims?: UserClaimsModel;
@@ -63,6 +65,7 @@ export const authInitialState: AuthState = {
     locale: 'da', // TODO add env for test run
     languageId: 0,
     darkTheme: false,
+    themeMode: 'system',
     themeVariant: 'eform',
     loginRedirectUrl: '',
     isFirstUser: false,
@@ -161,6 +164,7 @@ const _authReducer = createReducer(
     currentUser: {
       ...state.currentUser,
       darkTheme: payload.userSettings.model.darkTheme,
+      themeMode: payload.userSettings.model.themeMode as ThemeMode,
       themeVariant: payload.userSettings.model.themeVariant || 'eform',
       locale: payload.userSettings.model.locale,
       loginRedirectUrl: payload.userSettings.model.loginRedirectUrl || '',
@@ -211,6 +215,13 @@ const _authReducer = createReducer(
     currentUser: {
       ...state.currentUser,
       darkTheme: payload
+    }
+  })),
+  on(updateThemeMode, (state, {payload}) => ({
+    ...state,
+    currentUser: {
+      ...state.currentUser,
+      themeMode: payload
     }
   })),
   on(updateThemeVariant, (state, {payload}) => ({

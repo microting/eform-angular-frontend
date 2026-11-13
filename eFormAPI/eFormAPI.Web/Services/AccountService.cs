@@ -100,6 +100,13 @@ public class AccountService(
         };
     }
 
+    /// <summary>Returns "system", "light" or "dark" (case-insensitive), or null for anything else.</summary>
+    public static string NormalizeThemeMode(string value)
+    {
+        var mode = value?.Trim().ToLowerInvariant();
+        return mode is "system" or "light" or "dark" ? mode : null;
+    }
+
     public async Task<OperationDataResult<UserSettingsModel>> GetUserSettings()
     {
         var user = await userService.GetCurrentUserAsync();
@@ -108,10 +115,6 @@ public class AccountService(
             return new OperationDataResult<UserSettingsModel>(false, localizationService.GetString("UserNotFound"));
         }
 
-        var timeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone;
-        var formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats;
-        var darkTheme = user.DarkTheme;
-        var themeVariant = string.IsNullOrEmpty(user.ThemeVariant) ? "eform" : user.ThemeVariant;
         var locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale;
         var core = await coreHelper.GetCore();
         var dbContextHelper = core.DbContextHelper;
@@ -127,19 +130,27 @@ public class AccountService(
             .Select(x => x.SecurityGroup.RedirectLink)
             .FirstOrDefaultAsync();
 
-        return new OperationDataResult<UserSettingsModel>(true, new UserSettingsModel()
+        return new OperationDataResult<UserSettingsModel>(true,
+            BuildUserSettingsModel(user, languageId, securityGroupRedirectLink));
+    }
+
+    /// <summary>Builds the settings response from already-resolved inputs, applying the stored-value defaults.</summary>
+    public static UserSettingsModel BuildUserSettingsModel(EformUser user, int languageId, string loginRedirectUrl)
+    {
+        return new UserSettingsModel()
         {
-            Locale = locale,
+            Locale = string.IsNullOrEmpty(user.Locale) ? "da" : user.Locale,
             LanguageId = languageId,
-            DarkTheme = darkTheme,
-            ThemeVariant = themeVariant,
-            Formats = formats,
-            TimeZone = timeZone,
-            LoginRedirectUrl = securityGroupRedirectLink,
+            DarkTheme = user.DarkTheme,
+            ThemeMode = NormalizeThemeMode(user.ThemeMode) ?? "system",
+            ThemeVariant = string.IsNullOrEmpty(user.ThemeVariant) ? "eform" : user.ThemeVariant,
+            Formats = string.IsNullOrEmpty(user.Formats) ? "de-DE" : user.Formats,
+            TimeZone = string.IsNullOrEmpty(user.TimeZone) ? "Europe/Copenhagen" : user.TimeZone,
+            LoginRedirectUrl = loginRedirectUrl,
             ProfilePicture = user.ProfilePicture,
             ProfilePictureSnapshot = user.ProfilePictureSnapshot,
             EmailSha256 = user.EmailSha256
-        });
+        };
     }
 
     public OperationDataResult<TimeZonesModel> AllTimeZones()
@@ -177,7 +188,18 @@ public class AccountService(
         user.Locale = model.Locale;
         user.TimeZone = model.TimeZone;
         user.Formats = model.Formats;
-        user.DarkTheme = model.DarkTheme;
+        // The server derives DarkTheme from ThemeMode; a posted DarkTheme is never trusted. Empty or
+        // unknown ThemeMode means "said nothing" and changes neither field. "system" keeps the last
+        // concrete DarkTheme so plugins on older packages still see a sensible value.
+        var postedMode = NormalizeThemeMode(model.ThemeMode);
+        if (postedMode != null)
+        {
+            user.ThemeMode = postedMode;
+            if (postedMode != "system")
+            {
+                user.DarkTheme = postedMode == "dark";
+            }
+        }
         if (!string.IsNullOrEmpty(model.ThemeVariant))
         {
             user.ThemeVariant = model.ThemeVariant;

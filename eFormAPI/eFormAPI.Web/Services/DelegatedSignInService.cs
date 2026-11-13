@@ -290,15 +290,28 @@ public sealed class DelegatedSignInService(
             changed = true;
         }
 
-        // Only the two values the portal mints. Anything else is "said nothing"; it must
-        // not be read as "not dark".
-        if (assertion.Theme is "dark" or "light")
+        // Only the three values the portal mints: system, light, dark. Anything else is
+        // "said nothing"; it must not be read as "not dark".
+        // ThemeMode follows all three. DarkTheme is the fallback older plugins still read,
+        // so only a deliberate light/dark touches it. "system" is a profile sync, not a
+        // choice, and the portal cannot know what the advisor's OS reports, so the stale
+        // bool is deliberately left as it was.
+        if (assertion.Theme is "dark" or "light" or "system")
         {
-            var dark = assertion.Theme == "dark";
-            if (user.DarkTheme != dark)
+            if (user.ThemeMode != assertion.Theme)
             {
-                user.DarkTheme = dark;
+                user.ThemeMode = assertion.Theme;
                 changed = true;
+            }
+
+            if (assertion.Theme is "dark" or "light")
+            {
+                var dark = assertion.Theme == "dark";
+                if (user.DarkTheme != dark)
+                {
+                    user.DarkTheme = dark;
+                    changed = true;
+                }
             }
         }
 
