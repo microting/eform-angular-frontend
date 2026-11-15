@@ -75,8 +75,11 @@ namespace eFormAPI.Web.Integration.Tests.Services
 
             var permissions = DbContext.Permissions.Where(x => x.ClaimName == claim).ToList();
             Assert.That(permissions, Has.Count.EqualTo(1));
-            Assert.That(DbContext.MenuTemplatePermissions.Count(x => x.PermissionId == permissions[0].Id),
-                Is.EqualTo(2));
+            var permissionId = permissions[0].Id;
+            var links = DbContext.MenuTemplatePermissions.Where(x => x.PermissionId == permissionId)
+                .Select(x => new { x.Id, x.MenuTemplateId, x.MenuTemplate.E2EId, x.MenuTemplate.EformPluginId })
+                .ToList();
+            Assert.That(links, Has.Count.EqualTo(2), string.Join(", ", links));
             Assert.That(DbContext.MenuItems.Count(x => x.E2EId.StartsWith($"{pluginId}-link-")), Is.EqualTo(2));
         }
 
