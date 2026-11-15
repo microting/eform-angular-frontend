@@ -31,6 +31,7 @@ using eFormAPI.Web.Hosting.Helpers.DbOptions;
 using eFormAPI.Web.Infrastructure.Models.Settings.Plugins;
 using eFormAPI.Web.Services;
 using eFormAPI.Web.Services.PluginsManagement.MenuItemsLoader;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using eFormAPI.Web.Abstractions;
 using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu;
@@ -55,6 +56,12 @@ namespace eFormAPI.Web.Integration.Tests.Services
         public override void DoSetup()
         {
             _suffix = Guid.NewGuid().ToString("N")[..8];
+
+            // The fixture truncates Permissions with foreign key checks off, so seeded template links can
+            // point at permission ids that a new permission then reuses. Drop those orphans.
+            DbContext.MenuTemplatePermissions
+                .Where(x => !DbContext.Permissions.Any(p => p.Id == x.PermissionId))
+                .ExecuteDelete();
 
             if (!DbContext.MenuItems.Any(x => x.ParentId == null))
             {
