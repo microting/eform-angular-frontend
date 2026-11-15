@@ -6,7 +6,6 @@ namespace eFormAPI.Web.Services;
 using Microsoft.EntityFrameworkCore;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
-using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -162,9 +161,15 @@ public class PluginsManagementService(
         dbContext.RemoveRange(menuTemplates);
         dbContext.SaveChanges();
 
-        // delete all permissions connected with removed menu templates
-        foreach (var permissionId in permissionIds)
+        // delete the permissions of the removed menu templates. Links may share one permission, and a
+        // permission another plugin's (or the core's) template still links to is not ours to delete.
+        foreach (var permissionId in permissionIds.Distinct())
         {
+            if (dbContext.MenuTemplatePermissions.Any(x => x.PermissionId == permissionId))
+            {
+                continue;
+            }
+
             var permission = dbContext.Permissions.Single(x => x.Id == permissionId);
 
             dbContext.Permissions.Remove(permission);
@@ -172,7 +177,7 @@ public class PluginsManagementService(
         }
 
         // delete all permission types connected with removed permissions
-        foreach (var permissionTypeId in permissionTypeIds)
+        foreach (var permissionTypeId in permissionTypeIds.Distinct())
         {
             var permissions = dbContext.Permissions.Where(x => x.PermissionTypeId == permissionTypeId);
 
@@ -272,49 +277,8 @@ public class PluginsManagementService(
                             dbContext.SaveChanges();
                         }
 
-                        if (menuTemplateFromPlugin.Permissions.Any())
-                        {
-                            foreach (var itemPermission in menuTemplateFromPlugin.Permissions)
-                            {
-                                PermissionType newPermissionType = null;
-
-                                var permissionType =
-                                    dbContext.PermissionTypes.FirstOrDefault(x =>
-                                        x.Name == itemPermission.PermissionTypeName);
-
-                                if (permissionType == null)
-                                {
-                                    newPermissionType = new PermissionType
-                                    {
-                                        Name = itemPermission.PermissionTypeName
-                                    };
-
-                                    dbContext.PermissionTypes.Add(newPermissionType);
-                                    dbContext.SaveChanges();
-                                }
-
-                                var permission = new Permission
-                                {
-                                    PermissionName = itemPermission.PermissionName,
-                                    ClaimName = itemPermission.ClaimName,
-                                    PermissionTypeId = newPermissionType == null
-                                        ? permissionType.Id
-                                        : newPermissionType.Id
-                                };
-
-                                dbContext.Permissions.Add(permission);
-                                dbContext.SaveChanges();
-
-                                var menuTemplatePermission = new MenuTemplatePermission
-                                {
-                                    MenuTemplateId = menuTemplateToDatabase.Id,
-                                    PermissionId = permission.Id
-                                };
-
-                                dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
-                                dbContext.SaveChanges();
-                            }
-                        }
+                        MenuTemplatePermissionWriter.Link(dbContext, menuTemplateToDatabase.Id,
+                            menuTemplateFromPlugin.Permissions);
                     }
                 }
             }

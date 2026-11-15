@@ -28,7 +28,6 @@ using Microting.eFormApi.BasePn.Infrastructure.Models.Application.NavigationMenu
 using System.Linq;
 using Microting.EformAngularFrontendBase.Infrastructure.Data;
 using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Menu;
-using Microting.EformAngularFrontendBase.Infrastructure.Data.Entities.Permissions;
 
 public class SimpleLinkLoader(BaseDbContext dbContext) : AbstractLoader(dbContext)
 {
@@ -64,47 +63,7 @@ public class SimpleLinkLoader(BaseDbContext dbContext) : AbstractLoader(dbContex
             _dbContext.SaveChanges();
         }
 
-        if (MenuItem.MenuTemplate.Permissions.Any())
-        {
-            foreach (var itemPermission in MenuItem.MenuTemplate.Permissions)
-            {
-                PermissionType newPermissionType = null;
-
-                var permissionType = _dbContext.PermissionTypes.FirstOrDefault(x => x.Name == itemPermission.PermissionTypeName);
-
-                if(permissionType == null)
-                {
-                    newPermissionType = new PermissionType
-                    {
-                        Name = itemPermission.PermissionTypeName
-                    };
-
-                    _dbContext.PermissionTypes.Add(newPermissionType);
-                    _dbContext.SaveChanges();
-                }
-
-                var permission = new Permission
-                {
-                    PermissionName = itemPermission.PermissionName,
-                    ClaimName = itemPermission.ClaimName,
-                    PermissionTypeId = newPermissionType == null 
-                        ? permissionType.Id 
-                        : newPermissionType.Id 
-                };
-                    
-                _dbContext.Permissions.Add(permission);
-                _dbContext.SaveChanges();
-
-                var menuTemplatePermission = new MenuTemplatePermission
-                {
-                    MenuTemplateId = menuTemplate.Id,
-                    PermissionId = permission.Id
-                };
-
-                _dbContext.MenuTemplatePermissions.Add(menuTemplatePermission);
-                _dbContext.SaveChanges();
-            }
-        }
+        MenuTemplatePermissionWriter.Link(_dbContext, menuTemplate.Id, MenuItem.MenuTemplate.Permissions);
 
         var newMenuItem = new MenuItem()
         {
