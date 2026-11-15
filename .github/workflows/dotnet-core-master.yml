@@ -49,7 +49,7 @@ jobs:
         run: bash .github/scripts/check-login-path-fence.sh HEAD
   playwright-test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Playwright cannot install chromium on ubuntu-latest (26.04) yet, see #8222
     strategy:
       fail-fast: false
       matrix:
