@@ -1,0 +1,49 @@
+// _segmented.scss
+//
+// Segmented control, both themes. Workspace draws it in _workspace-utilities.scss §5;
+// this adds the Classic drawing and the shared focus ring and disabled state.
+
+body.theme-eform {
+  .segmented {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm);
+  }
+
+  .segmented-option {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--md-on-surface);
+    font: inherit;
+    cursor: pointer;
+
+    &.active {
+      background: var(--md-primary-container);
+    }
+  }
+}
+
+body .segmented-option:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 1px;
+}
+
+// Disabled: text at 38 % (Material's disabled opacity); the checked option keeps a neutral
+// fill. `body` plus the later cascade position beats both themes' checked-option rules.
+body .segmented-option:disabled,
+body .segment:disabled {
+  --segmented-disabled-text: color-mix(in srgb, var(--md-on-surface) 38%, transparent);
+  cursor: default;
+  color: var(--segmented-disabled-text);
+
+  &.active,
+  &[aria-selected="true"],
+  &[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--md-on-surface) 12%, transparent);
+    color: var(--segmented-disabled-text);
+  }
+}
