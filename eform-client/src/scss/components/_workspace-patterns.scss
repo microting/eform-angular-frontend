@@ -18,6 +18,11 @@
 //      .record-head), .journey, activity feed (.activity-feed, .media-row),
 //      ticket cards (.ticket-list, .ticket-card), task table (.task-table,
 //      .due-button, .latest-note)
+//   8. CRM phase 2 patterns: year cards (.year-grid, .sub-year), .calc-line,
+//      lifetime block (.sub-life), lock bar (.sub-lock), price rows
+//      (.sub-price, .sub-price-box), bar chart (.chart-grid, .bar-chart,
+//      .bar-chart-legend, .visually-hidden), .funnel, stage tiles
+//      (.stage-tiles, .stage-tile)
 // =============================================================================
 
 @use 'page-gutter' as gutter;
@@ -1255,4 +1260,358 @@ body.theme-workspace {
       color: var(--md-on-surface);
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // CRM phase 2 patterns (subscription, price calculator, pipeline, KPI)
+  // ---------------------------------------------------------------------------
+  // Section headers reuse .record-head; tiles reuse .kpi-grid / .kpi-card;
+  // notes reuse .alert--warning / .alert--info.
+
+  // Label/value line (year cards, lifetime block, calculator output)
+  .calc-line {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    font-size: 0.92rem;
+    strong,
+    b {
+      font-variant-numeric: tabular-nums;
+    }
+  }
+  .calc-line--total {
+    border-top: 1px solid var(--md-surface-variant);
+    padding-top: var(--spacing-md);
+    font-size: 1rem;
+  }
+
+  // Year cards ("Abonnement og omsætning"): previous, current, next year
+  .year-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+    gap: 10px;
+  }
+  .sub-year {
+    display: grid;
+    gap: var(--spacing-xs);
+    align-content: start;
+    min-width: 0;
+    padding: 14px var(--spacing-xl);
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-md);
+    background: var(--md-surface);
+    color: var(--md-on-surface);
+    .calc-line {
+      font-size: 0.85rem;
+    }
+  }
+  .sub-year--current {
+    border-color: var(--md-primary);
+    background: color-mix(in srgb, var(--md-primary) 5%, var(--md-surface));
+  }
+  .sub-year__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+  }
+  .sub-year__title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+  .sub-year__total {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .sub-year__delta {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--md-surface-variant);
+    font-size: 0.82rem;
+    .mat-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      color: var(--md-on-surface-variant);
+    }
+  }
+  .sub-year__delta--up .mat-icon {
+    color: var(--md-primary);
+  }
+  .sub-year__delta--down .mat-icon {
+    color: var(--md-alert);
+  }
+
+  // Lifetime block ("Samlet omsætning")
+  .sub-life {
+    display: grid;
+    gap: var(--spacing-lg);
+    min-width: 0;
+    padding: var(--spacing-xl);
+    border: 1px solid var(--md-surface-variant);
+    border-radius: var(--radius-md);
+    .kpi-card__value {
+      font-size: 1.15rem;
+    }
+    .calc-line {
+      flex-wrap: wrap;
+    }
+  }
+  .sub-life--ended {
+    border-color: var(--md-alert);
+  }
+  .sub-life__total {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  // Lock bar above the price calculator (locked / open for editing)
+  .sub-lock {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px var(--spacing-lg);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--md-primary) 6%, var(--md-surface));
+    color: var(--md-on-surface);
+  }
+  .sub-lock--open {
+    background: color-mix(in srgb, var(--status-afventer-bg) 18%, var(--md-surface));
+  }
+  .sub-lock__text {
+    flex: 1 1 220px;
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    small {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--md-on-surface-variant);
+    }
+  }
+
+  // Price rows (calculator: label + amount | discount field)
+  .sub-price {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: 10px;
+    align-items: end;
+    padding: 10px 0;
+    border-top: 1px solid var(--md-surface-variant);
+    &:first-child {
+      border-top: 0;
+    }
+  }
+  .sub-price--current {
+    padding-inline: var(--spacing-md);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--md-primary) 5%, var(--md-surface));
+  }
+  .sub-price__label {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    font-size: 0.9rem;
+    small {
+      font-size: 0.78rem;
+      color: var(--md-on-surface-variant);
+    }
+    strong {
+      font-size: 1.1rem;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+  // Live price box (period dialog)
+  .sub-price-box {
+    display: grid;
+    gap: 2px;
+    padding: 10px var(--spacing-lg);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--md-primary) 6%, var(--md-surface));
+    color: var(--md-on-surface);
+    b,
+    strong {
+      font-size: 1.05rem;
+      font-variant-numeric: tabular-nums;
+    }
+    small {
+      color: var(--md-on-surface-variant);
+    }
+  }
+
+  // Bar chart: inline SVG grouped bars + legend + visually hidden data table
+  .chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+    gap: var(--spacing-xl);
+  }
+  .bar-chart {
+    min-width: 0;
+    overflow-x: auto;
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+  .bar-chart__grid {
+    stroke: var(--md-surface-variant);
+  }
+  .bar-chart__base {
+    stroke: var(--md-outline);
+  }
+  .bar-chart__axis {
+    fill: var(--md-on-surface-variant);
+    font: 11px var(--font-family);
+  }
+  .bar-chart__value {
+    fill: var(--md-on-surface);
+    font: 600 11px var(--font-family);
+  }
+  .bar-chart__bar,
+  .bar-chart-legend__swatch {
+    --bar-color: var(--md-primary);
+    fill: var(--bar-color);
+    background: var(--bar-color);
+  }
+  .bar-chart__bar--soft,
+  .bar-chart-legend__swatch--soft {
+    --bar-color: color-mix(in srgb, var(--md-primary) 45%, var(--md-surface));
+  }
+  .bar-chart__bar--plan,
+  .bar-chart-legend__swatch--plan {
+    --bar-color: color-mix(in srgb, var(--md-primary) 30%, var(--md-surface));
+  }
+  .bar-chart__bar--won,
+  .bar-chart-legend__swatch--won {
+    --bar-color: var(--status-aktiv-bg);
+  }
+  .bar-chart__bar--prev,
+  .bar-chart-legend__swatch--prev {
+    --bar-color: color-mix(in srgb, var(--md-on-surface-variant) 50%, var(--md-surface));
+  }
+  .bar-chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs) 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--md-on-surface-variant);
+  }
+  .bar-chart-legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  .bar-chart-legend__swatch {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  // Screen-reader-only content (chart data tables, icon-only column heads)
+
+  // Funnel (KPI "Konvertering af nye dialoger")
+  .funnel {
+    display: grid;
+    gap: 10px;
+  }
+  .funnel__row {
+    display: grid;
+    grid-template-columns: minmax(120px, 190px) minmax(0, 1fr) auto;
+    gap: var(--spacing-lg);
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--md-on-surface);
+  }
+  .funnel__label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .funnel__track {
+    height: 22px;
+    border-radius: var(--radius-sm);
+    background: var(--md-surface-variant);
+    overflow: hidden;
+  }
+  .funnel__fill {
+    height: 100%;
+    background: var(--md-primary);
+  }
+  .funnel__fill--success {
+    background: var(--status-aktiv-bg);
+  }
+  .funnel__count {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 560px) {
+    .funnel__row {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .funnel__track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  // Stage tiles (pipeline "Fordeling på status"): <button class="kpi-card
+  // stage-tile" aria-pressed> toggles the status filter
+  .stage-tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+    gap: var(--spacing-md);
+  }
+  .stage-tile {
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    color: var(--md-on-surface);
+    &:hover {
+      border-color: var(--md-outline);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--md-primary);
+      outline-offset: 2px;
+    }
+    &[aria-pressed="true"] {
+      border-color: var(--md-primary);
+      // A second line of border, so pressed is not told by colour alone (WCAG 1.4.1).
+      box-shadow: inset 0 0 0 1px var(--md-primary);
+      background: color-mix(in srgb, var(--md-primary) 8%, var(--md-surface));
+    }
+    .kpi-card__value {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+// Screen-reader-only content (e.g. a chart's data table). Outside the theme scope: hidden content must
+// stay hidden under every theme.
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
