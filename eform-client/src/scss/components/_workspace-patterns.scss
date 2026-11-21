@@ -1481,11 +1481,20 @@ body.theme-workspace {
     fill: var(--md-on-surface);
     font: 600 11px var(--font-family);
   }
+  // The soft tints fall below 3:1 against the surface (WCAG 1.4.11), so every bar and swatch gets an
+  // outline in the on-surface-variant colour, which clears 3:1 in both themes.
   .bar-chart__bar,
   .bar-chart-legend__swatch {
     --bar-color: var(--md-primary);
     fill: var(--bar-color);
     background: var(--bar-color);
+  }
+  .bar-chart__bar {
+    stroke: var(--md-on-surface-variant);
+    stroke-width: 1;
+  }
+  .bar-chart-legend__swatch {
+    box-shadow: inset 0 0 0 1px var(--md-on-surface-variant);
   }
   .bar-chart__bar--soft,
   .bar-chart-legend__swatch--soft {
@@ -1556,6 +1565,8 @@ body.theme-workspace {
   }
   .funnel__fill--success {
     background: var(--status-aktiv-bg);
+    // Under 3:1 against the track in dark mode (WCAG 1.4.11): the outline marks the segment's extent.
+    box-shadow: inset 0 0 0 1px var(--md-on-surface-variant);
   }
   .funnel__count {
     font-weight: 700;
