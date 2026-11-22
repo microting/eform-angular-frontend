@@ -8,10 +8,10 @@
       <!-- use a disabled button to provide padding for tree leaf -->
       <a mat-button
          style="width: 100%"
-         [class.selected-node]="router.url === node.link"
          *ngIf="node.isInternalLink"
          routerLink="{{ node.link }}"
          routerLinkActive="selected-node"
+         [routerLinkActiveOptions]="activeMatch(node)"
          class="nav-link px-3"
          [id]="node.e2EId"
          (click)="onClickOnNode()"

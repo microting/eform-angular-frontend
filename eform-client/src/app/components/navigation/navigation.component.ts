@@ -3,11 +3,11 @@ import {AutoUnsubscribe} from 'ngx-auto-unsubscribe';
 import {Observable, Subscription} from 'rxjs';
 import { MatTreeNestedDataSource, MatTree, MatTreeNodeDef, MatTreeNode, MatTreeNodePadding, MatNestedTreeNode, MatTreeNodeToggle, MatTreeNodeOutlet } from '@angular/material/tree';
 import {NestedTreeControl} from '@angular/cdk/tree';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { IsActiveMatchOptions, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {selectAuthIsAuth, selectCurrentUserClaims, leftAppMenus, loadAppMenu} from 'src/app/state';
-import {snakeToCamel} from 'src/app/common/helpers';
+import {linkPath, snakeToCamel} from 'src/app/common/helpers';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
@@ -23,6 +23,10 @@ interface MenuNode {
   guards: Array<string>;
   icon?: string;
 }
+
+// The home path is a prefix of every path, so the home link must match the whole path.
+const HOME_MATCH: IsActiveMatchOptions = {paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored'};
+const PREFIX_MATCH = {exact: false};
 
 @AutoUnsubscribe()
 @Component({
@@ -75,6 +79,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
       }
       return false;
     }));
+  }
+
+  activeMatch(node: MenuNode): IsActiveMatchOptions | {exact: boolean} {
+    return linkPath(node.link) ? PREFIX_MATCH : HOME_MATCH;
   }
 
   onClickOnNode() {
