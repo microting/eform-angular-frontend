@@ -290,6 +290,8 @@ body.theme-workspace {
   .form-grid > input,
   .form-grid > select,
   .form-grid > textarea {
+    // Keep padding and border inside the 100% width (the host has no global reset).
+    box-sizing: border-box;
     width: 100%;
     border: 1px solid var(--md-outline);
     border-radius: var(--radius-sm, 4px);
