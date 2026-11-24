@@ -9,7 +9,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {defer, Observable, of, throwError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {HttpErrorInterceptor, isLoginRateLimitedUrl, retryAfterSeconds} from './http-error.interceptor';
 import {TranslateService} from '@ngx-translate/core';
@@ -29,13 +29,16 @@ class ScriptedHandler implements HttpHandler {
 
   constructor(private outcomes: Array<() => Observable<HttpEvent<any>>>) {}
 
+  // Like the real backend, every subscription is a request sent: retry() subscribes to the same observable again.
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    this.requests.push(req);
-    const outcome = this.outcomes.shift();
-    if (!outcome) {
-      throw new Error(`Unexpected extra request to ${req.url}`);
-    }
-    return outcome();
+    return defer(() => {
+      this.requests.push(req);
+      const outcome = this.outcomes.shift();
+      if (!outcome) {
+        throw new Error(`Unexpected extra request to ${req.url}`);
+      }
+      return outcome();
+    });
   }
 }
 
