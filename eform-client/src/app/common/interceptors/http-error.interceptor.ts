@@ -12,7 +12,7 @@ import {
   throwError,
   catchError,
   switchMap,
-  timer, retryWhen, EMPTY
+  timer, EMPTY, finalize
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {AuthStateService} from 'src/app/common/store';
@@ -65,6 +65,17 @@ export function retryAfterSeconds(retryAfter: string | null | undefined, now = D
   return isNaN(date) ? 60 : Math.max(1, Math.ceil((date - now) / 1000));
 }
 
+/** Methods that change nothing on the server, so sending them again is harmless. */
+const READ_METHODS: readonly string[] = ['GET', 'HEAD', 'OPTIONS'];
+
+/** Statuses that say the server (or the way to it) was briefly unavailable, not that the request was wrong. */
+const TRANSIENT_STATUSES: readonly number[] = [0, 502, 503, 504];
+
+const READ_MAX_RETRIES = 5;
+const READ_RETRY_DELAY_MS = 15000;
+
+const NO_ANSWER_MESSAGE = 'The server did not answer. Check whether the change was saved before trying again.';
+
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
   private loaderService = inject(LoaderService);
@@ -77,16 +88,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // Define a maximum number of retries and a delay between each retry
-    const count = 0;
-    const delay = 15000; // 10 seconds in milliseconds
-    const retryConfig: RetryConfig = {count, delay};
-
-    // Return the next handler, with retry logic applied
     return next.handle(request).pipe(
-      // Retry on HTTP 504 errors up to the maximum number of retries
-      retry(retryConfig),
-      // Handle 400 - Bad Request
       catchError((error: HttpErrorResponse) => {
         // A delegated sign-in assertion is single-use: a failure must reach the landing page
         // untouched - no logout, no refresh, no automatic retry.
@@ -105,7 +107,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           );
           return throwError(() => error);
         }
-        let errorMessage = '';
+        const errorMessage = '';
         if (environment.enableSentry && !SENTRY_IGNORED_STATUSES.includes(error.status)) {
           Sentry.captureException(error); // Log to Sentry only if enabled
         }
@@ -178,38 +180,38 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // return throwError(() => errorMessage);
           }
           default: {
-            const maxRetries = 5; // Number of retries (x)
-            const retryDelay = 15000; // Delay in milliseconds (y)
-
-            // @ts-ignore
-            if (error._body === undefined) {
-              return next.handle(request).pipe(
-                retryWhen((errors) =>
-                  errors.pipe(
-                    switchMap((err, index) => {
-                      if (index < maxRetries) {
-                        this.loaderService.setLoading(true);
-                        console.log('Retrying request...');
-                        return timer(retryDelay); // Wait for retryDelay before retrying
-                      }
-                      return EMPTY;
-                      // return throwError(() => err); // Throw error after max retries
-                    })
-                  )
-                )
-              );
+            // A failed write is never sent again automatically: its answer may simply have been lost
+            // (pod restart, proxy, network) after the server already carried it out, and a replay would
+            // create the record twice. The caller gets the error so its spinner stops and Save re-enables.
+            if (!READ_METHODS.includes(request.method.toUpperCase())) {
+              this.loaderService.setLoading(false);
+              const message = error.status === 0
+                ? this.translateService.instant(NO_ANSWER_MESSAGE)
+                : `${error.status} - ${error.statusText || ''}`;
+              this.toastrService.error(message, 'Error', {timeOut: 10000});
+              return throwError(() => error);
             }
-
-            // @ts-ignore
-            const body = error._body || '';
-            errorMessage = `${error.status} - ${error.statusText || ''} ${body}`;
-            if (errorMessage !== 'undefined -  ') {
-              this.toastrService.error(errorMessage, 'Error', {
-                timeOut: 10000,
-              });
-            }
-            return EMPTY;
-            // return throwError(() => errorMessage); // Ensure the error is propagated
+            // A read is retried while the server is briefly unavailable, one request at a time and
+            // READ_RETRY_DELAY_MS apart; any other failure, or running out of retries, ends it quietly.
+            const waitBeforeRetry = (err: HttpErrorResponse): Observable<unknown> => {
+              if (!TRANSIENT_STATUSES.includes(err.status)) {
+                return throwError(() => err);
+              }
+              this.loaderService.setLoading(true);
+              console.log('Retrying request...');
+              return timer(READ_RETRY_DELAY_MS);
+            };
+            // The failure in hand is the first attempt, so only READ_MAX_RETRIES - 1 remain after the wait.
+            // catchError ends every way out quietly, as before: a non-transient first error (whose
+            // throwError from waitBeforeRetry lands here too), a non-transient error during a retry, or
+            // running out of retries. finalize turns the loader off on those and on a successful retry.
+            return waitBeforeRetry(error).pipe(
+              switchMap(() => next.handle(request).pipe(
+                retry({count: READ_MAX_RETRIES - 1, delay: waitBeforeRetry}),
+              )),
+              catchError(() => EMPTY),
+              finalize(() => this.loaderService.setLoading(false)),
+            );
           }
         }
       })
