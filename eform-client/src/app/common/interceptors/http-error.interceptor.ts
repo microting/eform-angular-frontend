@@ -12,7 +12,7 @@ import {
   throwError,
   catchError,
   switchMap,
-  timer, EMPTY, finalize
+  timer, EMPTY
 } from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {AuthStateService} from 'src/app/common/store';
@@ -183,8 +183,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // A failed write is never sent again automatically: its answer may simply have been lost
             // (pod restart, proxy, network) after the server already carried it out, and a replay would
             // create the record twice. The caller gets the error so its spinner stops and Save re-enables.
+            // The loader is LoaderInterceptor's: it counts pending requests, so none is turned off here.
             if (!READ_METHODS.includes(request.method.toUpperCase())) {
-              this.loaderService.setLoading(false);
               const message = error.status === 0
                 ? this.translateService.instant(NO_ANSWER_MESSAGE)
                 : `${error.status} - ${error.statusText || ''}`;
@@ -204,13 +204,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             // The failure in hand is the first attempt, so only READ_MAX_RETRIES - 1 remain after the wait.
             // catchError ends every way out quietly, as before: a non-transient first error (whose
             // throwError from waitBeforeRetry lands here too), a non-transient error during a retry, or
-            // running out of retries. finalize turns the loader off on those and on a successful retry.
+            // running out of retries. The loader shown during a wait is cleared by LoaderInterceptor
+            // when the next attempt ends.
             return waitBeforeRetry(error).pipe(
               switchMap(() => next.handle(request).pipe(
                 retry({count: READ_MAX_RETRIES - 1, delay: waitBeforeRetry}),
               )),
               catchError(() => EMPTY),
-              finalize(() => this.loaderService.setLoading(false)),
             );
           }
         }

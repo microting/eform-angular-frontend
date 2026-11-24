@@ -300,8 +300,8 @@ describe('HttpErrorInterceptor', () => {
         expect(seen.errors).toHaveLength(1);
         expect(seen.errors[0]).toBeInstanceOf(HttpErrorResponse);
         expect(seen.errors[0].status).toBe(status);
-        expect(loaderService.setLoading).toHaveBeenCalledWith(false);
-        expect(loaderService.setLoading).not.toHaveBeenCalledWith(true);
+        // The loader is LoaderInterceptor's, which counts pending requests; this interceptor leaves it alone.
+        expect(loaderService.setLoading).not.toHaveBeenCalled();
         expect(toastrService.error).toHaveBeenCalledTimes(1);
         expect(toastrService.error).toHaveBeenCalledWith(
           status === 0 ? NO_ANSWER : `${status} - Error`,
@@ -350,7 +350,6 @@ describe('HttpErrorInterceptor', () => {
       expect((seen.events[0] as HttpResponse<any>).body).toEqual({templates: []});
       expect(seen.errors).toHaveLength(0);
       expect(seen.completed).toBe(true);
-      expect(loaderService.setLoading).toHaveBeenLastCalledWith(false);
       expect(toastrService.error).not.toHaveBeenCalled();
       subscription.unsubscribe();
     });
@@ -383,7 +382,8 @@ describe('HttpErrorInterceptor', () => {
       expect(seen.events).toHaveLength(0);
       expect(seen.errors).toHaveLength(0);
       expect(seen.completed).toBe(true);
-      expect(loaderService.setLoading).toHaveBeenLastCalledWith(false);
+      expect(loaderService.setLoading).toHaveBeenCalledTimes(5);
+      expect(loaderService.setLoading).not.toHaveBeenCalledWith(false);
       subscription.unsubscribe();
     });
 
@@ -397,8 +397,7 @@ describe('HttpErrorInterceptor', () => {
       expect(seen.events).toHaveLength(0);
       expect(seen.errors).toHaveLength(0);
       expect(seen.completed).toBe(true);
-      expect(loaderService.setLoading).toHaveBeenCalledWith(false);
-      expect(loaderService.setLoading).not.toHaveBeenCalledWith(true);
+      expect(loaderService.setLoading).not.toHaveBeenCalled();
       subscription.unsubscribe();
     });
   });
