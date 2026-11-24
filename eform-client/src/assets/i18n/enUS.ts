@@ -473,4 +473,5 @@ export const enUS = {
   'Restore default link': 'Restore default link',
   'Too many failed sign-ins': 'Too many failed sign-ins',
   'Too many failed sign-in attempts. Try again in {{seconds}} seconds.': 'Too many failed sign-in attempts. Try again in {{seconds}} seconds.',
+  'The server did not answer. Check whether the change was saved before trying again.': 'The server did not answer. Check whether the change was saved before trying again.',
 };

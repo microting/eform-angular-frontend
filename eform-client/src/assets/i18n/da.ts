@@ -504,4 +504,5 @@ export const da = {
   'Restore default link': 'Gendan standardlink',
   'Too many failed sign-ins': 'For mange mislykkede logins',
   'Too many failed sign-in attempts. Try again in {{seconds}} seconds.': 'For mange mislykkede loginforsøg. Prøv igen om {{seconds}} sekunder.',
+  'The server did not answer. Check whether the change was saved before trying again.': 'Serveren svarede ikke. Kontrollér om ændringen blev gemt, før du prøver igen.',
 };

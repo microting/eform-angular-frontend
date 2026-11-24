@@ -9,7 +9,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {defer, Observable, of, throwError} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {HttpErrorInterceptor, isLoginRateLimitedUrl, retryAfterSeconds} from './http-error.interceptor';
 import {TranslateService} from '@ngx-translate/core';
@@ -29,13 +29,16 @@ class ScriptedHandler implements HttpHandler {
 
   constructor(private outcomes: Array<() => Observable<HttpEvent<any>>>) {}
 
+  // Like the real backend, every subscription is a request sent: retry() subscribes to the same observable again.
   handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-    this.requests.push(req);
-    const outcome = this.outcomes.shift();
-    if (!outcome) {
-      throw new Error(`Unexpected extra request to ${req.url}`);
-    }
-    return outcome();
+    return defer(() => {
+      this.requests.push(req);
+      const outcome = this.outcomes.shift();
+      if (!outcome) {
+        throw new Error(`Unexpected extra request to ${req.url}`);
+      }
+      return outcome();
+    });
   }
 }
 
@@ -182,8 +185,9 @@ describe('HttpErrorInterceptor', () => {
   });
 
   describe('Sentry reporting', () => {
+    // Sentry is reported synchronously; unsubscribing stops a read retry from leaving a timer behind.
     const run = (handler: ScriptedHandler) =>
-      interceptor.intercept(request, handler).subscribe({next: () => {}, error: () => {}});
+      interceptor.intercept(request, handler).subscribe({next: () => {}, error: () => {}}).unsubscribe();
 
     it.each([
       ['network failure / aborted request', 0],
@@ -250,6 +254,152 @@ describe('HttpErrorInterceptor', () => {
       interceptor.intercept(new HttpRequest('POST', badUrl, {}), handler).subscribe({})
     ).not.toThrow();
     expect(authStateService.logout).toHaveBeenCalled();
+  });
+
+  describe('failed writes and read retries', () => {
+    const RETRY_DELAY_MS = 15000;
+    const NO_ANSWER = 'The server did not answer. Check whether the change was saved before trying again.';
+    const authHeaders = new HttpHeaders({Authorization: 'Bearer old-token'});
+    const requestFor = (method: string) =>
+      new HttpRequest<any>(method, url, ['POST', 'PUT', 'PATCH'].includes(method) ? {name: 'Example Org A/S'} : null, {
+        headers: authHeaders,
+      });
+
+    /** Subscribes and records everything the caller would see. */
+    const subscribe = (req: HttpRequest<any>, handler: ScriptedHandler) => {
+      const seen = {events: [] as HttpEvent<any>[], errors: [] as any[], completed: false};
+      const subscription = interceptor.intercept(req, handler).subscribe({
+        next: (event) => seen.events.push(event),
+        error: (error) => seen.errors.push(error),
+        complete: () => (seen.completed = true),
+      });
+      return {seen, subscription};
+    };
+
+    beforeEach(() => {
+      vi.useFakeTimers();
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    describe.each(['POST', 'PUT', 'PATCH', 'DELETE'])('a %s', (method) => {
+      it.each([0, 404, 500, 502, 503, 504])('failing with %i is sent once and the error reaches the caller', (status) => {
+        // Spare successful outcomes: any replay would consume one and show up in handler.requests.
+        const handler = new ScriptedHandler([
+          () => httpError(status, url),
+          ...Array.from({length: 6}, () => () => okResponse()),
+        ]);
+
+        const {seen, subscription} = subscribe(requestFor(method), handler);
+        vi.advanceTimersByTime(10 * RETRY_DELAY_MS);
+
+        expect(handler.requests).toHaveLength(1);
+        expect(seen.events).toHaveLength(0);
+        expect(seen.errors).toHaveLength(1);
+        expect(seen.errors[0]).toBeInstanceOf(HttpErrorResponse);
+        expect(seen.errors[0].status).toBe(status);
+        // The loader is LoaderInterceptor's, which counts pending requests; this interceptor leaves it alone.
+        expect(loaderService.setLoading).not.toHaveBeenCalled();
+        expect(toastrService.error).toHaveBeenCalledTimes(1);
+        expect(toastrService.error).toHaveBeenCalledWith(
+          status === 0 ? NO_ANSWER : `${status} - Error`,
+          'Error',
+          {timeOut: 10000},
+        );
+        expect(authStateService.logout).not.toHaveBeenCalled();
+        subscription.unsubscribe();
+      });
+    });
+
+    it('retries a 403 POST exactly once with the refreshed token, and never again', () => {
+      authStateService.refreshToken.mockReturnValue(of({success: true, model: {accessToken: 'new-token'}}));
+      const handler = new ScriptedHandler([
+        () => httpError(403, url),
+        () => okResponse({id: 1}),
+        () => okResponse({id: 2}),
+      ]);
+
+      const {seen, subscription} = subscribe(requestFor('POST'), handler);
+      vi.advanceTimersByTime(10 * RETRY_DELAY_MS);
+
+      expect(handler.requests).toHaveLength(2);
+      expect(handler.requests[1].headers.get('Authorization')).toBe('Bearer new-token');
+      expect((seen.events[0] as HttpResponse<any>).body).toEqual({id: 1});
+      expect(seen.errors).toHaveLength(0);
+      subscription.unsubscribe();
+    });
+
+    it('retries a GET that got 503 once, 15 seconds later, and delivers the answer', () => {
+      const handler = new ScriptedHandler([
+        () => httpError(503, url),
+        () => okResponse({templates: []}),
+      ]);
+
+      const {seen, subscription} = subscribe(requestFor('GET'), handler);
+      expect(handler.requests).toHaveLength(1);
+
+      vi.advanceTimersByTime(RETRY_DELAY_MS - 1);
+      expect(handler.requests).toHaveLength(1);
+      expect(loaderService.setLoading).toHaveBeenCalledWith(true);
+
+      vi.advanceTimersByTime(1);
+      expect(handler.requests).toHaveLength(2);
+      expect(seen.events).toHaveLength(1);
+      expect((seen.events[0] as HttpResponse<any>).body).toEqual({templates: []});
+      expect(seen.errors).toHaveLength(0);
+      expect(seen.completed).toBe(true);
+      expect(toastrService.error).not.toHaveBeenCalled();
+      subscription.unsubscribe();
+    });
+
+    it.each(['HEAD', 'OPTIONS'])('retries a %s that got 502', (method) => {
+      const handler = new ScriptedHandler([() => httpError(502, url), () => okResponse()]);
+
+      const {seen, subscription} = subscribe(requestFor(method), handler);
+      vi.advanceTimersByTime(RETRY_DELAY_MS);
+
+      expect(handler.requests).toHaveLength(2);
+      expect(seen.events).toHaveLength(1);
+      subscription.unsubscribe();
+    });
+
+    it('sends a GET that keeps failing with 0 six times in all, then completes without a value', () => {
+      const handler = new ScriptedHandler([
+        ...Array.from({length: 6}, () => () => httpError(0, url)),
+        () => okResponse(),
+      ]);
+
+      const {seen, subscription} = subscribe(requestFor('GET'), handler);
+      for (let attempt = 2; attempt <= 6; attempt++) {
+        vi.advanceTimersByTime(RETRY_DELAY_MS);
+        expect(handler.requests).toHaveLength(attempt);
+      }
+      vi.advanceTimersByTime(10 * RETRY_DELAY_MS);
+
+      expect(handler.requests).toHaveLength(6);
+      expect(seen.events).toHaveLength(0);
+      expect(seen.errors).toHaveLength(0);
+      expect(seen.completed).toBe(true);
+      expect(loaderService.setLoading).toHaveBeenCalledTimes(5);
+      expect(loaderService.setLoading).not.toHaveBeenCalledWith(false);
+      subscription.unsubscribe();
+    });
+
+    it.each([404, 500])('does not retry a GET that got %i and completes empty', (status) => {
+      const handler = new ScriptedHandler([() => httpError(status, url), () => okResponse()]);
+
+      const {seen, subscription} = subscribe(requestFor('GET'), handler);
+      vi.advanceTimersByTime(10 * RETRY_DELAY_MS);
+
+      expect(handler.requests).toHaveLength(1);
+      expect(seen.events).toHaveLength(0);
+      expect(seen.errors).toHaveLength(0);
+      expect(seen.completed).toBe(true);
+      expect(loaderService.setLoading).not.toHaveBeenCalled();
+      subscription.unsubscribe();
+    });
   });
 
   describe('login rate limit (429)', () => {
